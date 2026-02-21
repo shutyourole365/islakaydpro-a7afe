@@ -50,7 +50,7 @@ jobs:
         - language: javascript-typescript
           build-mode: none
         - language: swift
-          build-mode: autobuild
+          build-mode: manual
         # CodeQL supports the following values keywords for 'language': 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'rust', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
@@ -92,12 +92,32 @@ jobs:
       if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-        echo 'If you are using a "manual" build mode for one or more of the' \
-          'languages you are analyzing, replace this with the commands to build' \
-          'your code, for example:'
-        echo '  make bootstrap'
-        echo '  make release'
-        exit 1
+        set -euo pipefail
+        echo "Matrix language: ${matrix.language}"
+        if [ "${matrix.language}" = "swift" ]; then
+          echo "Running manual Xcode build for Swift (ios/App)..."
+          # Select Xcode (match what your iOS build workflow uses)
+          sudo xcode-select -s /Applications/Xcode_15.2.app || true
+
+          # Resolve Swift Package Manager dependencies and build an archive
+          if [ -d ios/App ]; then
+            cd ios/App
+            xcodebuild -resolvePackageDependencies -project App.xcodeproj -scheme App
+            xcodebuild -project App.xcodeproj \
+              -scheme App \
+              -configuration Release \
+              -destination 'generic/platform=iOS' \
+              -archivePath build/App.xcarchive \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGNING_ALLOWED=NO \
+              archive
+          else
+            echo "Warning: ios/App not found in repository; skipping Xcode build."
+          fi
+        else
+          echo "No manual build steps defined for language: ${matrix.language}"
+        fi
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
