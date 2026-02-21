@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const axePath = require.resolve('axe-core/axe.min.js');
+const ROOT = process.cwd();
 
 async function run(url, outPath) {
   const browser = await chromium.launch();
@@ -12,10 +13,16 @@ async function run(url, outPath) {
     return await axe.run();
   });
   await browser.close();
-  const outDir = path.dirname(outPath);
+
+  const resolvedOutPath = path.resolve(ROOT, outPath);
+  if (resolvedOutPath !== ROOT && !resolvedOutPath.startsWith(ROOT + path.sep)) {
+    throw new Error(`Refusing to write outside of root directory: ${resolvedOutPath}`);
+  }
+
+  const outDir = path.dirname(resolvedOutPath);
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
-  console.log('Axe results saved to', outPath);
+  fs.writeFileSync(resolvedOutPath, JSON.stringify(results, null, 2));
+  console.log('Axe results saved to', resolvedOutPath);
 }
 
 const url = process.argv[2] || 'http://localhost:5174/';
