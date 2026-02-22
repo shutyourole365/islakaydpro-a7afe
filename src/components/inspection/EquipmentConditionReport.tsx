@@ -20,6 +20,7 @@ import {
   Share2,
   PenLine,
 } from 'lucide-react';
+import ProgressBar from '../ui/ProgressBar';
 
 type ConditionRating = 'excellent' | 'good' | 'fair' | 'poor' | 'damaged';
 type ReportType = 'pre_rental' | 'post_rental' | 'maintenance' | 'inspection';
@@ -288,9 +289,11 @@ export default function EquipmentConditionReport({
             </span>
           </div>
           <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-blue-600 transition-all duration-300"
-              style={{ width: `${(stats.completed / stats.total) * 100}%` }}
+            <ProgressBar
+              value={(stats.completed / stats.total) * 100}
+              className="h-2 bg-gray-200 dark:bg-gray-600 rounded-full"
+              innerClassName="h-full bg-blue-600 transition-all duration-300"
+              aria-label="Inspection completion"
             />
           </div>
         </div>
@@ -344,6 +347,7 @@ export default function EquipmentConditionReport({
                 max="100"
                 value={fuelLevel}
                 onChange={(e) => setFuelLevel(parseInt(e.target.value))}
+                aria-label="Fuel level"
                 className="flex-1"
               />
               <span className="text-sm font-medium text-gray-900 dark:text-white w-12">
@@ -504,6 +508,8 @@ export default function EquipmentConditionReport({
                                     />
                                     <button
                                       onClick={() => removePhoto(item.id, index)}
+                                      aria-label={`Remove photo ${index + 1}`}
+                                      title={`Remove photo ${index + 1}`}
                                       className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                                     >
                                       <Trash2 className="w-3 h-3" />
@@ -518,6 +524,8 @@ export default function EquipmentConditionReport({
                                       `https://images.unsplash.com/photo-1580901368919-7738efb0f87e?w=100&t=${Date.now()}`
                                     );
                                   }}
+                                  aria-label="Add photo"
+                                  title="Add photo"
                                   className="w-16 h-16 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center text-gray-400 hover:border-blue-500 hover:text-blue-500"
                                 >
                                   <Camera className="w-6 h-6" />
