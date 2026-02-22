@@ -15,6 +15,7 @@ import {
   FileText,
   Info,
 } from 'lucide-react';
+import ProgressBar from '../ui/ProgressBar';
 
 interface AIDamageDetectionProps {
   equipmentId: string;
@@ -263,9 +264,11 @@ export default function AIDamageDetection({
                       playsInline
                       muted
                     />
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4">
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4">
                       <button
                         onClick={stopCamera}
+                        aria-label="Cancel camera"
+                        title="Cancel camera"
                         className="px-6 py-2 bg-white/20 backdrop-blur text-white rounded-full"
                       >
                         Cancel
@@ -303,6 +306,8 @@ export default function AIDamageDetection({
                       multiple
                       onChange={handleFileUpload}
                       className="hidden"
+                      aria-label="Upload photos"
+                      title="Upload photos"
                     />
                   </div>
                 )}
@@ -319,6 +324,8 @@ export default function AIDamageDetection({
                         />
                         <button
                           onClick={() => removePhoto(index)}
+                          aria-label={`Remove photo ${index + 1}`}
+                          title={`Remove photo ${index + 1}`}
                           className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -395,11 +402,13 @@ export default function AIDamageDetection({
                         } animate-pulse cursor-pointer`}
                         aria-label={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
                         title={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
-                        style={{
-                          left: `${damage.boundingBox.x}%`,
-                          top: `${damage.boundingBox.y}%`,
-                          width: `${damage.boundingBox.width}%`,
-                          height: `${damage.boundingBox.height}%`,
+                        ref={(el) => {
+                          if (el) {
+                            el.style.left = `${damage.boundingBox.x}%`;
+                            el.style.top = `${damage.boundingBox.y}%`;
+                            el.style.width = `${damage.boundingBox.width}%`;
+                            el.style.height = `${damage.boundingBox.height}%`;
+                          }
                         }}
                       >
                         <span className="absolute -top-6 left-0 px-2 py-0.5 bg-red-500 text-white text-xs rounded-full">
@@ -504,13 +513,12 @@ export default function AIDamageDetection({
                             )}
                           </div>
                           <div className="mt-2 h-1 bg-gray-100 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-orange-500"
-                              role="progressbar"
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                              aria-valuenow={Math.round(damage.confidence * 100)}
-                              style={{ width: `${damage.confidence * 100}%` }}
+                            {/* Progress width is set via DOM inside ProgressBar to avoid inline JSX styles */}
+                            <ProgressBar
+                              value={Math.round(damage.confidence * 100)}
+                              className="h-1 bg-gray-100 rounded-full"
+                              innerClassName="h-full bg-orange-500"
+                              aria-label={`Detection confidence for ${damage.type}`}
                             />
                           </div>
                           <p className="text-xs text-gray-400 mt-1">

@@ -382,6 +382,8 @@ export default function EnhancedMap({
                   <button
                     key={rating}
                     onClick={() => setFilters(f => ({ ...f, rating }))}
+                    aria-label={`Filter by ${rating} stars and up`}
+                    title={`Filter by ${rating} stars and up`}
                     className={`p-1 ${filters.rating >= rating ? 'text-amber-500' : 'text-gray-300'}`}
                   >
                     <Star className="w-6 h-6 fill-current" />
@@ -421,6 +423,7 @@ export default function EnhancedMap({
                   value={searchRadius}
                   onChange={(e) => setSearchRadius(+e.target.value)}
                   className="flex-1"
+                  aria-label="Search radius in miles"
                 />
                 <span className="text-sm font-medium text-gray-600 w-16">{searchRadius} mi</span>
               </div>

@@ -13,6 +13,7 @@ import {
   Droplets,
   Gauge,
 } from 'lucide-react';
+import ProgressBar from '../ui/ProgressBar';
 import type { Equipment, InspectionReport } from '../../types';
 
 interface EquipmentInspectionProps {
@@ -354,10 +355,12 @@ export default function EquipmentInspection({
 
         {/* Progress Bar */}
         <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
-          <div
-            className="bg-blue-600 h-3 rounded-full transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          ></div>
+          <ProgressBar
+            value={progress}
+            className="w-full bg-gray-200 rounded-full h-3"
+            innerClassName="bg-blue-600 h-3 rounded-full transition-all duration-500"
+            aria-label="Inspection progress"
+          />
         </div>
 
         {/* Category Navigation */}
