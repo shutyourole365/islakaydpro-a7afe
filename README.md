@@ -42,3 +42,7 @@ Security / notes
 
 - Do NOT commit API keys to Git. Use environment variables or your deployment provider secrets.
 - Edge Function requires `SUPABASE_SERVICE_ROLE_KEY` locally for some operations.
+
+
+# Trigger: CodeQL rerun
+This trivial edit was committed to trigger GitHub Code Scanning re-run.
