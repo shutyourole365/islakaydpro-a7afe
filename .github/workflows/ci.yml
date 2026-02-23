@@ -104,7 +104,16 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libatk-bridge2.0-0 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libxss1 libasound2
+          sudo apt-get install -y \
+            libatk-bridge2.0-0 \
+            libdrm2 \
+            libxkbcommon0 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxrandr2 \
+            libgbm1 \
+            libxss1 \
+            libasound2
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
@@ -113,8 +122,8 @@ jobs:
         run: npm run test:e2e
         env:
           CI: true
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://placeholder.supabase.co' }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
@@ -145,8 +154,8 @@ jobs:
       - name: Build application
         run: npm run build
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://placeholder.supabase.co' }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_ENABLE_ANALYTICS: 'false'
           NODE_ENV: production
 
@@ -326,11 +335,16 @@ jobs:
         with:
           script: |
             try {
+              const p = '${{ steps.preview-deploy.outputs.preview-url }}';
+              const body = '🚀 **Preview deployment is ready!**\n\n' +
+                '🔗 **Preview URL:** ' + p + '\n\n' +
+                '*This preview will be updated with each new commit to this PR.*';
+
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `🚀 **Preview deployment is ready!**\n\n🔗 **Preview URL:** ${{ steps.preview-deploy.outputs.preview-url }}\n\n*This preview will be updated with each new commit to this PR.*`
+                body: body
               });
             } catch (error) {
               console.log('Failed to comment on PR:', error.message);

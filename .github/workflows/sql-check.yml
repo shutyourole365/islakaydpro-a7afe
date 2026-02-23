@@ -29,7 +29,9 @@ jobs:
           echo "🔍 Checking SQL files for security issues..."
 
           # Check for potential SQL injection vulnerabilities
-          if grep -r -E "(exec|execute|eval)\s*\(" supabase/migrations/ 2>/dev/null; then
+          pe='exec|execute|eval'
+          if grep -r -E "($pe)\\s*\\(" \
+            supabase/migrations/ 2>/dev/null; then
             echo "⚠️  Warning: Found potentially unsafe SQL execution patterns"
             echo "Please review these patterns for SQL injection vulnerabilities"
           else
@@ -37,7 +39,9 @@ jobs:
           fi
 
           # Check for commented credentials
-          if grep -r -i -E "(password|secret|api_key|token)\s*=" supabase/migrations/ 2>/dev/null | grep -v "REDACTED"; then
+          pc='password|secret|api_key|token'
+          if grep -r -i -E "($pc)\\s*=" \
+            supabase/migrations/ 2>/dev/null | grep -v "REDACTED"; then
             echo "❌ ERROR: Found potential credentials in SQL files"
             exit 1
           else
@@ -45,7 +49,8 @@ jobs:
           fi
 
           # Check for DROP DATABASE or DROP SCHEMA
-          if grep -r -i "DROP\s\+\(DATABASE\|SCHEMA\)" supabase/migrations/ 2>/dev/null; then
+          if grep -r -i "DROP\s\+\(DATABASE\|SCHEMA\)" \
+            supabase/migrations/ 2>/dev/null; then
             echo "⚠️  Warning: Found DROP DATABASE/SCHEMA statements"
             echo "Please ensure these are intentional"
           fi
@@ -57,14 +62,15 @@ jobs:
           echo "🔍 Validating SQL syntax..."
 
           # Check for balanced parentheses
-          for file in $(find supabase/migrations -name "*.sql" 2>/dev/null); do
+          for file in $(find supabase/migrations \
+            -name "*.sql" 2>/dev/null); do
             echo "Checking $file..."
 
             # Count opening and closing parentheses
             open=$(grep -o "(" "$file" | wc -l)
             close=$(grep -o ")" "$file" | wc -l)
 
-            if ["$open" -ne "$close"]; then
+            if [ "$open" -ne "$close" ]; then
               echo "⚠️  Warning: Unbalanced parentheses in $file"
             fi
           done
@@ -76,12 +82,15 @@ jobs:
           echo "🔍 Checking for Row Level Security policies..."
 
           # Check if RLS is enabled on tables
-          if grep -r "CREATE TABLE" supabase/migrations/ 2>/dev/null | grep -v "CREATE TABLE IF NOT EXISTS"; then
+          if grep -r "CREATE TABLE" \
+            supabase/migrations/ 2>/dev/null | \
+            grep -v "CREATE TABLE IF NOT EXISTS"; then
             echo "⚠️  Warning: Some tables may not use IF NOT EXISTS"
           fi
 
           # Check for ALTER TABLE ENABLE RLS
-          if grep -r "ALTER TABLE.*ENABLE ROW LEVEL SECURITY" supabase/migrations/ 2>/dev/null; then
+          if grep -r "ALTER TABLE.*ENABLE ROW LEVEL SECURITY" \
+            supabase/migrations/ 2>/dev/null; then
             echo "✅ Found RLS enablement statements"
           else
             echo "⚠️  Warning: No RLS policies found in migrations"
