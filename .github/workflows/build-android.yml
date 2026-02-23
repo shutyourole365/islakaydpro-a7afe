@@ -1,6 +1,7 @@
+---
 name: Build Android APK/AAB
 
-on:
+"on":
   push:
     branches: [main]
     paths:
@@ -25,7 +26,7 @@ env:
 jobs:
   build-android:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -77,7 +78,7 @@ jobs:
         if: ${{ github.event.inputs.build_type == 'aab' || github.event.inputs.build_type == '' }}
         run: |
           cd android
-          if [ -f "app/keystore.jks" ]; then
+          if [-f "app/keystore.jks"]; then
             ./gradlew bundleRelease \
               -Pandroid.injected.signing.store.file=keystore.jks \
               -Pandroid.injected.signing.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
@@ -91,7 +92,7 @@ jobs:
         if: ${{ github.event.inputs.build_type == 'apk' }}
         run: |
           cd android
-          if [ -f "app/keystore.jks" ]; then
+          if [-f "app/keystore.jks"]; then
             ./gradlew assembleRelease \
               -Pandroid.injected.signing.store.file=keystore.jks \
               -Pandroid.injected.signing.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \

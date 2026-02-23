@@ -1,0 +1,39 @@
+---
+name: DB Index Maintenance Check
+
+"on":
+  workflow_dispatch:
+    inputs:
+      applyTemplates:
+        description: 'Set to "true" to apply CREATE INDEX templates (dangerous)'
+        required: false
+        default: 'false'
+
+jobs:
+  index-check:
+    name: Run index usage check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install psql (PostgreSQL client)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Run index maintenance (check)
+        shell: pwsh
+        env:
+          DATABASE_URL: ${{ secrets.MAINT_DB_URL }}
+        run: |
+          pwsh ./db/scripts/run_index_maintenance.ps1
+
+      - name: Apply CREATE INDEX templates (ONLY if requested)
+        if: ${{ github.event.inputs.applyTemplates == 'true' }}
+        shell: pwsh
+        env:
+          DATABASE_URL: ${{ secrets.MAINT_DB_URL }}
+        run: |
+          pwsh ./db/scripts/run_index_maintenance.ps1 -applyTemplates
