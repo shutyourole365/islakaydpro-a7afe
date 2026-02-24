@@ -314,7 +314,8 @@ export default function WishlistCollections({
 
                     {/* Menu Button */}
                     <button
-                      onClick={(e) = aria-label="Icon button"> {
+                      aria-label="Icon button"
+                      onClick={(e) => {
                         e.stopPropagation();
                         setMenuOpen(menuOpen === collection.id ? null : collection.id);
                       }}
@@ -435,7 +436,8 @@ export default function WishlistCollections({
                       className="w-full h-full object-cover"
                     />
                     <button
-                      onClick={(e) = aria-label="Icon button"> {
+                      aria-label="Icon button"
+                      onClick={(e) => {
                         e.stopPropagation();
                         onRemoveFromCollection(selectedCollection.id, item.id);
                       }}
@@ -488,7 +490,8 @@ export default function WishlistCollections({
                     </div>
                   </div>
                   <button
-                    onClick={(e) = aria-label="Icon button"> {
+                    aria-label="Icon button"
+                    onClick={(e) => {
                       e.stopPropagation();
                       onRemoveFromCollection(selectedCollection.id, item.id);
                     }}
@@ -512,7 +515,8 @@ export default function WishlistCollections({
                 {showCreateModal ? 'Create Collection' : 'Edit Collection'}
               </h3>
               <button
-                aria-label="Icon button"> {
+                aria-label="Icon button"
+                onClick={() => {
                   setShowCreateModal(false);
                   setShowEditModal(false);
                   setEditingCollection(null);
@@ -583,7 +587,8 @@ export default function WishlistCollections({
 
             <div className="flex gap-3 mt-6">
               <button
-                aria-label="Icon button"> {
+                aria-label="Icon button"
+                onClick={() => {
                   setShowCreateModal(false);
                   setShowEditModal(false);
                 }}
