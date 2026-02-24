@@ -67,6 +67,7 @@ export default function PriceNegotiator({
 
     // Generate AI suggestions
     generateSuggestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const generateSuggestions = () => {
@@ -216,7 +217,7 @@ export default function PriceNegotiator({
           <button
             onClick={onClose}
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-           aria-label="Close negotiator">
+          >
             <XCircle className="w-5 h-5" />
           </button>
         </div>

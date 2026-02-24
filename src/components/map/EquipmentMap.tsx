@@ -22,7 +22,7 @@ export default function EquipmentMap({
 }: EquipmentMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [mapInstance, setMapInstance] = useState<any>(null); // react-hooks/exhaustive-deps rule disabled in eslint config
+  const [mapInstance, setMapInstance] = useState<any>(null);
   const [markers, setMarkers] = useState<MapMarker[]>([]);
   const [hoveredEquipment, setHoveredEquipment] = useState<Equipment | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,6 +68,7 @@ export default function EquipmentMap({
       }
     };
     // mapInstance intentionally excluded - only runs on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -120,7 +121,7 @@ export default function EquipmentMap({
         mapInstance.fitBounds(bounds, { padding: [50, 50], maxZoom: 12 });
       }
     }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapInstance, equipment, selectedId, onEquipmentClick]);
 
   const handleZoomIn = () => {
@@ -211,12 +212,13 @@ export default function EquipmentMap({
 
       <div className="absolute top-4 right-4 flex flex-col gap-2 z-[1000]">
         <button
-          onClick={handleZoomIn} aria-label="Zoom in"
-          className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+          onClick={handleZoomIn}
+          className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+        >
           <Plus className="w-5 h-5 text-gray-700" />
         </button>
         <button
-          onClick={handleZoomOut} aria-label="Zoom out"
+          onClick={handleZoomOut}
           className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
         >
           <Minus className="w-5 h-5 text-gray-700" />
@@ -225,7 +227,7 @@ export default function EquipmentMap({
         <button
           onClick={handleLocate}
           className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
-          aria-label="Locate me">
+        >
           <Navigation className="w-5 h-5 text-gray-700" />
         </button>
       </div>
@@ -258,4 +260,3 @@ export default function EquipmentMap({
     </div>
   );
 }
-

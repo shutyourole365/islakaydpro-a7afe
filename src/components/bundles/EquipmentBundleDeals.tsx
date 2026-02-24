@@ -238,9 +238,6 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
   // Get equipment by ID
   const getEquipmentById = (id: string) => mockEquipment.find((eq) => eq.id === id);
 
-  // utility for z-index classes
-  const zClasses = ['z-4', 'z-3', 'z-2', 'z-1'];
-
   // Render bundle card
   const renderBundleCard = (bundle: EquipmentBundle) => {
     const bundleEquipment = bundle.equipment_ids.map(getEquipmentById).filter(Boolean) as Equipment[];
@@ -254,12 +251,12 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
             <div className="flex items-start justify-between">
               <div>
                 <span className="inline-flex items-center gap-1 px-2 py-1 bg-white/20 rounded-full text-white text-xs">
-                  <Package className="w-3 h-3" aria-hidden="true" />
+                  <Package className="w-3 h-3" />
                   {bundle.equipment_ids.length} Items
                 </span>
               </div>
               <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-500 rounded-full text-white text-sm font-bold">
-                <Percent className="w-4 h-4" aria-hidden="true" />
+                <Percent className="w-4 h-4" />
                 {bundle.discount_percentage}% OFF
               </span>
             </div>
@@ -270,7 +267,8 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
                 key={eq.id}
                 src={eq.images[0] || 'https://via.placeholder.com/48'}
                 alt={eq.title}
-                className={`w-12 h-12 rounded-lg border-2 border-white object-cover ${zClasses[idx] || 'z-0'}`}
+                className="w-12 h-12 rounded-lg border-2 border-white object-cover"
+                style={{ zIndex: 4 - idx }}
               />
             ))}
             {bundleEquipment.length > 4 && (
@@ -308,9 +306,6 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
           <button
             onClick={() => setExpandedBundle(isExpanded ? null : bundle.id)}
             className="w-full mt-4 py-2 text-sm text-teal-600 hover:text-teal-700 flex items-center justify-center gap-1 border-t pt-3"
-            aria-expanded={isExpanded}
-            aria-controls={`bundle-details-${bundle.id}`}
-            aria-label={isExpanded ? 'Hide bundle details' : 'View bundle contents'}
           >
             {isExpanded ? (
               <>
@@ -325,7 +320,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
 
           {/* Expanded Content */}
           {isExpanded && (
-            <div id={`bundle-details-${bundle.id}`} className="mt-4 pt-4 border-t space-y-3">
+            <div className="mt-4 pt-4 border-t space-y-3">
               <h4 className="font-medium text-gray-900">Included Equipment:</h4>
               {bundleEquipment.map((eq) => (
                 <div key={eq.id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
@@ -358,7 +353,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
                   <ShoppingCart className="w-4 h-4" />
                   Book Bundle
                 </button>
-                <button className="p-2.5 border rounded-lg hover:bg-gray-50 transition-colors" aria-label="Share bundle">
+                <button className="p-2.5 border rounded-lg hover:bg-gray-50 transition-colors">
                   <Share2 className="w-4 h-4 text-gray-500" />
                 </button>
               </>
@@ -371,10 +366,8 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
                 <button
                   onClick={() => handleDeleteBundle(bundle.id)}
                   className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                  aria-label="Delete bundle"
-                  title="Delete bundle"
                 >
-                  <Trash2 className="w-4 h-4" aria-hidden="true" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </>
             )}
@@ -454,46 +447,34 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label htmlFor="discount-percentage" className="block text-sm font-medium text-gray-700 mb-1">Discount %</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Discount %</label>
               <input
-                id="discount-percentage"
                 type="number"
                 min="1"
                 max="50"
-                placeholder="e.g., 10"
-                title="Discount percentage"
                 value={formData.discount_percentage}
                 onChange={(e) => setFormData({ ...formData, discount_percentage: parseInt(e.target.value) || 0 })}
                 className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
-                aria-label="Discount percentage"
               />
             </div>
             <div>
-              <label htmlFor="min-days" className="block text-sm font-medium text-gray-700 mb-1">Min Days</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Min Days</label>
               <input
-                id="min-days"
                 type="number"
                 min="1"
-                placeholder="1"
-                title="Minimum rental days"
                 value={formData.min_rental_days}
                 onChange={(e) => setFormData({ ...formData, min_rental_days: parseInt(e.target.value) || 1 })}
                 className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
-                aria-label="Minimum rental days"
               />
             </div>
             <div>
-              <label htmlFor="max-days" className="block text-sm font-medium text-gray-700 mb-1">Max Days</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Max Days</label>
               <input
-                id="max-days"
                 type="number"
                 min="1"
-                placeholder="30"
-                title="Maximum rental days"
                 value={formData.max_rental_days}
                 onChange={(e) => setFormData({ ...formData, max_rental_days: parseInt(e.target.value) || 30 })}
                 className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
-                aria-label="Maximum rental days"
               />
             </div>
           </div>
@@ -560,13 +541,13 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
                 onClick={() => setIsCreating(true)}
                 className="flex items-center gap-2 px-4 py-2 bg-white text-purple-600 rounded-lg hover:bg-purple-50 transition-colors font-medium"
               >
-                <Plus className="w-4 h-4" aria-hidden="true" />
+                <Plus className="w-4 h-4" />
                 Create Bundle
               </button>
             )}
             {onClose && (
-              <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors" aria-label="Close bundle deals">
-                <X className="w-5 h-5" aria-hidden="true" />
+              <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                <X className="w-5 h-5" />
               </button>
             )}
           </div>
@@ -574,11 +555,10 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
 
         {/* Search */}
         <div className="mt-4 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-purple-200" aria-hidden="true" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-purple-200" />
           <input
             type="text"
             placeholder="Search bundles..."
-            aria-label="Search bundles"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-white/30"
@@ -593,7 +573,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
           <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg p-4 mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-amber-100 rounded-lg">
-                <Gift className="w-6 h-6 text-amber-600" aria-hidden="true" />
+                <Gift className="w-6 h-6 text-amber-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-amber-900">Bundle & Save!</h3>
@@ -613,7 +593,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
           <>
             {filteredBundles.length === 0 ? (
               <div className="text-center py-12">
-                <Package className="w-12 h-12 mx-auto text-gray-300 mb-3" aria-hidden="true" />
+                <Package className="w-12 h-12 mx-auto text-gray-300 mb-3" />
                 <p className="text-gray-500 mb-4">No bundles found</p>
                 {mode === 'manage' && (
                   <button

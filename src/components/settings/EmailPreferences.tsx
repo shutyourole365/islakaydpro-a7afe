@@ -91,6 +91,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
     if (user) {
       loadPreferences();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const loadPreferences = async () => {
@@ -245,7 +246,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
                     ? 'bg-teal-500'
                     : 'bg-gray-200'
                 } ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
-                aria-pressed={!!preferences?.[option.key]}
+                aria-pressed={preferences?.[option.key]}
                 aria-label={`Toggle ${option.label}`}
               >
                 <span

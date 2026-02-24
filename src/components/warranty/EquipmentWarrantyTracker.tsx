@@ -278,7 +278,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             </div>
           </div>
           {onClose && (
-            <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors" aria-label="Close tracker">
+            <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
               <X className="w-5 h-5" />
             </button>
           )}

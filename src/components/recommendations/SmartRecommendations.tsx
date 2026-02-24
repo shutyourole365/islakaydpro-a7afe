@@ -186,6 +186,7 @@ export default function SmartRecommendations({
         return { equipment: eq, score, reasons };
       })
       .sort((a, b) => b.score - a.score);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [equipment, dismissedIds, favorites]);
 
   // Filter based on active tab

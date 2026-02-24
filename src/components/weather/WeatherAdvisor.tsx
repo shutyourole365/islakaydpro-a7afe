@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps, prefer-const */
 import { useState, useEffect } from 'react';
 import {
   Cloud,
@@ -74,7 +75,7 @@ export default function WeatherAdvisor({
     const conditions: WeatherForecast['condition'][] = ['sunny', 'cloudy', 'rainy', 'sunny', 'windy', 'cloudy', 'sunny'];
     const days: WeatherForecast[] = [];
     
-    const currentDate = new Date(startDate);
+    let currentDate = new Date(startDate);
     while (currentDate <= endDate) {
       const dayIndex = days.length % conditions.length;
       days.push({

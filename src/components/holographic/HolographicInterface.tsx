@@ -346,7 +346,6 @@ export default function HolographicInterface() {
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
     ctx.font = '12px monospace';
     ctx.textAlign = 'center';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ctx.fillText(String((projection.data as any)?.value ?? (projection.data as any)?.count ?? 'N/A'), 0, 5);
   };
 
@@ -362,7 +361,6 @@ export default function HolographicInterface() {
     ctx.stroke();
 
     // Participant indicators
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const participants = typeof (projection.data as any)?.participants === 'number' ? (projection.data as any).participants : 1;
     for (let i = 0; i < participants; i++) {
       const angle = (i / participants) * Math.PI * 2;
@@ -465,9 +463,8 @@ export default function HolographicInterface() {
         <div className="flex flex-wrap items-center gap-4">
           {/* Interface Selection */}
           <div className="flex items-center gap-2">
-            <label htmlFor="interface-select" className="text-sm font-medium">Interface:</label>
+            <label className="text-sm font-medium">Interface:</label>
             <select
-              id="interface-select"
               value={activeInterface?.id || ''}
               onChange={(e) => {
                 const interface_ = interfaces.find(i => i.id === e.target.value);
@@ -485,9 +482,8 @@ export default function HolographicInterface() {
 
           {/* Projection Mode */}
           <div className="flex items-center gap-2">
-            <label htmlFor="projection-mode" className="text-sm font-medium">Mode:</label>
+            <label className="text-sm font-medium">Mode:</label>
             <select
-              id="projection-mode"
               value={projectionMode}
               onChange={(e) => setProjectionMode(e.target.value as '3d' | '2d' | 'mixed')}
               className="px-3 py-1 border rounded"
@@ -500,9 +496,8 @@ export default function HolographicInterface() {
 
           {/* Quality */}
           <div className="flex items-center gap-2">
-            <label htmlFor="render-quality" className="text-sm font-medium">Quality:</label>
+            <label className="text-sm font-medium">Quality:</label>
             <select
-              id="render-quality"
               value={renderQuality}
               onChange={(e) => setRenderQuality(e.target.value as 'low' | 'medium' | 'high' | 'ultra')}
               className="px-3 py-1 border rounded"
@@ -522,7 +517,7 @@ export default function HolographicInterface() {
                 ambientLighting ? 'bg-cyan-100 text-cyan-800' : 'bg-gray-100 text-gray-600'
               }`}
             >
-              <Zap className="w-4 h-4" aria-hidden="true" />
+              <Zap className="w-4 h-4" />
               Lighting
             </button>
 
@@ -532,7 +527,7 @@ export default function HolographicInterface() {
                 particleEffects ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-600'
               }`}
             >
-              <Eye className="w-4 h-4" aria-hidden="true" />
+              <Eye className="w-4 h-4" />
               Particles
             </button>
 
@@ -542,7 +537,7 @@ export default function HolographicInterface() {
                 audioEnabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
               }`}
             >
-              {audioEnabled ? <Volume2 className="w-4 h-4" aria-hidden="true" /> : <VolumeX className="w-4 h-4" aria-hidden="true" />}
+              {audioEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
               Audio
             </button>
 
@@ -552,7 +547,7 @@ export default function HolographicInterface() {
                 gestureControls ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600'
               }`}
             >
-              <Settings className="w-4 h-4" aria-hidden="true" />
+              <Settings className="w-4 h-4" />
               Gestures
             </button>
           </div>
@@ -563,8 +558,8 @@ export default function HolographicInterface() {
               onClick={resetInterface}
               className="p-2 border rounded hover:bg-gray-50"
               title="Reset Interface"
-              aria-label="Reset interface">
-              <RotateCcw className="w-4 h-4" aria-hidden="true" />
+            >
+              <RotateCcw className="w-4 h-4" />
             </button>
 
             <button
@@ -579,12 +574,11 @@ export default function HolographicInterface() {
       </div>
 
       {/* Holographic Display */}
-      <div className={`bg-black rounded-lg overflow-hidden shadow-2xl ${
-          fullscreen ? 'h-[calc(100vh-200px)]' : 'h-[600px]'
-        }`}>
+      <div className="bg-black rounded-lg overflow-hidden shadow-2xl" style={{ height: fullscreen ? 'calc(100vh - 200px)' : '600px' }}>
         <canvas
           ref={canvasRef}
-          className="w-full h-full cursor-pointer [image-rendering:pixelated]"
+          className="w-full h-full cursor-pointer"
+          style={{ imageRendering: 'pixelated' }}
           onClick={(e) => {
             // Simple click detection for projections (simplified)
             if (activeInterface) {
@@ -639,7 +633,7 @@ export default function HolographicInterface() {
             onClick={() => setActiveInterface(interface_)}
           >
             <div className="flex items-center gap-3 mb-3">
-              <Monitor className="w-6 h-6 text-cyan-500" aria-hidden="true" />
+              <Monitor className="w-6 h-6 text-cyan-500" />
               <div>
                 <h3 className="font-semibold">{interface_.name}</h3>
                 <p className="text-sm text-gray-600">{interface_.description}</p>
@@ -652,8 +646,8 @@ export default function HolographicInterface() {
             </div>
 
             <div className="flex gap-2 mt-3">
-              {interface_.audioEnabled && <Volume2 className="w-4 h-4 text-green-500" aria-hidden="true" />}
-              {interface_.gestureControls && <Settings className="w-4 h-4 text-blue-500" aria-hidden="true" /> }
+              {interface_.audioEnabled && <Volume2 className="w-4 h-4 text-green-500" />}
+              {interface_.gestureControls && <Settings className="w-4 h-4 text-blue-500" />}
             </div>
           </div>
         ))}
