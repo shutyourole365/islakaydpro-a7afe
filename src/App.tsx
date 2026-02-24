@@ -108,6 +108,12 @@ const MultiLanguageSupport = lazy(() => import('./components/i18n/MultiLanguageS
 // New Feature Components - Trust, Alerts, Bundles, Warranties, Insights
 const RenterTrustScore = lazy(() => import('./components/trust/RenterTrustScore'));
 const SmartAlertsSystem = lazy(() => import('./components/alerts/SmartAlertsSystem'));
+// NEW Features - Availability Calendar, Revenue Dashboard, Certification, Agreements, Support
+const EquipmentAvailabilityCalendar = lazy(() => import('./components/availability/EquipmentAvailabilityCalendar'));
+const OwnerRevenueDashboard = lazy(() => import('./components/revenue/OwnerRevenueDashboard'));
+const EquipmentCertificationTracker = lazy(() => import('./components/certification/EquipmentCertificationTracker'));
+const RentalAgreementGenerator = lazy(() => import('./components/agreements/RentalAgreementGenerator'));
+const CustomerSupportTickets = lazy(() => import('./components/tickets/CustomerSupportTickets'));
 const EquipmentBundleDeals = lazy(() => import('./components/bundles/EquipmentBundleDeals'));
 const EquipmentWarrantyTracker = lazy(() => import('./components/warranty/EquipmentWarrantyTracker'));
 const BulkBookingSystem = lazy(() => import('./components/booking/BulkBookingSystem'));
@@ -583,7 +589,7 @@ const sampleEquipment: Equipment[] = [
 ];
 
 function AppContent() {
-type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language';
+type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language' | 'availability-calendar' | 'revenue-dashboard' | 'certification-tracker' | 'agreement-generator' | 'support-tickets';
   const { isAuthenticated, user, profile, signOut } = useAuth();
   const {
     showBanner,
@@ -1135,6 +1141,21 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
         break;
       case 'multi-language':
         setCurrentPage('multi-language');
+        break;
+      case 'availability-calendar':
+        setCurrentPage('availability-calendar');
+        break;
+      case 'revenue-dashboard':
+        setCurrentPage('revenue-dashboard');
+        break;
+      case 'certification-tracker':
+        setCurrentPage('certification-tracker');
+        break;
+      case 'agreement-generator':
+        setCurrentPage('agreement-generator');
+        break;
+      case 'support-tickets':
+        setCurrentPage('support-tickets');
         break;
       default:
         alert(`${featureId} feature coming soon!`);
@@ -2436,7 +2457,42 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
         </Suspense>
       )}
 
-      {/* Legal Pages */}
+            {currentPage === 'availability-calendar' && (
+        <Suspense fallback={<PageLoader />}>
+          <EquipmentAvailabilityCalendar onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'revenue-dashboard' && (
+        <Suspense fallback={<PageLoader />}>
+          <OwnerRevenueDashboard onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'certification-tracker' && (
+        <Suspense fallback={<PageLoader />}>
+          <EquipmentCertificationTracker onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'agreement-generator' && (
+        <Suspense fallback={<PageLoader />}>
+          <RentalAgreementGenerator onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'support-tickets' && (
+        <Suspense fallback={<PageLoader />}>
+          <CustomerSupportTickets onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+{/* Legal Pages */}
       {currentPage === 'terms' && (
         <Suspense fallback={<PageLoader />}>
           <TermsOfService onBack={() => setCurrentPage('home')} />
