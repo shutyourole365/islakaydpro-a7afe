@@ -127,7 +127,8 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              aria-label="Icon button"
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-gray-900 text-white'

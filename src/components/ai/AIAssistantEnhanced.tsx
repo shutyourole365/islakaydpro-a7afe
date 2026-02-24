@@ -452,7 +452,8 @@ export default function AIAssistantEnhanced() {
   return (
     <>
       <button
-        onClick={() = aria-label="Icon button"> setIsOpen(true)}
+        onClick={() => setIsOpen(true)}
+        aria-label="Open AI assistant"
         className={`fixed bottom-6 right-6 z-50 group ${isOpen ? 'hidden' : ''}`}
       >
         <div className="relative">
