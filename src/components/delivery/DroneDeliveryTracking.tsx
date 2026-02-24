@@ -281,7 +281,7 @@ export default function DroneDeliveryTracking({
 
         {/* Live View Button */}
         <button
-          onClick={() => setShowLiveView(!showLiveView)}
+          onClick={() = aria-label="Icon button"> setShowLiveView(!showLiveView)}
           className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-lg text-sm font-medium text-gray-700"
         >
           <Eye className="w-4 h-4" />
@@ -369,11 +369,11 @@ export default function DroneDeliveryTracking({
       {/* Actions */}
       <div className="p-4 bg-gray-50 border-t border-gray-100">
         <div className="flex gap-3">
-          <button className="flex-1 py-3 bg-white border border-gray-200 rounded-xl font-medium text-gray-700 flex items-center justify-center gap-2 hover:bg-gray-50">
+          <button className="flex-1 py-3 bg-white border border-gray-200 rounded-xl font-medium text-gray-700 flex items-center justify-center gap-2 hover:bg-gray-50" aria-label="Icon button">
             <Phone className="w-5 h-5" />
             Contact Support
           </button>
-          <button className="flex-1 py-3 bg-white border border-gray-200 rounded-xl font-medium text-gray-700 flex items-center justify-center gap-2 hover:bg-gray-50">
+          <button className="flex-1 py-3 bg-white border border-gray-200 rounded-xl font-medium text-gray-700 flex items-center justify-center gap-2 hover:bg-gray-50" aria-label="Icon button">
             <Share2 className="w-5 h-5" />
             Share Tracking
           </button>

@@ -184,7 +184,7 @@ export default function ShareEquipment({
                   key={option.name}
                   onClick={option.action}
                   className={`flex items-center space-x-2 p-3 rounded-lg transition-colors ${option.color}`}
-                >
+                 aria-label="Icon button">
                   <option.icon className="w-5 h-5" />
                   <span className="text-sm font-medium">{option.name}</span>
                 </button>
@@ -195,7 +195,7 @@ export default function ShareEquipment({
           {/* Additional Actions */}
           <div className="mt-6 pt-4 border-t">
             <button
-              onClick={() => window.open(shareUrl, '_blank')}
+              onClick={() = aria-label="Icon button"> window.open(shareUrl, '_blank')}
               className="flex items-center space-x-2 text-teal-600 hover:text-teal-700 text-sm font-medium"
             >
               <ExternalLink className="w-4 h-4" />

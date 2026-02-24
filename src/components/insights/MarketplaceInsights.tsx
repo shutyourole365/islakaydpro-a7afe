@@ -513,10 +513,10 @@ export default function MarketplaceInsights({ categoryId, equipmentId, onClose }
             </div>
 
             <div className="flex justify-end gap-2 mt-4">
-              <button className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm">
+              <button className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm" aria-label="Icon button">
                 Dismiss
               </button>
-              <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-sm">
+              <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-sm" aria-label="Icon button">
                 Apply Suggestion
               </button>
             </div>
@@ -648,7 +648,7 @@ export default function MarketplaceInsights({ categoryId, equipmentId, onClose }
           ].map(({ id, label, icon: Icon }) => (
             <button
               key={id}
-              onClick={() => setActiveTab(id as typeof activeTab)}
+              onClick={() = aria-label="Icon button"> setActiveTab(id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === id
                   ? 'bg-white text-teal-700'
@@ -676,11 +676,11 @@ export default function MarketplaceInsights({ categoryId, equipmentId, onClose }
           Last updated: {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}
         </p>
         <div className="flex gap-2">
-          <button className="flex items-center gap-1 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors">
+          <button className="flex items-center gap-1 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors" aria-label="Icon button">
             <Download className="w-4 h-4" />
             Export
           </button>
-          <button className="flex items-center gap-1 px-3 py-1.5 text-teal-600 hover:bg-teal-50 rounded-lg text-sm transition-colors">
+          <button className="flex items-center gap-1 px-3 py-1.5 text-teal-600 hover:bg-teal-50 rounded-lg text-sm transition-colors" aria-label="Icon button">
             <RefreshCw className="w-4 h-4" />
             Refresh
           </button>

@@ -142,7 +142,7 @@ export default function EnhancedReviewSystem({
           <button
             key={star}
             type="button"
-            onClick={() => onChange(star)}
+            onClick={() = aria-label="Icon button"> onChange(star)}
             onMouseEnter={() => setHover(star)}
             onMouseLeave={() => setHover(0)}
             className="transition-transform hover:scale-110"
@@ -316,7 +316,7 @@ export default function EnhancedReviewSystem({
                       className="w-full h-full object-cover rounded-xl"
                     />
                     <button
-                      onClick={() => {
+                      onClick={() = aria-label="Icon button"> {
                         setSelectedPhotos(prev => prev.filter((_, i) => i !== idx));
                         setPhotoUrls(prev => prev.filter((_, i) => i !== idx));
                       }}
@@ -360,7 +360,7 @@ export default function EnhancedReviewSystem({
         {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between">
           <button
-            onClick={() => {
+            onClick={() = aria-label="Icon button"> {
               const steps = ['rating', 'aspects', 'details', 'photos'] as const;
               const currentIndex = steps.indexOf(step);
               if (currentIndex > 0) {
@@ -375,7 +375,7 @@ export default function EnhancedReviewSystem({
           </button>
 
           <button
-            onClick={() => {
+            onClick={() = aria-label="Icon button"> {
               const steps = ['rating', 'aspects', 'details', 'photos'] as const;
               const currentIndex = steps.indexOf(step);
               if (currentIndex < steps.length - 1) {

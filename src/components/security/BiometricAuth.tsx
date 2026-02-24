@@ -123,7 +123,7 @@ export default function BiometricAuth({ onSuccess, onCancel, mode = 'authenticat
             <button
               onClick={onCancel}
               className="px-6 py-3 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700 transition-colors"
-            >
+             aria-label="Icon button">
               Use Password Instead
             </button>
           </div>
@@ -198,7 +198,7 @@ export default function BiometricAuth({ onSuccess, onCancel, mode = 'authenticat
                       ? 'bg-teal-100 text-teal-600 cursor-not-allowed'
                       : 'bg-teal-600 text-white hover:bg-teal-700'
                   }`}
-                >
+                 aria-label="Icon button">
                   {status === 'scanning' ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
@@ -215,7 +215,7 @@ export default function BiometricAuth({ onSuccess, onCancel, mode = 'authenticat
                 <button
                   onClick={onCancel}
                   className="w-full py-3 text-gray-600 hover:text-gray-900 font-medium flex items-center justify-center gap-2"
-                >
+                 aria-label="Icon button">
                   <Key className="w-4 h-4" />
                   Use Password Instead
                 </button>

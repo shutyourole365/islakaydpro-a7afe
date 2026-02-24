@@ -180,7 +180,7 @@ export default function SustainabilityDashboard({ onBack }: SustainabilityDashbo
               ].map((period) => (
                 <button
                   key={period.key}
-                  onClick={() => setSelectedPeriod(period.key as 'week' | 'month' | 'year')}
+                  onClick={() = aria-label="Icon button"> setSelectedPeriod(period.key as 'week' | 'month' | 'year')}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     selectedPeriod === period.key
                       ? 'bg-white text-green-600'

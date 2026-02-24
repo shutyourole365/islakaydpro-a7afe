@@ -73,7 +73,7 @@ const EquipmentCard = memo(function EquipmentCard({
                     ? 'bg-red-50 text-red-500'
                     : 'text-gray-400 hover:text-red-500'
                 }`}
-              >
+               aria-label="Icon button">
                 <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500' : ''}`} />
               </button>
             </div>
@@ -92,7 +92,7 @@ const EquipmentCard = memo(function EquipmentCard({
               <span className="text-gray-500 text-sm">/day</span>
             </div>
             {showQuickBook && (
-              <button className="px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors">
+              <button className="px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors" aria-label="Icon button">
                 Quick Book
               </button>
             )}
@@ -126,7 +126,7 @@ const EquipmentCard = memo(function EquipmentCard({
                 ? 'bg-red-500 text-white'
                 : 'bg-white/90 text-gray-600 hover:text-red-500'
             }`}
-          >
+           aria-label="Icon button">
             <Heart className={`w-4 h-4 ${isFavorite ? 'fill-white' : ''}`} />
           </button>
         </div>
@@ -172,7 +172,7 @@ const EquipmentCard = memo(function EquipmentCard({
                 ? 'bg-red-500 text-white scale-110'
                 : 'bg-white/90 text-gray-600 hover:bg-white hover:text-red-500'
             }`}
-          >
+           aria-label="Icon button">
             <Heart className={`w-5 h-5 ${isFavorite ? 'fill-white' : ''}`} />
           </button>
           {showCompareButton && onAddToComparison && (
@@ -246,7 +246,7 @@ const EquipmentCard = memo(function EquipmentCard({
 
         {showQuickBook && (
           <button
-            onClick={(e) => {
+            onClick={(e) = aria-label="Icon button"> {
               e.stopPropagation();
               onEquipmentClick(equipment);
             }}

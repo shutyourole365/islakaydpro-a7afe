@@ -49,7 +49,7 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
     return (
       <div ref={dropdownRef} className={`relative ${className}`}>
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() = aria-label="Icon button"> setIsOpen(!isOpen)}
           className="p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
           aria-label="Toggle theme menu"
         >
@@ -65,7 +65,7 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
             {themes.map(({ value, label, icon: Icon }) => (
               <button
                 key={value}
-                onClick={() => {
+                onClick={() = aria-label="Icon button"> {
                   setTheme(value);
                   setIsOpen(false);
                 }}
@@ -94,7 +94,7 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
       {themes.map(({ value, label, icon: Icon }) => (
         <button
           key={value}
-          onClick={() => setTheme(value)}
+          onClick={() = aria-label="Icon button"> setTheme(value)}
           className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all
             ${theme === value
               ? 'bg-white dark:bg-gray-700 text-teal-600 dark:text-teal-400 shadow-sm'

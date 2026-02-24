@@ -279,7 +279,7 @@ export default function LoyaltyProgram(_props: LoyaltyProgramProps) {
           {(['overview', 'rewards', 'history', 'challenges'] as const).map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() = aria-label="Icon button"> setActiveTab(tab)}
               className={`px-6 py-3 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab
                   ? 'bg-teal-500 text-white'

@@ -357,7 +357,7 @@ export default function InstantInsuranceQuote({
                         ))}
                         {plan.features.length > 3 && (
                           <button
-                            onClick={(e) => {
+                            onClick={(e) = aria-label="Icon button"> {
                               e.stopPropagation();
                               setShowDetails(showDetails === plan.id ? null : plan.id);
                             }}
@@ -455,14 +455,14 @@ export default function InstantInsuranceQuote({
                 <button
                   onClick={onClose}
                   className="flex-1 py-4 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
-                >
+                 aria-label="Icon button">
                   Skip Insurance
                 </button>
                 <button
                   onClick={handleConfirm}
                   disabled={!selectedPlan}
                   className="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                >
+                 aria-label="Icon button">
                   {selectedPlan ? (
                     <>
                       Add {selectedPlan.name} - ${selectedPlan.totalCost.toFixed(2)}

@@ -239,7 +239,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
                 </div>
               </div>
               <button
-                onClick={() => handleToggle(option.key)}
+                onClick={() = aria-label="Icon button"> handleToggle(option.key)}
                 disabled={isSaving || !preferences}
                 className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
                   preferences?.[option.key]
@@ -278,7 +278,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
         <button
           onClick={loadPreferences}
           className="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-        >
+         aria-label="Icon button">
           Try Again
         </button>
       </div>
@@ -329,7 +329,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
           onClick={handleEnableAll}
           disabled={isSaving}
           className="flex items-center gap-2 px-4 py-2 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 transition-colors disabled:opacity-50"
-        >
+         aria-label="Icon button">
           <CheckCircle2 className="w-4 h-4" />
           Enable All
         </button>
@@ -337,7 +337,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
           onClick={handleDisableAll}
           disabled={isSaving}
           className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
-        >
+         aria-label="Icon button">
           <Bell className="w-4 h-4" />
           Disable All
         </button>

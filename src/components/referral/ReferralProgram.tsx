@@ -192,7 +192,7 @@ export default function ReferralProgram({ userId, userName }: ReferralProgramPro
               {stats.referralCode}
             </div>
             <button
-              onClick={() => copyToClipboard(stats.referralCode)}
+              onClick={() = aria-label="Icon button"> copyToClipboard(stats.referralCode)}
               className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
             >
               {copied ? <CheckCircle2 className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
@@ -222,31 +222,31 @@ export default function ReferralProgram({ userId, userName }: ReferralProgramPro
         <p className="text-sm text-gray-600 mb-3">Share your link</p>
         <div className="flex gap-2">
           <button
-            onClick={() => shareVia('twitter')}
+            onClick={() = aria-label="Icon button"> shareVia('twitter')}
             className="flex-1 py-3 bg-[#1DA1F2] text-white rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
           >
             <Twitter className="w-5 h-5" />
           </button>
           <button
-            onClick={() => shareVia('facebook')}
+            onClick={() = aria-label="Icon button"> shareVia('facebook')}
             className="flex-1 py-3 bg-[#4267B2] text-white rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
           >
             <Facebook className="w-5 h-5" />
           </button>
           <button
-            onClick={() => shareVia('email')}
+            onClick={() = aria-label="Icon button"> shareVia('email')}
             className="flex-1 py-3 bg-gray-700 text-white rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
           >
             <Mail className="w-5 h-5" />
           </button>
           <button
-            onClick={() => shareVia('sms')}
+            onClick={() = aria-label="Icon button"> shareVia('sms')}
             className="flex-1 py-3 bg-green-600 text-white rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
           >
             <MessageSquare className="w-5 h-5" />
           </button>
           <button
-            onClick={() => copyToClipboard(stats.referralLink)}
+            onClick={() = aria-label="Icon button"> copyToClipboard(stats.referralLink)}
             className="flex-1 py-3 bg-gray-200 text-gray-700 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-300 transition-colors"
           >
             <Link2 className="w-5 h-5" />
@@ -259,7 +259,7 @@ export default function ReferralProgram({ userId, userName }: ReferralProgramPro
         {(['overview', 'referrals', 'leaderboard'] as const).map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() = aria-label="Icon button"> setActiveTab(tab)}
             className={`flex-1 py-4 text-sm font-medium transition-colors ${
               activeTab === tab
                 ? 'text-pink-600 border-b-2 border-pink-500'
@@ -334,7 +334,7 @@ export default function ReferralProgram({ userId, userName }: ReferralProgramPro
                   onClick={sendInvite}
                   disabled={!inviteEmail || inviteSent}
                   className="px-6 py-3 bg-pink-600 text-white rounded-xl font-medium hover:bg-pink-700 disabled:opacity-50 transition-colors"
-                >
+                 aria-label="Icon button">
                   {inviteSent ? 'Sending...' : 'Invite'}
                 </button>
               </div>

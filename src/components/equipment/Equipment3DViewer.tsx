@@ -180,7 +180,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
           {images.map((img, index) => (
             <button
               key={index}
-              onClick={() => {
+              onClick={() = aria-label="Icon button"> {
                 setCurrentIndex(index);
                 setRotation((index / images.length) * 360);
               }}
@@ -198,7 +198,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
       <div className="p-4 border-t border-gray-800">
         <div className="flex items-center justify-center gap-3">
           <button
-            onClick={() => setIsRotating(!isRotating)}
+            onClick={() = aria-label="Icon button"> setIsRotating(!isRotating)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
               isRotating
                 ? 'bg-teal-500 text-white'
@@ -220,13 +220,13 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
             <button
               onClick={handleZoomIn}
               className="p-2 hover:bg-gray-700 rounded-r-lg transition-colors"
-            >
+             aria-label="Icon button">
               <ZoomIn className="w-5 h-5 text-gray-300" />
             </button>
           </div>
 
           <button
-            onClick={() => setShowMeasurements(!showMeasurements)}
+            onClick={() = aria-label="Icon button"> setShowMeasurements(!showMeasurements)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
               showMeasurements
                 ? 'bg-purple-500 text-white'
@@ -240,7 +240,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
           <button
             onClick={handleReset}
             className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
-          >
+           aria-label="Icon button">
             <Maximize2 className="w-5 h-5" />
             <span>Reset</span>
           </button>

@@ -108,7 +108,7 @@ export default function InstallPrompt() {
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setShowPrompt(true)}
+                onClick={() = aria-label="Icon button"> setShowPrompt(true)}
                 className="px-4 py-2 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
               >
                 Install
@@ -167,7 +167,7 @@ export default function InstallPrompt() {
               <button
                 onClick={handleInstall}
                 className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
-              >
+               aria-label="Icon button">
                 <Download className="w-5 h-5" />
                 Install Now
               </button>
@@ -175,7 +175,7 @@ export default function InstallPrompt() {
               <button
                 onClick={handleDismiss}
                 className="w-full py-3 text-gray-500 font-medium hover:text-gray-700 transition-colors"
-              >
+               aria-label="Icon button">
                 Maybe Later
               </button>
             </div>

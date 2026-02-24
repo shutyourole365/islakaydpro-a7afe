@@ -58,7 +58,7 @@ export default function CTASection({ onGetStarted }: CTASectionProps) {
               <button
                 onClick={onGetStarted}
                 className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-full hover:shadow-xl transition-all"
-              >
+               aria-label="Icon button">
                 Start Listing Today
                 <ArrowRight className="w-5 h-5" />
               </button>

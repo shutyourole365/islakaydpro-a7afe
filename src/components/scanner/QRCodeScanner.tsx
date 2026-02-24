@@ -303,7 +303,7 @@ export default function QRCodeScanner({
               <button
                 onClick={toggleFlash}
                 className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white"
-              >
+               aria-label="Icon button">
                 {flashOn ? (
                   <Flashlight className="w-5 h-5 text-yellow-400" />
                 ) : (
@@ -316,13 +316,13 @@ export default function QRCodeScanner({
               <button
                 onClick={switchCamera}
                 className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white"
-              >
+               aria-label="Icon button">
                 <SwitchCamera className="w-5 h-5" />
               </button>
             )}
 
             <button
-              onClick={() => setShowHistory(!showHistory)}
+              onClick={() = aria-label="Icon button"> setShowHistory(!showHistory)}
               className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white"
             >
               <History className="w-5 h-5" />
@@ -336,7 +336,7 @@ export default function QRCodeScanner({
             <button
               onClick={manualScan}
               className="px-6 py-3 bg-white/20 backdrop-blur rounded-full text-white flex items-center gap-2"
-            >
+             aria-label="Icon button">
               <QrCode className="w-5 h-5" />
               Demo Scan
             </button>
@@ -349,7 +349,7 @@ export default function QRCodeScanner({
             <div className="bg-red-500/90 backdrop-blur rounded-xl p-4 flex items-center gap-3 text-white">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               <p className="flex-1">{error}</p>
-              <button onClick={() => setError(null)}>
+              <button onClick={() = aria-label="Icon button"> setError(null)}>
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -366,7 +366,7 @@ export default function QRCodeScanner({
               {recentScans.map((scan, i) => (
                 <button
                   key={i}
-                  onClick={() => {
+                  onClick={() = aria-label="Icon button"> {
                     setScanResult(scan);
                     setShowHistory(false);
                   }}
@@ -428,13 +428,13 @@ export default function QRCodeScanner({
                 <button
                   onClick={continueScan}
                   className="flex-1 py-3 border-2 border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50"
-                >
+                 aria-label="Icon button">
                   Scan Another
                 </button>
                 <button
                   onClick={confirmScan}
                   className="flex-1 py-3 bg-emerald-600 rounded-xl font-medium text-white hover:bg-emerald-700"
-                >
+                 aria-label="Icon button">
                   View Details
                 </button>
               </div>

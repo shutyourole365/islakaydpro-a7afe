@@ -268,13 +268,13 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
                 <button
                   onClick={initCamera}
                   className="px-6 py-3 bg-teal-500 text-white rounded-xl font-medium hover:bg-teal-600 transition-colors"
-                >
+                 aria-label="Icon button">
                   Try Again
                 </button>
                 <button
                   onClick={onClose}
                   className="px-6 py-3 bg-gray-800 text-white rounded-xl font-medium hover:bg-gray-700 transition-colors"
-                >
+                 aria-label="Icon button">
                   Close
                 </button>
               </div>
@@ -349,7 +349,7 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
               
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3">
                 <button
-                  onClick={() => setCapturedImage(null)}
+                  onClick={() = aria-label="Icon button"> setCapturedImage(null)}
                   className="p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
                 >
                   <X className="w-6 h-6" />
@@ -363,11 +363,11 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
                 <button
                   onClick={handleShare}
                   className="p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
-                >
+                 aria-label="Icon button">
                   <Share2 className="w-6 h-6" />
                 </button>
                 <button
-                  onClick={() => setCapturedImage(null)}
+                  onClick={() = aria-label="Icon button"> setCapturedImage(null)}
                   className="flex items-center gap-2 px-6 py-3 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors"
                 >
                   <Check className="w-5 h-5" />
@@ -394,7 +394,7 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
             </div>
 
             <button
-              onClick={() => setShowInfo(!showInfo)}
+              onClick={() = aria-label="Icon button"> setShowInfo(!showInfo)}
               className="p-2.5 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
             >
               <Info className="w-6 h-6" />
@@ -426,7 +426,7 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
             {modes.map(mode => (
               <button
                 key={mode.id}
-                onClick={() => setActiveMode(mode.id as typeof activeMode)}
+                onClick={() = aria-label="Icon button"> setActiveMode(mode.id as typeof activeMode)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeMode === mode.id
                     ? 'bg-teal-500 text-white'
@@ -455,7 +455,7 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
                 <button
                   onClick={handleZoomIn}
                   className="p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
-                >
+                 aria-label="Icon button">
                   <ZoomIn className="w-6 h-6" />
                 </button>
                 <button
@@ -479,11 +479,11 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
                 <button
                   onClick={handleReset}
                   className="p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
-                >
+                 aria-label="Icon button">
                   <Maximize2 className="w-6 h-6" />
                 </button>
                 <button
-                  onClick={() => setShowControls(!showControls)}
+                  onClick={() = aria-label="Icon button"> setShowControls(!showControls)}
                   className="p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
                 >
                   <Box className="w-6 h-6" />

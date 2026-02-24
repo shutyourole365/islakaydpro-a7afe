@@ -331,7 +331,7 @@ export default function LoyaltyRewardsTracker({
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as typeof activeTab)}
+            onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
             className={`flex-1 py-4 flex items-center justify-center gap-2 border-b-2 transition-colors ${
               activeTab === tab.id
                 ? 'border-blue-600 text-blue-600'
@@ -395,7 +395,7 @@ export default function LoyaltyRewardsTracker({
                       <p className="text-xs text-gray-500 dark:text-gray-400">points</p>
                     </div>
                     <button
-                      onClick={() => handleRedeem(reward)}
+                      onClick={() = aria-label="Icon button"> handleRedeem(reward)}
                       disabled={!canAfford || isRedeemed}
                       className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                         isRedeemed
@@ -459,7 +459,7 @@ export default function LoyaltyRewardsTracker({
             <button
               onClick={onViewHistory}
               className="w-full py-3 text-blue-600 font-medium flex items-center justify-center gap-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
-            >
+             aria-label="Icon button">
               View Full History
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -546,7 +546,7 @@ export default function LoyaltyRewardsTracker({
             </div>
             <div className="flex gap-3">
               <button
-                onClick={() => setSelectedReward(null)}
+                onClick={() = aria-label="Icon button"> setSelectedReward(null)}
                 className="flex-1 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium"
               >
                 Cancel
@@ -554,7 +554,7 @@ export default function LoyaltyRewardsTracker({
               <button
                 onClick={confirmRedeem}
                 className="flex-1 py-3 bg-blue-600 text-white rounded-xl font-medium"
-              >
+               aria-label="Icon button">
                 Confirm
               </button>
             </div>

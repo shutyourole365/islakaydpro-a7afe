@@ -132,7 +132,7 @@ export default function LiveChat({ recipientId, recipientName, equipmentId, onCl
             <button className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
               <Phone className="w-5 h-5" />
             </button>
-            <button className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
+            <button className="p-2 rounded-full hover:bg-white/10 text-white transition-colors" aria-label="Icon button">
               <Video className="w-5 h-5" />
             </button>
             <button className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
@@ -141,7 +141,7 @@ export default function LiveChat({ recipientId, recipientName, equipmentId, onCl
             <button
               onClick={onClose}
               className="p-2 rounded-full hover:bg-white/10 text-white transition-colors"
-            >
+             aria-label="Icon button">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -157,7 +157,7 @@ export default function LiveChat({ recipientId, recipientName, equipmentId, onCl
               </p>
               <p className="text-xs text-gray-600">$450/day</p>
             </div>
-            <button className="text-xs text-teal-600 hover:text-teal-700 font-medium">
+            <button className="text-xs text-teal-600 hover:text-teal-700 font-medium" aria-label="Icon button">
               View
             </button>
           </div>
@@ -250,7 +250,7 @@ export default function LiveChat({ recipientId, recipientName, equipmentId, onCl
               onClick={handleSend}
               disabled={!inputValue.trim()}
               className="p-2.5 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
-            >
+             aria-label="Icon button">
               <Send className="w-5 h-5" />
             </button>
           </div>

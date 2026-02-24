@@ -256,14 +256,14 @@ export default function NotificationSettings() {
             <button
               onClick={handleDisablePush}
               className="px-4 py-2 bg-white/20 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors"
-            >
+             aria-label="Icon button">
               Disable
             </button>
           ) : subscriptionStatus !== 'unsupported' && subscriptionStatus !== 'denied' ? (
             <button
               onClick={handleEnablePush}
               className="px-4 py-2 bg-white rounded-lg text-teal-600 text-sm font-medium hover:bg-white/90 transition-colors"
-            >
+             aria-label="Icon button">
               Enable
             </button>
           ) : null}
@@ -273,7 +273,7 @@ export default function NotificationSettings() {
           <button
             onClick={testNotification}
             className="mt-4 w-full py-2.5 bg-white/20 rounded-xl text-sm font-medium hover:bg-white/30 transition-colors flex items-center justify-center gap-2"
-          >
+           aria-label="Icon button">
             <Bell className="w-4 h-4" />
             Send Test Notification
           </button>

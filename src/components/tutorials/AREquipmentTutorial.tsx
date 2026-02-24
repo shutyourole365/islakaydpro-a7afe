@@ -321,7 +321,7 @@ export default function AREquipmentTutorial({
                         {q.options.map((option, oIndex) => (
                           <button
                             key={oIndex}
-                            onClick={() => setQuizAnswers({ ...quizAnswers, [q.id]: oIndex })}
+                            onClick={() = aria-label="Icon button"> setQuizAnswers({ ...quizAnswers, [q.id]: oIndex })}
                             className={`w-full p-3 text-left rounded-lg border-2 transition-colors ${
                               quizAnswers[q.id] === oIndex
                                 ? 'border-indigo-500 bg-indigo-50'
@@ -340,7 +340,7 @@ export default function AREquipmentTutorial({
                   onClick={submitQuiz}
                   disabled={Object.keys(quizAnswers).length !== quizQuestions.length}
                   className="w-full mt-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl disabled:opacity-50"
-                >
+                 aria-label="Icon button">
                   Submit Answers
                 </button>
               </>
@@ -373,7 +373,7 @@ export default function AREquipmentTutorial({
                 <div className="flex gap-3">
                   {progress.quizScore < 70 && (
                     <button
-                      onClick={() => {
+                      onClick={() = aria-label="Icon button"> {
                         setShowQuiz(false);
                         setProgress({ ...progress, currentStep: 0, quizScore: undefined });
                         setQuizAnswers({});
@@ -386,7 +386,7 @@ export default function AREquipmentTutorial({
                   <button
                     onClick={onClose}
                     className="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl"
-                  >
+                   aria-label="Icon button">
                     {progress.quizScore >= 70 ? 'Get Started!' : 'Close'}
                   </button>
                 </div>
@@ -476,20 +476,20 @@ export default function AREquipmentTutorial({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setIsPlaying(!isPlaying)}
+                    onClick={() = aria-label="Icon button"> setIsPlaying(!isPlaying)}
                     className="p-2 bg-white/20 rounded-full hover:bg-white/30"
                   >
                     {isPlaying ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white" />}
                   </button>
                   <button
-                    onClick={() => setIsMuted(!isMuted)}
+                    onClick={() = aria-label="Icon button"> setIsMuted(!isMuted)}
                     className="p-2 bg-white/20 rounded-full hover:bg-white/30"
                   >
                     {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
                   </button>
                 </div>
                 <button
-                  onClick={() => setShowAR(!showAR)}
+                  onClick={() = aria-label="Icon button"> setShowAR(!showAR)}
                   className={`px-3 py-1.5 rounded-full text-sm font-medium ${
                     showAR ? 'bg-cyan-500 text-white' : 'bg-white/20 text-white'
                   }`}
@@ -551,7 +551,7 @@ export default function AREquipmentTutorial({
                 {currentStep.checkpoints.map((checkpoint, index) => (
                   <button
                     key={index}
-                    onClick={() => completeCheckpoint(checkpoint)}
+                    onClick={() = aria-label="Icon button"> completeCheckpoint(checkpoint)}
                     className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-colors ${
                       progress.completedSteps.includes(`${currentStep.id}-${checkpoint}`) || 
                       (stepComplete && index <= currentStep.checkpoints.indexOf(checkpoint))
@@ -586,7 +586,7 @@ export default function AREquipmentTutorial({
             onClick={handlePrevStep}
             disabled={progress.currentStep === 0}
             className="flex items-center gap-2 px-4 py-2 text-gray-600 disabled:opacity-50"
-          >
+           aria-label="Icon button">
             <ChevronLeft className="w-5 h-5" />
             Previous
           </button>
@@ -614,7 +614,7 @@ export default function AREquipmentTutorial({
                 ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
                 : 'bg-gray-100 text-gray-400'
             }`}
-          >
+           aria-label="Icon button">
             {progress.currentStep === steps.length - 1 ? 'Complete' : 'Next'}
             <ChevronRight className="w-5 h-5" />
           </button>

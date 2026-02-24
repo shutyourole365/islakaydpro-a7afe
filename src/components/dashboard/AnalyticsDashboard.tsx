@@ -147,7 +147,7 @@ export default function AnalyticsDashboard({
           <button
             onClick={onBack}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
-          >
+           aria-label="Icon button">
             <ArrowUpRight className="w-5 h-5 rotate-[225deg]" />
             Back to Dashboard
           </button>
@@ -165,7 +165,7 @@ export default function AnalyticsDashboard({
                 {periods.map((p) => (
                   <button
                     key={p.id}
-                    onClick={() => handlePeriodChange(p.id as typeof period)}
+                    onClick={() = aria-label="Icon button"> handlePeriodChange(p.id as typeof period)}
                     className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
                       period === p.id
                     ? 'bg-white text-gray-900 shadow-sm'
@@ -180,13 +180,13 @@ export default function AnalyticsDashboard({
             onClick={onRefresh}
             disabled={loading}
             className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-          >
+           aria-label="Icon button">
             <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <button
             onClick={onExport}
             className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-          >
+           aria-label="Icon button">
             <Download className="w-4 h-4" />
             <span className="hidden sm:inline">Export</span>
           </button>
@@ -239,7 +239,7 @@ export default function AnalyticsDashboard({
               ].map((chart) => (
                 <button
                   key={chart.id}
-                  onClick={() => setActiveChart(chart.id as typeof activeChart)}
+                  onClick={() = aria-label="Icon button"> setActiveChart(chart.id as typeof activeChart)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm transition-all ${
                     activeChart === chart.id
                       ? 'bg-white text-gray-900 shadow-sm'

@@ -127,7 +127,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-gray-900 text-white'
@@ -165,7 +165,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
 
             {/* Quick Actions */}
             <div className="grid md:grid-cols-3 gap-4">
-              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left">
+              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left" aria-label="Icon button">
                 <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
                   <Users className="w-6 h-6 text-blue-600" />
                 </div>
@@ -175,7 +175,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                 </div>
               </button>
 
-              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left">
+              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left" aria-label="Icon button">
                 <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
                   <Package className="w-6 h-6 text-purple-600" />
                 </div>
@@ -185,7 +185,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                 </div>
               </button>
 
-              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left">
+              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left" aria-label="Icon button">
                 <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
                   <Flag className="w-6 h-6 text-red-600" />
                 </div>
@@ -240,7 +240,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
-              <button className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+              <button className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors" aria-label="Icon button">
                 <Filter className="w-4 h-4" />
                 Filter
               </button>

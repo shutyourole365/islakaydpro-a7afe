@@ -83,7 +83,7 @@ export default function EquipmentDetail({
           <button
             onClick={onClose}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
+           aria-label="Icon button">
             <ChevronLeft className="w-5 h-5" />
             Back to results
           </button>
@@ -95,11 +95,11 @@ export default function EquipmentDetail({
                   ? 'bg-red-50 text-red-500'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
-            >
+             aria-label="Icon button">
               <Heart className={`w-5 h-5 ${isFavorite ? 'fill-red-500' : ''}`} />
             </button>
             <button
-              onClick={() => setShowShareModal(true)}
+              onClick={() = aria-label="Icon button"> setShowShareModal(true)}
               className="p-2.5 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
             >
               <Share2 className="w-5 h-5" />
@@ -132,14 +132,14 @@ export default function EquipmentDetail({
                   <button
                     onClick={nextImage}
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-800 hover:bg-white transition-colors shadow-lg"
-                  >
+                   aria-label="Icon button">
                     <ChevronRight className="w-6 h-6" />
                   </button>
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
                     {equipment.images.map((_, index) => (
                       <button
                         key={index}
-                        onClick={() => setCurrentImageIndex(index)}
+                        onClick={() = aria-label="Icon button"> setCurrentImageIndex(index)}
                         className={`w-2 h-2 rounded-full transition-all ${
                           index === currentImageIndex
                             ? 'bg-white w-6'
@@ -157,7 +157,7 @@ export default function EquipmentDetail({
                 {equipment.images.map((image, index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentImageIndex(index)}
+                    onClick={() = aria-label="Icon button"> setCurrentImageIndex(index)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                       index === currentImageIndex
                         ? 'border-teal-500'
@@ -263,7 +263,7 @@ export default function EquipmentDetail({
                     Maintenance Status
                   </h2>
                   <button
-                    onClick={() => setShowMaintenance(true)}
+                    onClick={() = aria-label="Icon button"> setShowMaintenance(true)}
                     className="text-teal-600 hover:text-teal-700 text-sm font-medium"
                   >
                     View Details →
@@ -364,7 +364,7 @@ export default function EquipmentDetail({
                 )}
 
                 <button
-                  onClick={() => onBook(equipment, { start: startDate, end: endDate })}
+                  onClick={() = aria-label="Icon button"> onBook(equipment, { start: startDate, end: endDate })}
                   disabled={!pricing}
                   className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-3"
                 >
@@ -372,7 +372,7 @@ export default function EquipmentDetail({
                 </button>
 
                 <button
-                  onClick={() => onMessage(equipment)}
+                  onClick={() = aria-label="Icon button"> onMessage(equipment)}
                   className="w-full py-4 border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageSquare className="w-5 h-5" />
@@ -380,7 +380,7 @@ export default function EquipmentDetail({
                 </button>
 
                 <button
-                  onClick={() => setShowNegotiator(true)}
+                  onClick={() = aria-label="Icon button"> setShowNegotiator(true)}
                   className="w-full py-4 border border-orange-200 text-orange-700 font-semibold rounded-xl hover:bg-orange-50 transition-colors flex items-center justify-center gap-2"
                 >
                   <DollarSign className="w-5 h-5" />

@@ -56,7 +56,7 @@ export function Button({
         ${fullWidth ? 'w-full' : ''}
         ${className}
       `}
-    >
+     aria-label="Icon button">
       {loading ? (
         <Loader2 className="w-5 h-5 animate-spin" />
       ) : leftIcon ? (

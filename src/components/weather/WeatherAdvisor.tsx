@@ -214,7 +214,7 @@ export default function WeatherAdvisor({
             </div>
           </div>
           <button
-            onClick={() => setExpanded(!expanded)}
+            onClick={() = aria-label="Icon button"> setExpanded(!expanded)}
             className="p-2 hover:bg-white rounded-lg transition-colors"
           >
             <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform ${expanded ? 'rotate-90' : ''}`} />

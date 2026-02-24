@@ -225,7 +225,7 @@ export default function SocialCommunities({ onBack }: SocialCommunitiesProps) {
               ].map((tab) => (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(tab.key as 'feed' | 'groups' | 'messages')}
+                  onClick={() = aria-label="Icon button"> setActiveTab(tab.key as 'feed' | 'groups' | 'messages')}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     activeTab === tab.key
                       ? 'bg-white text-purple-600'
@@ -351,15 +351,15 @@ export default function SocialCommunities({ onBack }: SocialCommunitiesProps) {
                     {/* Post Actions */}
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                       <div className="flex items-center gap-6">
-                        <button className="flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors">
+                        <button className="flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors" aria-label="Icon button">
                           <Heart className="w-5 h-5" />
                           <span className="text-sm">{post.likes}</span>
                         </button>
-                        <button className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors">
+                        <button className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors" aria-label="Icon button">
                           <MessageSquare className="w-5 h-5" />
                           <span className="text-sm">{post.comments}</span>
                         </button>
-                        <button className="flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors">
+                        <button className="flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors" aria-label="Icon button">
                           <Share2 className="w-5 h-5" />
                           <span className="text-sm">{post.shares}</span>
                         </button>

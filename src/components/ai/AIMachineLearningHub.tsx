@@ -139,7 +139,7 @@ export default function AIMachineLearningHub() {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={() => setActiveTab(id as 'predictions' | 'insights' | 'training')}
+            onClick={() = aria-label="Icon button"> setActiveTab(id as 'predictions' | 'insights' | 'training')}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-teal-500 text-teal-600'
@@ -306,7 +306,7 @@ export default function AIMachineLearningHub() {
                   <button
                     onClick={retrainModel}
                     className="w-full px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-                  >
+                   aria-label="Icon button">
                     Retrain Model
                   </button>
                   <p className="text-xs text-gray-500">

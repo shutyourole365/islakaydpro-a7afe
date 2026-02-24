@@ -285,7 +285,7 @@ export default function MaintenanceScheduler({ equipment: propEquipment, classNa
           </div>
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setShowTaskForm(true)}
+              onClick={() = aria-label="Icon button"> setShowTaskForm(true)}
               className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
             >
               <Plus className="w-4 h-4" />
@@ -294,7 +294,7 @@ export default function MaintenanceScheduler({ equipment: propEquipment, classNa
             <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
               <Download className="w-5 h-5" />
             </button>
-            <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+            <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Icon button">
               <Settings className="w-5 h-5" />
             </button>
           </div>
@@ -375,7 +375,7 @@ export default function MaintenanceScheduler({ equipment: propEquipment, classNa
             {(['list', 'calendar', 'kanban'] as const).map((mode) => (
               <button
                 key={mode}
-                onClick={() => setViewMode(mode)}
+                onClick={() = aria-label="Icon button"> setViewMode(mode)}
                 className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                   viewMode === mode
                     ? 'bg-blue-100 text-blue-700'
@@ -443,7 +443,7 @@ export default function MaintenanceScheduler({ equipment: propEquipment, classNa
                     <div className="flex items-center gap-2">
                       {task.status === 'scheduled' && (
                         <button
-                          onClick={() => handleTaskStatusUpdate(task.id, 'completed')}
+                          onClick={() = aria-label="Icon button"> handleTaskStatusUpdate(task.id, 'completed')}
                           className="flex items-center gap-2 bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition-colors text-sm"
                         >
                           <CheckCircle className="w-4 h-4" />
@@ -452,14 +452,14 @@ export default function MaintenanceScheduler({ equipment: propEquipment, classNa
                       )}
 
                       <button
-                        onClick={() => setSelectedTask(task)}
+                        onClick={() = aria-label="Icon button"> setSelectedTask(task)}
                         className="flex items-center gap-2 bg-gray-100 text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-200 transition-colors text-sm"
                       >
                         <Edit className="w-4 h-4" />
                         Edit
                       </button>
 
-                      <button className="flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-lg hover:bg-red-200 transition-colors text-sm">
+                      <button className="flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-lg hover:bg-red-200 transition-colors text-sm" aria-label="Icon button">
                         <Trash2 className="w-4 h-4" />
                         Delete
                       </button>

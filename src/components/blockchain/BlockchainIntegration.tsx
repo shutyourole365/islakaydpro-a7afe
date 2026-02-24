@@ -246,7 +246,7 @@ export default function BlockchainIntegration() {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={() => setActiveTab(id as 'contracts' | 'certificates' | 'transactions')}
+            onClick={() = aria-label="Icon button"> setActiveTab(id as 'contracts' | 'certificates' | 'transactions')}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-teal-500 text-teal-600'
@@ -280,7 +280,7 @@ export default function BlockchainIntegration() {
                   </span>
                   {!contract.signatures.owner && (
                     <button
-                      onClick={() => signContract(contract.id)}
+                      onClick={() = aria-label="Icon button"> signContract(contract.id)}
                       className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm"
                     >
                       Sign Contract
@@ -399,7 +399,7 @@ export default function BlockchainIntegration() {
                   <span className="font-mono">{cert.contractAddress.slice(0, 6)}...</span>
                 </div>
 
-                <button className="w-full px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors text-sm font-medium">
+                <button className="w-full px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors text-sm font-medium" aria-label="Icon button">
                   View on OpenSea
                 </button>
               </div>
@@ -461,7 +461,7 @@ export default function BlockchainIntegration() {
                       )}
                     </div>
 
-                    <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700 text-sm">
+                    <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700 text-sm" aria-label="Icon button">
                       <ExternalLink className="w-4 h-4" />
                       View on Explorer
                     </button>

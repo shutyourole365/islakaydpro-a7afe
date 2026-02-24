@@ -243,7 +243,7 @@ export default function ReviewsSection({
 
                 <div className="flex items-center gap-4 mt-4">
                   <button
-                    onClick={() => markHelpful(review.id)}
+                    onClick={() = aria-label="Icon button"> markHelpful(review.id)}
                     className={`flex items-center gap-1.5 text-sm transition-colors ${
                       helpfulReviews.has(review.id)
                         ? 'text-teal-600'
@@ -253,7 +253,7 @@ export default function ReviewsSection({
                     <ThumbsUp className={`w-4 h-4 ${helpfulReviews.has(review.id) ? 'fill-current' : ''}`} />
                     Helpful ({review.helpful + (helpfulReviews.has(review.id) ? 1 : 0)})
                   </button>
-                  <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                  <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors" aria-label="Icon button">
                     <MessageSquare className="w-4 h-4" />
                     Reply
                   </button>
@@ -275,7 +275,7 @@ export default function ReviewsSection({
       </div>
 
       <div className="p-4 border-t border-gray-100 bg-gray-50">
-        <button className="w-full py-3 text-center text-teal-600 hover:text-teal-700 font-medium transition-colors">
+        <button className="w-full py-3 text-center text-teal-600 hover:text-teal-700 font-medium transition-colors" aria-label="Icon button">
           View All {totalReviews} Reviews
         </button>
       </div>

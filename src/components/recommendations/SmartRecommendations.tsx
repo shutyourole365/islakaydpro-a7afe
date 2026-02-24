@@ -243,7 +243,7 @@ export default function SmartRecommendations({
             onClick={handleRefresh}
             disabled={isRefreshing}
             className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
-          >
+           aria-label="Icon button">
             <RefreshCw className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
             Refresh
           </button>
@@ -254,7 +254,7 @@ export default function SmartRecommendations({
           {tabs.map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-violet-500 to-purple-500 text-white shadow-lg'
@@ -306,7 +306,7 @@ export default function SmartRecommendations({
 
                   {/* Favorite button */}
                   <button
-                    onClick={(e) => {
+                    onClick={(e) = aria-label="Icon button"> {
                       e.stopPropagation();
                       handleFavoriteClick(eq.id);
                     }}
@@ -321,7 +321,7 @@ export default function SmartRecommendations({
 
                   {/* Quick view */}
                   <button
-                    onClick={() => handleEquipmentClick(eq)}
+                    onClick={() = aria-label="Icon button"> handleEquipmentClick(eq)}
                     className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 bg-white rounded-full text-gray-900 font-medium text-sm opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0"
                   >
                     Quick View
@@ -352,7 +352,7 @@ export default function SmartRecommendations({
                     {!feedbackGiven.has(eq.id) ? (
                       <div className="flex items-center gap-1">
                         <button
-                          onClick={(e) => {
+                          onClick={(e) = aria-label="Icon button"> {
                             e.stopPropagation();
                             handleFeedback(eq.id, true);
                           }}
@@ -362,7 +362,7 @@ export default function SmartRecommendations({
                           <ThumbsUp className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={(e) => {
+                          onClick={(e) = aria-label="Icon button"> {
                             e.stopPropagation();
                             handleFeedback(eq.id, false);
                           }}
@@ -386,7 +386,7 @@ export default function SmartRecommendations({
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No recommendations found</h3>
             <p className="text-gray-500 mb-6">Try adjusting your filters or check back later</p>
             <button
-              onClick={() => setActiveTab('for-you')}
+              onClick={() = aria-label="Icon button"> setActiveTab('for-you')}
               className="px-6 py-3 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"
             >
               View All Recommendations
@@ -397,7 +397,7 @@ export default function SmartRecommendations({
         {/* View all link */}
         {filteredEquipment.length > 8 && (
           <div className="text-center mt-8">
-            <button className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors">
+            <button className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors" aria-label="Icon button">
               View All {filteredEquipment.length} Recommendations
               <ArrowRight className="w-4 h-4" />
             </button>

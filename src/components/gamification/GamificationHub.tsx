@@ -288,7 +288,7 @@ export default function GamificationHub({ className = '' }: GamificationHubProps
           return (
             <button
               key={tab.id}
-              onClick={() => setSelectedTab(tab.id as typeof selectedTab)}
+              onClick={() = aria-label="Icon button"> setSelectedTab(tab.id as typeof selectedTab)}
               className={`flex items-center gap-2 px-4 py-3 border-b-2 font-medium text-sm transition-colors ${
                 selectedTab === tab.id
                   ? 'border-purple-600 text-purple-600'
@@ -472,7 +472,7 @@ export default function GamificationHub({ className = '' }: GamificationHubProps
                         ? 'bg-purple-600 text-white hover:bg-purple-700'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
-                  >
+                   aria-label="Icon button">
                     {reward.available ? 'Redeem' : 'Locked'}
                   </button>
                 </div>

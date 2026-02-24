@@ -221,7 +221,7 @@ export default function CarbonFootprintTracker({
         {(['overview', 'history', 'achievements'] as const).map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() = aria-label="Icon button"> setActiveTab(tab)}
             className={`flex-1 py-4 text-sm font-medium transition-colors ${
               activeTab === tab
                 ? 'text-green-600 border-b-2 border-green-500'
@@ -292,7 +292,7 @@ export default function CarbonFootprintTracker({
             <button
               onClick={handleShare}
               className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
-            >
+             aria-label="Icon button">
               <Share2 className="w-5 h-5" />
               Share Your Impact
             </button>

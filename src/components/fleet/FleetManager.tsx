@@ -250,7 +250,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
             <button
               onClick={loadFleetData}
               className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
-            >
+             aria-label="Icon button">
               <RefreshCw className="w-5 h-5" />
             </button>
           </div>
@@ -316,7 +316,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
             {(['all', 'available', 'rented', 'maintenance'] as const).map((f) => (
               <button
                 key={f}
-                onClick={() => setFilter(f)}
+                onClick={() = aria-label="Icon button"> setFilter(f)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   filter === f
                     ? 'bg-white text-indigo-600 shadow-sm'
@@ -327,7 +327,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
               </button>
             ))}
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors" aria-label="Icon button">
             <Plus className="w-5 h-5" />
             Add Equipment
           </button>
@@ -390,7 +390,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
 
               <div className="relative">
                 <button
-                  onClick={() => setShowActions(showActions === item.id ? null : item.id)}
+                  onClick={() = aria-label="Icon button"> setShowActions(showActions === item.id ? null : item.id)}
                   className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   <MoreVertical className="w-5 h-5 text-gray-500" />
@@ -398,25 +398,25 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
 
                 {showActions === item.id && (
                   <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-10">
-                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" aria-label="Icon button">
                       <Eye className="w-4 h-4" />
                       View Details
                     </button>
-                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" aria-label="Icon button">
                       <Edit3 className="w-4 h-4" />
                       Edit Listing
                     </button>
-                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" aria-label="Icon button">
                       <BarChart3 className="w-4 h-4" />
                       View Analytics
                     </button>
-                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" aria-label="Icon button">
                       <Wrench className="w-4 h-4" />
                       Schedule Maintenance
                     </button>
                     <hr className="my-2" />
                     <button
-                      onClick={() => toggleEquipmentStatus(item.id)}
+                      onClick={() = aria-label="Icon button"> toggleEquipmentStatus(item.id)}
                       className="w-full flex items-center gap-2 px-4 py-2 text-sm text-amber-600 hover:bg-amber-50"
                     >
                       {item.status === 'inactive' ? (
@@ -431,7 +431,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
                         </>
                       )}
                     </button>
-                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                    <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50" aria-label="Icon button">
                       <Trash2 className="w-4 h-4" />
                       Delete Listing
                     </button>

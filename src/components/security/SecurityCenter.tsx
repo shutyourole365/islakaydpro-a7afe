@@ -281,7 +281,7 @@ export default function SecurityCenter({
         ].map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setActiveSection(tab.id as typeof activeSection)}
+            onClick={() = aria-label="Icon button"> setActiveSection(tab.id as typeof activeSection)}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
               activeSection === tab.id
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -312,7 +312,7 @@ export default function SecurityCenter({
                     ? 'bg-red-50 text-red-600 hover:bg-red-100'
                     : 'bg-teal-500 text-white hover:bg-teal-600'
                 }`}
-              >
+               aria-label="Icon button">
                 {loading ? 'Processing...' : twoFactorEnabled ? 'Disable' : 'Enable'}
               </button>
             }
@@ -332,7 +332,7 @@ export default function SecurityCenter({
               <button
                 onClick={onChangePassword}
                 className="px-4 py-2 rounded-lg font-medium text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all"
-              >
+               aria-label="Icon button">
                 Change Password
               </button>
             }
@@ -349,7 +349,7 @@ export default function SecurityCenter({
                 <button
                   onClick={onVerifyEmail}
                   className="px-4 py-2 rounded-lg font-medium text-sm bg-teal-500 text-white hover:bg-teal-600 transition-all"
-                >
+                 aria-label="Icon button">
                   Verify Email
                 </button>
               )
@@ -366,7 +366,7 @@ export default function SecurityCenter({
               <button
                 onClick={onVerifyPhone}
                 className="px-4 py-2 rounded-lg font-medium text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all"
-              >
+               aria-label="Icon button">
                 {phoneVerified ? 'Update' : 'Add Phone'}
               </button>
             }
@@ -395,7 +395,7 @@ export default function SecurityCenter({
             <button
               onClick={onRevokeAllSessions}
               className="text-sm text-red-600 hover:text-red-700 font-medium"
-            >
+             aria-label="Icon button">
               Sign out all other sessions
             </button>
           </div>
@@ -430,7 +430,7 @@ export default function SecurityCenter({
                 </div>
                 {!session.isCurrent && (
                   <button
-                    onClick={() => onRevokeSession(session.id)}
+                    onClick={() = aria-label="Icon button"> onRevokeSession(session.id)}
                     className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
@@ -461,7 +461,7 @@ export default function SecurityCenter({
             ))}
           </div>
 
-          <button className="w-full py-3 text-teal-600 hover:text-teal-700 font-medium text-sm flex items-center justify-center gap-2">
+          <button className="w-full py-3 text-teal-600 hover:text-teal-700 font-medium text-sm flex items-center justify-center gap-2" aria-label="Icon button">
             View Full Activity Log
             <ChevronRight className="w-4 h-4" />
           </button>
@@ -476,7 +476,7 @@ export default function SecurityCenter({
             <button
               onClick={onDownloadData}
               className="w-full p-4 flex items-center gap-3 hover:bg-gray-50 transition-colors"
-            >
+             aria-label="Icon button">
               <div className="p-2 bg-blue-100 rounded-lg">
                 <Download className="w-5 h-5 text-blue-600" />
               </div>
@@ -490,7 +490,7 @@ export default function SecurityCenter({
             <button
               onClick={onDeleteAccount}
               className="w-full p-4 flex items-center gap-3 hover:bg-red-50 transition-colors"
-            >
+             aria-label="Icon button">
               <div className="p-2 bg-red-100 rounded-lg">
                 <Trash2 className="w-5 h-5 text-red-600" />
               </div>
@@ -541,7 +541,7 @@ function SecurityQuickAction({
           ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
           : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
       }`}
-    >
+     aria-label="Icon button">
       {icon}
       <span className="text-xs font-medium">{label}</span>
       <div className={`w-2 h-2 rounded-full ${status ? 'bg-green-400' : 'bg-slate-500'}`} />

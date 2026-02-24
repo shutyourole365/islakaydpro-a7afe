@@ -140,7 +140,7 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
               <button
                 onClick={onClose}
                 className="px-6 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
-              >
+               aria-label="Icon button">
                 <Plus className="w-5 h-5 inline mr-2" />
                 Create Your First Search
               </button>
@@ -163,13 +163,13 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
                           autoFocus
                         />
                         <button
-                          onClick={() => handleSaveEdit(search.id)}
+                          onClick={() = aria-label="Icon button"> handleSaveEdit(search.id)}
                           className="px-3 py-1.5 bg-teal-500 text-white rounded-lg text-sm font-medium hover:bg-teal-600 transition-colors"
                         >
                           Save
                         </button>
                         <button
-                          onClick={() => setEditingId(null)}
+                          onClick={() = aria-label="Icon button"> setEditingId(null)}
                           className="px-3 py-1.5 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
                         >
                           Cancel
@@ -181,7 +181,7 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
                           {search.name}
                         </h3>
                         <button
-                          onClick={() => handleStartEdit(search)}
+                          onClick={() = aria-label="Icon button"> handleStartEdit(search)}
                           className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-gray-100 transition-all"
                         >
                           <Edit2 className="w-4 h-4 text-gray-400" />
@@ -207,7 +207,7 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
 
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => handleToggleAlert(search.id)}
+                      onClick={() = aria-label="Icon button"> handleToggleAlert(search.id)}
                       className={`p-2 rounded-lg transition-all ${
                         search.alertsEnabled
                           ? 'bg-teal-50 text-teal-600 hover:bg-teal-100'
@@ -223,14 +223,14 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
                     </button>
 
                     <button
-                      onClick={() => onSearchClick(search.filters)}
+                      onClick={() = aria-label="Icon button"> onSearchClick(search.filters)}
                       className="px-4 py-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-medium rounded-lg hover:shadow-lg transition-all"
                     >
                       Search Now
                     </button>
 
                     <button
-                      onClick={() => handleDelete(search.id)}
+                      onClick={() = aria-label="Icon button"> handleDelete(search.id)}
                       className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-all"
                     >
                       <Trash2 className="w-5 h-5" />
@@ -263,7 +263,7 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
             <button
               onClick={onClose}
               className="px-4 py-2 bg-white border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
-            >
+             aria-label="Icon button">
               Close
             </button>
           </div>

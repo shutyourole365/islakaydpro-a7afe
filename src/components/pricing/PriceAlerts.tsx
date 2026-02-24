@@ -185,7 +185,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
           ].map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as 'active' | 'triggered' | 'settings')}
+              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as 'active' | 'triggered' | 'settings')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'bg-white text-orange-600'
@@ -204,7 +204,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
         {/* Create Alert Button */}
         {(activeTab === 'active' || activeTab === 'triggered') && !isCreating && (
           <button
-            onClick={() => setIsCreating(true)}
+            onClick={() = aria-label="Icon button"> setIsCreating(true)}
             className="w-full mb-4 p-4 border-2 border-dashed border-orange-200 rounded-xl text-orange-600 hover:border-orange-400 hover:bg-orange-50 transition-colors flex items-center justify-center gap-2"
           >
             <Plus className="w-5 h-5" />
@@ -262,11 +262,11 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                   onClick={createAlert}
                   disabled={!newAlert.equipmentTitle || !newAlert.targetPrice}
                   className="flex-1 py-2 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
+                 aria-label="Icon button">
                   Create Alert
                 </button>
                 <button
-                  onClick={() => setIsCreating(false)}
+                  onClick={() = aria-label="Icon button"> setIsCreating(false)}
                   className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                 >
                   Cancel
@@ -306,13 +306,13 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                       </div>
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => toggleAlert(alert.id)}
+                          onClick={() = aria-label="Icon button"> toggleAlert(alert.id)}
                           className="p-2 hover:bg-gray-100 rounded-lg"
                         >
                           <Edit2 className="w-4 h-4 text-gray-400" />
                         </button>
                         <button
-                          onClick={() => deleteAlert(alert.id)}
+                          onClick={() = aria-label="Icon button"> deleteAlert(alert.id)}
                           className="p-2 hover:bg-red-50 rounded-lg"
                         >
                           <Trash2 className="w-4 h-4 text-red-400" />
@@ -375,7 +375,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                         <div className="font-bold text-green-600">${alert.currentPrice}/day</div>
                       </div>
                     </div>
-                    <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">
+                    <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700" aria-label="Icon button">
                       Book Now
                     </button>
                   </div>
@@ -431,7 +431,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                       name="frequency"
                       defaultChecked={freq === 'Instant'}
                       className="w-4 h-4 text-orange-600 focus:ring-orange-500"
-                    />
+                    / aria-label="frequency">
                     <span className="text-gray-700">{freq}</span>
                   </label>
                 ))}

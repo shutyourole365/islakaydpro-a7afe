@@ -280,6 +280,7 @@ export default function Dashboard({
           <button
             onClick={onBack}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+            aria-label="Go back"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -290,6 +291,7 @@ export default function Dashboard({
           <button
             onClick={loadDashboardData}
             className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Reload dashboard data"
           >
             <RefreshCw className="w-5 h-5" />
           </button>
@@ -325,7 +327,7 @@ export default function Dashboard({
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id as TabType)}
+                  onClick={() = aria-label="Icon button"> setActiveTab(tab.id as TabType)}
                   className={`w-full flex items-center justify-between px-6 py-4 text-left transition-colors ${
                     activeTab === tab.id
                       ? 'bg-teal-50 text-teal-700 border-l-4 border-teal-500'
@@ -393,7 +395,7 @@ export default function Dashboard({
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-lg font-semibold text-gray-900">Performance Overview</h2>
-                      <select className="text-sm border-0 text-gray-500 focus:ring-0">
+                      <select aria-label="Select time range" className="text-sm border-0 text-gray-500 focus:ring-0">
                         <option>Last 30 days</option>
                         <option>Last 90 days</option>
                         <option>This year</option>
@@ -435,7 +437,7 @@ export default function Dashboard({
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-lg font-semibold text-gray-900">Recent Bookings</h2>
                       <button
-                        onClick={() => setActiveTab('bookings')}
+                        onClick={() = aria-label="Icon button"> setActiveTab('bookings')}
                         className="text-teal-600 text-sm font-medium hover:text-teal-700"
                       >
                         View All
@@ -474,7 +476,7 @@ export default function Dashboard({
                   <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <AlertCircle className="w-6 h-6 text-amber-600" />
+                        <AlertCircle className="w-6 h-6 text-amber-600" aria-hidden="true" />
                       </div>
                       <div className="flex-1">
                         <h3 className="font-semibold text-amber-900 mb-1">Pending Booking Requests</h3>
@@ -482,7 +484,7 @@ export default function Dashboard({
                           You have {pendingOwnerBookings.length} booking request{pendingOwnerBookings.length > 1 ? 's' : ''} waiting for your approval.
                         </p>
                         <button
-                          onClick={() => setActiveTab('listings')}
+                          onClick={() = aria-label="Icon button"> setActiveTab('listings')}
                           className="px-4 py-2 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition-colors"
                         >
                           Review Requests
@@ -500,8 +502,8 @@ export default function Dashboard({
                   <button
                     onClick={onListEquipment}
                     className="flex items-center gap-2 px-6 py-3 bg-white text-teal-600 font-semibold rounded-xl hover:bg-gray-100 transition-colors"
-                  >
-                    <Plus className="w-5 h-5" />
+                   aria-label="Icon button">
+                    <Plus className="w-5 h-5" aria-hidden="true" />
                     List Equipment
                   </button>
                 </div>
@@ -514,6 +516,7 @@ export default function Dashboard({
                   <h2 className="text-lg font-semibold text-gray-900">My Bookings</h2>
                   <div className="flex items-center gap-2">
                     <select
+                      aria-label="Filter bookings"
                       value={bookingFilter}
                       onChange={(e) => setBookingFilter(e.target.value as BookingFilter)}
                       className="px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-teal-500"
@@ -536,7 +539,7 @@ export default function Dashboard({
                     <button
                       onClick={onBack}
                       className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-                    >
+                     aria-label="Icon button">
                       Browse Equipment
                     </button>
                   </div>
@@ -547,7 +550,7 @@ export default function Dashboard({
                         <div className="flex items-start gap-4">
                           <img
                             src={booking.equipment?.images[0] || 'https://images.pexels.com/photos/162553/keys-workshop-mechanic-tools-162553.jpeg'}
-                            alt=""
+                            alt={booking.equipment?.title || 'Equipment image'}
                             className="w-24 h-24 rounded-xl object-cover flex-shrink-0"
                           />
                           <div className="flex-1 min-w-0">
@@ -555,7 +558,7 @@ export default function Dashboard({
                               <div>
                                 <h3 className="font-semibold text-gray-900">{booking.equipment?.title}</h3>
                                 <p className="text-sm text-gray-500 flex items-center gap-1.5">
-                                  <MapPin className="w-4 h-4" />
+                                  <MapPin className="w-4 h-4" aria-hidden="true" />
                                   {booking.equipment?.location}
                                 </p>
                               </div>
@@ -563,22 +566,22 @@ export default function Dashboard({
                             </div>
                             <div className="flex items-center gap-6 text-sm text-gray-500 mb-4">
                               <span className="flex items-center gap-1.5">
-                                <Calendar className="w-4 h-4" />
+                                <Calendar className="w-4 h-4" aria-hidden="true" />
                                 {formatDate(booking.start_date)} - {formatDate(booking.end_date)}
                               </span>
                               <span className="flex items-center gap-1.5">
-                                <Clock className="w-4 h-4" />
+                                <Clock className="w-4 h-4" aria-hidden="true" />
                                 {booking.total_days} days
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
                               <p className="text-lg font-semibold text-gray-900">${booking.total_amount.toFixed(2)}</p>
                               <button
-                                onClick={() => booking.equipment && onEquipmentClick(booking.equipment)}
+                                onClick={() = aria-label="Icon button"> booking.equipment && onEquipmentClick(booking.equipment)}
                                 className="flex items-center gap-2 px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-xl transition-colors"
                               >
                                 View Details
-                                <ChevronRight className="w-4 h-4" />
+                                <ChevronRight className="w-4 h-4" aria-hidden="true" />
                               </button>
                             </div>
                           </div>
@@ -597,8 +600,8 @@ export default function Dashboard({
                   <button
                     onClick={onListEquipment}
                     className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white font-medium rounded-xl hover:bg-teal-600 transition-colors"
-                  >
-                    <Plus className="w-5 h-5" />
+                   aria-label="Icon button">
+                    <Plus className="w-5 h-5" aria-hidden="true" />
                     Add New
                   </button>
                 </div>
@@ -614,7 +617,7 @@ export default function Dashboard({
                           <div className="flex items-center gap-4">
                             <img
                               src={booking.equipment?.images[0] || ''}
-                              alt=""
+                              alt={booking.equipment?.title || 'Equipment image'}
                               className="w-16 h-16 rounded-lg object-cover"
                             />
                             <div className="flex-1">
@@ -626,16 +629,18 @@ export default function Dashboard({
                             </div>
                             <div className="flex items-center gap-2">
                               <button
-                                onClick={() => handleBookingAction(booking.id, 'confirm')}
+                                onClick={() = aria-label="Icon button"> handleBookingAction(booking.id, 'confirm')}
                                 className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-colors"
+                                aria-label="Approve request"
                               >
-                                <Check className="w-5 h-5" />
+                                <Check className="w-5 h-5" aria-hidden="true" />
                               </button>
                               <button
-                                onClick={() => handleBookingAction(booking.id, 'cancel')}
+                                onClick={() = aria-label="Icon button"> handleBookingAction(booking.id, 'cancel')}
                                 className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors"
+                                aria-label="Reject request"
                               >
-                                <X className="w-5 h-5" />
+                                <X className="w-5 h-5" aria-hidden="true" />
                               </button>
                             </div>
                           </div>
@@ -647,7 +652,7 @@ export default function Dashboard({
 
                 {myListings.length === 0 ? (
                   <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
-                    <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" aria-hidden="true" />
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">No listings yet</h3>
                     <p className="text-gray-600 mb-6 max-w-md mx-auto">
                       Start earning money by listing your equipment. It's free to list and you set your own prices.
@@ -655,7 +660,7 @@ export default function Dashboard({
                     <button
                       onClick={onListEquipment}
                       className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-                    >
+                     aria-label="Icon button">
                       <Plus className="w-5 h-5" />
                       Create Your First Listing
                     </button>
@@ -690,15 +695,15 @@ export default function Dashboard({
                           </div>
                           <div className="flex items-center gap-2">
                             <button
-                              onClick={() => onEquipmentClick(item)}
+                              onClick={() = aria-label="Icon button"> onEquipmentClick(item)}
                               className="flex-1 px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors"
                             >
                               View
                             </button>
-                            <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                            <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Edit booking">
                               <Edit className="w-5 h-5" />
                             </button>
-                            <button className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
+                            <button aria-label="Delete item" className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
                               <Trash2 className="w-5 h-5" />
                             </button>
                           </div>
@@ -722,7 +727,7 @@ export default function Dashboard({
                     <button
                       onClick={onBack}
                       className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-                    >
+                     aria-label="Icon button">
                       Browse Equipment
                     </button>
                   </div>
@@ -737,13 +742,13 @@ export default function Dashboard({
                           <p className="font-semibold text-gray-900 mb-3">${item.daily_rate}/day</p>
                           <div className="flex items-center gap-2">
                             <button
-                              onClick={() => onEquipmentClick(item)}
+                              onClick={() = aria-label="Icon button"> onEquipmentClick(item)}
                               className="px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors"
                             >
                               View
                             </button>
                             <button
-                              onClick={() => handleRemoveFavorite(item.id)}
+                              onClick={() = aria-label="Icon button"> handleRemoveFavorite(item.id)}
                               className="px-4 py-2 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
                             >
                               Remove
@@ -767,6 +772,7 @@ export default function Dashboard({
                         <input
                           type="text"
                           placeholder="Search conversations..."
+                          aria-label="Search conversations"
                           className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-teal-500"
                         />
                       </div>
@@ -781,7 +787,7 @@ export default function Dashboard({
                         conversations.map((conv) => (
                           <button
                             key={conv.id}
-                            onClick={() => setSelectedConversation(conv.id)}
+                            onClick={() = aria-label="Icon button"> setSelectedConversation(conv.id)}
                             className={`w-full p-4 text-left hover:bg-gray-50 transition-colors ${
                               selectedConversation === conv.id ? 'bg-teal-50' : ''
                             }`}
@@ -847,12 +853,13 @@ export default function Dashboard({
                               onChange={(e) => setNewMessage(e.target.value)}
                               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                               placeholder="Type a message..."
+                              aria-label="Type a message"
                               className="flex-1 px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-teal-500"
                             />
                             <button
                               onClick={handleSendMessage}
                               className="p-2 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-colors"
-                            >
+                             aria-label="Send message">
                               <Send className="w-5 h-5" />
                             </button>
                           </div>
@@ -879,7 +886,7 @@ export default function Dashboard({
                   </h2>
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => setShowNotificationSettings(!showNotificationSettings)}
+                      onClick={() = aria-label="Icon button"> setShowNotificationSettings(!showNotificationSettings)}
                       className="text-teal-600 text-sm font-medium hover:text-teal-700 flex items-center gap-1"
                     >
                       <Settings className="w-4 h-4" />
@@ -889,7 +896,7 @@ export default function Dashboard({
                       <button
                         onClick={handleMarkAllRead}
                         className="text-teal-600 text-sm font-medium hover:text-teal-700"
-                      >
+                       aria-label="Icon button">
                         Mark all as read
                       </button>
                     )}
@@ -933,8 +940,9 @@ export default function Dashboard({
                             </div>
                             {!notification.is_read && (
                               <button
-                                onClick={() => handleMarkNotificationRead(notification.id)}
+                                onClick={() = aria-label="Icon button"> handleMarkNotificationRead(notification.id)}
                                 className="p-1 text-teal-600 hover:bg-teal-100 rounded"
+                                aria-label="Mark notification as read"
                               >
                                 <Check className="w-4 h-4" />
                               </button>
@@ -1000,7 +1008,7 @@ export default function Dashboard({
                           <p className="text-sm text-gray-500">Last changed 30 days ago</p>
                         </div>
                       </div>
-                      <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors">
+                      <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors" aria-label="Icon button">
                         Change
                       </button>
                     </div>
@@ -1021,7 +1029,7 @@ export default function Dashboard({
                         profile?.two_factor_enabled
                           ? 'text-red-600 hover:bg-red-50'
                           : 'text-teal-600 hover:bg-teal-50'
-                      }`}>
+                      }`} aria-label="Icon button">
                         {profile?.two_factor_enabled ? 'Disable' : 'Enable'}
                       </button>
                     </div>
@@ -1064,7 +1072,7 @@ export default function Dashboard({
                         {settingsForm.full_name?.charAt(0) || 'U'}
                       </div>
                       <div>
-                        <button className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                        <button className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors" aria-label="Icon button">
                           Change Photo
                         </button>
                       </div>
@@ -1072,20 +1080,27 @@ export default function Dashboard({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
+                        <label htmlFor="settings-full-name" className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
                         <input
+                          id="settings-full-name"
                           type="text"
+                          placeholder="Your full name"
+                          title="Full name"
                           value={settingsForm.full_name}
                           onChange={(e) => setSettingsForm(prev => ({ ...prev, full_name: e.target.value }))}
                           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-500"
+                          aria-label="Full name"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+                        <label htmlFor="settings-email" className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
                         <input
+                          id="settings-email"
                           type="email"
                           value={user?.email || ''}
                           disabled
+                          title="Email address"
+                          aria-label="Email address"
                           className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-500"
                         />
                       </div>
@@ -1127,7 +1142,7 @@ export default function Dashboard({
                         onClick={handleSaveSettings}
                         disabled={saving}
                         className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                      >
+                       aria-label="Icon button">
                         {saving && <Loader2 className="w-4 h-4 animate-spin" />}
                         Save Changes
                       </button>
@@ -1168,7 +1183,7 @@ export default function Dashboard({
                   <p className="text-red-700 text-sm mb-4">
                     Once you delete your account, there is no going back. Please be certain.
                   </p>
-                  <button className="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors">
+                  <button className="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors" aria-label="Icon button">
                     Delete Account
                   </button>
                 </div>
@@ -1245,7 +1260,7 @@ function VerificationItem({ icon: Icon, title, description, verified }: {
           Verified
         </span>
       ) : (
-        <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors">
+        <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors" aria-label="Icon button">
           Verify
         </button>
       )}

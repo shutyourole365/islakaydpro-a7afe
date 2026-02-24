@@ -299,7 +299,7 @@ export default function SchedulingOptimizer({
                   ? 'bg-green-600 text-white hover:bg-green-700'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
-            >
+             aria-label="Icon button">
               <Zap className="w-4 h-4" />
               {autoOptimize ? 'Auto-Optimizing' : 'Auto Optimize'}
             </button>
@@ -352,7 +352,7 @@ export default function SchedulingOptimizer({
           {(['overview', 'detailed', 'calendar'] as const).map((mode) => (
             <button
               key={mode}
-              onClick={() => setViewMode(mode)}
+              onClick={() = aria-label="Icon button"> setViewMode(mode)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 viewMode === mode
                   ? 'bg-blue-100 text-blue-700'
@@ -507,7 +507,7 @@ export default function SchedulingOptimizer({
                       </span>
                     </td>
                     <td className="py-3 px-4">
-                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium" aria-label="Icon button">
                         Optimize
                       </button>
                     </td>

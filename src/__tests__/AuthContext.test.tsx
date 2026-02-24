@@ -82,22 +82,22 @@ function AuthConsumer() {
       <span data-testid="notifications">{auth.unreadNotifications}</span>
       <button 
         data-testid="sign-in" 
-        onClick={() => auth.signIn('test@example.com', 'password123').catch(() => {})}
+        onClick={() = aria-label="Icon button"> auth.signIn('test@example.com', 'password123').catch(() => {})}
       >
         Sign In
       </button>
       <button 
         data-testid="sign-up" 
-        onClick={() => auth.signUp('new@example.com', 'password123', 'New User').catch(() => {})}
+        onClick={() = aria-label="Icon button"> auth.signUp('new@example.com', 'password123', 'New User').catch(() => {})}
       >
         Sign Up
       </button>
-      <button data-testid="sign-out" onClick={() => auth.signOut()}>
+      <button data-testid="sign-out" onClick={() = aria-label="Icon button"> auth.signOut()}>
         Sign Out
       </button>
       <button 
         data-testid="reset-password" 
-        onClick={() => auth.resetPassword('test@example.com').catch(() => {})}
+        onClick={() = aria-label="Icon button"> auth.resetPassword('test@example.com').catch(() => {})}
       >
         Reset Password
       </button>

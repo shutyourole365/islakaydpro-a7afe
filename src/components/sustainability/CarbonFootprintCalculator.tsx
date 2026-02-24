@@ -244,7 +244,7 @@ export default function CarbonFootprintCalculator({
             <button className="p-2 bg-white/20 rounded-lg hover:bg-white/30">
               <Share2 className="w-5 h-5" />
             </button>
-            <button className="p-2 bg-white/20 rounded-lg hover:bg-white/30">
+            <button className="p-2 bg-white/20 rounded-lg hover:bg-white/30" aria-label="Icon button">
               <Download className="w-5 h-5" />
             </button>
           </div>
@@ -289,7 +289,7 @@ export default function CarbonFootprintCalculator({
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveView(tab.id as typeof activeView)}
+            onClick={() = aria-label="Icon button"> setActiveView(tab.id as typeof activeView)}
             className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 transition-colors ${
               activeView === tab.id
                 ? 'border-green-600 text-green-600'
@@ -380,7 +380,7 @@ export default function CarbonFootprintCalculator({
             {/* Quick Calculator */}
             <div>
               <button
-                onClick={() => setShowCalculator(!showCalculator)}
+                onClick={() = aria-label="Icon button"> setShowCalculator(!showCalculator)}
                 className="w-full flex items-center justify-between py-3 text-gray-600 dark:text-gray-400"
               >
                 <span className="font-medium">Estimate New Rental</span>
@@ -441,7 +441,7 @@ export default function CarbonFootprintCalculator({
                   </div>
 
                   <button
-                    onClick={() => onCalculate?.(estimate)}
+                    onClick={() = aria-label="Icon button"> onCalculate?.(estimate)}
                     className="w-full py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
                   >
                     Use This Estimate
@@ -561,7 +561,7 @@ export default function CarbonFootprintCalculator({
                 Want to go carbon neutral? Offset your {totals.co2Emissions} kg CO2 emissions by
                 supporting verified reforestation projects.
               </p>
-              <button className="w-full py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+              <button className="w-full py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700" aria-label="Icon button">
                 Learn About Carbon Offsets
               </button>
             </div>

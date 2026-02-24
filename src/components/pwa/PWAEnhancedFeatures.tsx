@@ -123,7 +123,7 @@ export default function PWAEnhancedFeatures({ onClose }: PWAEnhancedFeaturesProp
             <button
               onClick={onClose}
               className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
-            >
+             aria-label="Icon button">
               ×
             </button>
           </div>
@@ -171,7 +171,7 @@ export default function PWAEnhancedFeatures({ onClose }: PWAEnhancedFeaturesProp
                 <button
                   onClick={handleUpdate}
                   className="px-4 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors"
-                >
+                 aria-label="Icon button">
                   Update Now
                 </button>
               </div>
@@ -229,7 +229,7 @@ export default function PWAEnhancedFeatures({ onClose }: PWAEnhancedFeaturesProp
               <button
                 onClick={handleClearCache}
                 className="w-full py-2.5 bg-white border-2 border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
+               aria-label="Icon button">
                 Clear Cache
               </button>
             </div>
@@ -249,7 +249,7 @@ export default function PWAEnhancedFeatures({ onClose }: PWAEnhancedFeaturesProp
                 <button
                   onClick={handleDownloadForOffline}
                   className="px-6 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
-                >
+                 aria-label="Icon button">
                   Download Content
                 </button>
               </div>
@@ -306,7 +306,7 @@ export default function PWAEnhancedFeatures({ onClose }: PWAEnhancedFeaturesProp
           <button
             onClick={onClose}
             className="w-full py-3 bg-gradient-to-r from-violet-500 to-purple-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
-          >
+           aria-label="Icon button">
             Got It!
           </button>
         </div>

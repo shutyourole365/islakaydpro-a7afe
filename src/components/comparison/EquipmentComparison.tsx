@@ -228,13 +228,13 @@ export default function EquipmentComparison({
             <button
               onClick={onClose}
               className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-            >
+             aria-label="Icon button">
               Cancel
             </button>
             <button
               onClick={onAddEquipment}
               className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors flex items-center gap-2"
-            >
+             aria-label="Icon button">
               <Plus className="w-4 h-4" />
               Add Equipment
             </button>
@@ -303,7 +303,7 @@ export default function EquipmentComparison({
             {categories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                onClick={() = aria-label="Icon button"> setActiveCategory(cat.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
                   activeCategory === cat.id
                     ? 'bg-teal-50 text-teal-700'
@@ -330,7 +330,7 @@ export default function EquipmentComparison({
                 <div key={equip.id} className="bg-white p-4">
                   <div className="relative">
                     <button
-                      onClick={() => handleRemove(equip.id)}
+                      onClick={() = aria-label="Icon button"> handleRemove(equip.id)}
                       className="absolute -top-2 -right-2 w-6 h-6 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-200 transition-colors"
                     >
                       <X className="w-4 h-4" />
@@ -355,13 +355,13 @@ export default function EquipmentComparison({
                     </div>
                     <div className="flex gap-2">
                       <button
-                        onClick={() => onBook(equip)}
+                        onClick={() = aria-label="Icon button"> onBook(equip)}
                         className="flex-1 py-2 bg-teal-500 text-white text-xs font-medium rounded-lg hover:bg-teal-600 transition-colors"
                       >
                         Book Now
                       </button>
                       <button
-                        onClick={() => onFavorite(equip.id)}
+                        onClick={() = aria-label="Icon button"> onFavorite(equip.id)}
                         className={`p-2 rounded-lg transition-colors ${
                           favorites.has(equip.id)
                             ? 'bg-red-50 text-red-500'
@@ -380,7 +380,7 @@ export default function EquipmentComparison({
                   <button
                     onClick={onAddEquipment}
                     className="flex flex-col items-center gap-2 text-gray-400 hover:text-teal-500 transition-colors"
-                  >
+                   aria-label="Icon button">
                     <div className="w-12 h-12 border-2 border-dashed border-current rounded-xl flex items-center justify-center">
                       <Plus className="w-6 h-6" />
                     </div>
@@ -426,7 +426,7 @@ export default function EquipmentComparison({
                   Our AI assistant can help you choose the best equipment for your needs.
                 </p>
               </div>
-              <button className="px-6 py-3 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+              <button className="px-6 py-3 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors" aria-label="Icon button">
                 Ask Kayd AI
               </button>
             </div>

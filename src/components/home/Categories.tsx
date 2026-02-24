@@ -40,7 +40,7 @@ interface CategoryItemProps {
 const CategoryItem = memo(function CategoryItem({ category, onClick, index }: CategoryItemProps) {
   return (
     <button
-      onClick={() => onClick(category)}
+      onClick={() = aria-label="Icon button"> onClick(category)}
       className="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-teal-200 overflow-hidden"
       style={{ animationDelay: `${index * 50}ms` }}
     >

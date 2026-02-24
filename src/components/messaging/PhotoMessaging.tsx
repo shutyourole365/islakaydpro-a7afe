@@ -122,7 +122,7 @@ export default function PhotoMessaging({ conversationId, onSendMessage, onClose 
                   className="w-20 h-20 object-cover rounded-lg border-2 border-gray-200"
                 />
                 <button
-                  onClick={() => removePhoto(idx)}
+                  onClick={() = aria-label="Icon button"> removePhoto(idx)}
                   className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
                 >
                   <X className="w-4 h-4" />
@@ -135,7 +135,7 @@ export default function PhotoMessaging({ conversationId, onSendMessage, onClose 
             
             {previewUrls.length < 5 && (
               <button
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() = aria-label="Icon button"> fileInputRef.current?.click()}
                 className="w-20 h-20 rounded-lg border-2 border-dashed border-gray-300 hover:border-teal-400 hover:bg-teal-50 transition-all flex items-center justify-center"
               >
                 <div className="text-center">
@@ -155,7 +155,7 @@ export default function PhotoMessaging({ conversationId, onSendMessage, onClose 
           {quickMessages.map((msg, idx) => (
             <button
               key={idx}
-              onClick={() => setMessage(msg)}
+              onClick={() = aria-label="Icon button"> setMessage(msg)}
               className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-teal-400 hover:bg-teal-50 transition-colors"
             >
               {msg}
@@ -195,7 +195,7 @@ export default function PhotoMessaging({ conversationId, onSendMessage, onClose 
             />
             
             <button
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() = aria-label="Icon button"> fileInputRef.current?.click()}
               className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors"
               title="Upload photos"
             >
@@ -203,7 +203,7 @@ export default function PhotoMessaging({ conversationId, onSendMessage, onClose 
             </button>
             
             <button
-              onClick={() => cameraInputRef.current?.click()}
+              onClick={() = aria-label="Icon button"> cameraInputRef.current?.click()}
               className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors"
               title="Take photo"
             >
@@ -211,7 +211,7 @@ export default function PhotoMessaging({ conversationId, onSendMessage, onClose 
             </button>
             
             <button
-              onClick={() => setShowCamera(!showCamera)}
+              onClick={() = aria-label="Icon button"> setShowCamera(!showCamera)}
               className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors"
               title="Add emoji"
             >
@@ -227,7 +227,7 @@ export default function PhotoMessaging({ conversationId, onSendMessage, onClose 
             onClick={handleSend}
             disabled={(!message.trim() && selectedPhotos.length === 0) || isSending}
             className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+           aria-label="Icon button">
             {isSending ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

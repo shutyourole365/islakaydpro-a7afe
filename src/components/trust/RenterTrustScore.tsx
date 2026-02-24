@@ -306,7 +306,7 @@ export default function RenterTrustScore({ userId, viewMode = 'full', onClose }:
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
               className={`flex-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'text-teal-600 border-b-2 border-teal-600'
@@ -504,7 +504,7 @@ export default function RenterTrustScore({ userId, viewMode = 'full', onClose }:
             <FileText className="w-4 h-4" />
             <span>Last updated: {new Date().toLocaleDateString()}</span>
           </div>
-          <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700">
+          <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700" aria-label="Icon button">
             <MessageSquare className="w-4 h-4" />
             Report Issue
           </button>

@@ -139,7 +139,7 @@ export default function LiveLocationTracker({ equipmentLocation, pickupTime }: L
           </div>
           
           <button
-            onClick={() => setIsTracking(!isTracking)}
+            onClick={() = aria-label="Icon button"> setIsTracking(!isTracking)}
             className={`px-4 py-2 rounded-lg font-medium transition-all ${
               isTracking
                 ? 'bg-white/20 hover:bg-white/30'
@@ -236,7 +236,7 @@ export default function LiveLocationTracker({ equipmentLocation, pickupTime }: L
         <button
           onClick={openNavigation}
           className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-cyan-600 transition-all"
-        >
+         aria-label="Icon button">
           <Navigation className="w-5 h-5" />
           Open in Google Maps
         </button>

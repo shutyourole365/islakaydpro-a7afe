@@ -203,7 +203,7 @@ export default function AccessibilitySettingsComponent({
           <button
             onClick={resetSettings}
             className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
-          >
+           aria-label="Icon button">
             <RotateCcw className="w-5 h-5" />
             Reset
           </button>
@@ -217,7 +217,7 @@ export default function AccessibilitySettingsComponent({
             {sections.map((section) => (
               <button
                 key={section.id}
-                onClick={() => setActiveSection(section.id)}
+                onClick={() = aria-label="Icon button"> setActiveSection(section.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                   activeSection === section.id
                     ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600'
@@ -246,7 +246,7 @@ export default function AccessibilitySettingsComponent({
                   {fontSizeOptions.map((option) => (
                     <button
                       key={option.value}
-                      onClick={() => updateSetting('fontSize', option.value as AccessibilitySettings['fontSize'])}
+                      onClick={() = aria-label="Icon button"> updateSetting('fontSize', option.value as AccessibilitySettings['fontSize'])}
                       className={`p-3 rounded-xl border-2 text-center transition-all ${
                         settings.fontSize === option.value
                           ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
@@ -277,7 +277,7 @@ export default function AccessibilitySettingsComponent({
                   {contrastOptions.map((option) => (
                     <button
                       key={option.value}
-                      onClick={() => updateSetting('contrast', option.value as AccessibilitySettings['contrast'])}
+                      onClick={() = aria-label="Icon button"> updateSetting('contrast', option.value as AccessibilitySettings['contrast'])}
                       className={`w-full p-3 rounded-xl border-2 flex items-center justify-between ${
                         settings.contrast === option.value
                           ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
@@ -333,7 +333,7 @@ export default function AccessibilitySettingsComponent({
                   {textSpacingOptions.map((option) => (
                     <button
                       key={option.value}
-                      onClick={() => updateSetting('textSpacing', option.value as AccessibilitySettings['textSpacing'])}
+                      onClick={() = aria-label="Icon button"> updateSetting('textSpacing', option.value as AccessibilitySettings['textSpacing'])}
                       className={`w-full p-3 rounded-xl border-2 flex items-center justify-between ${
                         settings.textSpacing === option.value
                           ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
@@ -450,7 +450,7 @@ export default function AccessibilitySettingsComponent({
                   {['small', 'medium', 'large'].map((size) => (
                     <button
                       key={size}
-                      onClick={() => updateSetting('cursorSize', size as AccessibilitySettings['cursorSize'])}
+                      onClick={() = aria-label="Icon button"> updateSetting('cursorSize', size as AccessibilitySettings['cursorSize'])}
                       className={`p-3 rounded-xl border-2 text-center transition-all ${
                         settings.cursorSize === size
                           ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
@@ -516,7 +516,7 @@ export default function AccessibilitySettingsComponent({
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   <button
-                    onClick={() => updateSetting('theme', 'light')}
+                    onClick={() = aria-label="Icon button"> updateSetting('theme', 'light')}
                     className={`p-4 rounded-xl border-2 text-center transition-all ${
                       settings.theme === 'light'
                         ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
@@ -529,7 +529,7 @@ export default function AccessibilitySettingsComponent({
                     </span>
                   </button>
                   <button
-                    onClick={() => updateSetting('theme', 'dark')}
+                    onClick={() = aria-label="Icon button"> updateSetting('theme', 'dark')}
                     className={`p-4 rounded-xl border-2 text-center transition-all ${
                       settings.theme === 'dark'
                         ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
@@ -542,7 +542,7 @@ export default function AccessibilitySettingsComponent({
                     </span>
                   </button>
                   <button
-                    onClick={() => updateSetting('theme', 'system')}
+                    onClick={() = aria-label="Icon button"> updateSetting('theme', 'system')}
                     className={`p-4 rounded-xl border-2 text-center transition-all ${
                       settings.theme === 'system'
                         ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
@@ -676,7 +676,7 @@ function ToggleSetting({
         </div>
       </div>
       <button
-        onClick={() => onChange(!enabled)}
+        onClick={() = aria-label="Icon button"> onChange(!enabled)}
         className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
           enabled ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
         }`}

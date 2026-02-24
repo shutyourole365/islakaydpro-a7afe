@@ -202,7 +202,7 @@ export default function DeliveryTracker({
               onClick={refreshStatus}
               className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
               disabled={isRefreshing}
-            >
+             aria-label="Icon button">
               <RefreshCw className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
             </button>
             <button
@@ -284,10 +284,10 @@ export default function DeliveryTracker({
         </div>
         {/* Map controls */}
         <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-          <button className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center">
+          <button className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center" aria-label="Icon button">
             <span className="text-lg font-bold text-gray-600 dark:text-gray-400">+</span>
           </button>
-          <button className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center">
+          <button className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center" aria-label="Icon button">
             <span className="text-lg font-bold text-gray-600 dark:text-gray-400">−</span>
           </button>
         </div>
@@ -316,7 +316,7 @@ export default function DeliveryTracker({
           </div>
           <div className="flex gap-2">
             <button
-              onClick={() => window.open(`tel:${delivery.driver.phone}`)}
+              onClick={() = aria-label="Icon button"> window.open(`tel:${delivery.driver.phone}`)}
               className="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-xl hover:bg-green-200 dark:hover:bg-green-900/50"
             >
               <Phone className="w-5 h-5" />
@@ -384,7 +384,7 @@ export default function DeliveryTracker({
       {/* Status History */}
       <div className="p-4">
         <button
-          onClick={() => setShowDetails(!showDetails)}
+          onClick={() = aria-label="Icon button"> setShowDetails(!showDetails)}
           className="w-full flex items-center justify-between py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
         >
           <span className="font-medium">Delivery History</span>
@@ -425,7 +425,7 @@ export default function DeliveryTracker({
       <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-t dark:border-gray-700">
         <div className="flex gap-3">
           <button
-            onClick={() => setNotifications(!notifications)}
+            onClick={() = aria-label="Icon button"> setNotifications(!notifications)}
             className={`flex-1 py-3 rounded-xl flex items-center justify-center gap-2 ${
               notifications
                 ? 'bg-blue-600 text-white'
@@ -438,7 +438,7 @@ export default function DeliveryTracker({
           <button
             onClick={onViewDetails}
             className="flex-1 py-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl flex items-center justify-center gap-2"
-          >
+           aria-label="Icon button">
             <Package className="w-5 h-5" />
             View Booking
           </button>

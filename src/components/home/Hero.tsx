@@ -89,7 +89,7 @@ export default function Hero({ onSearch }: HeroProps) {
             <button
               onClick={handleSearch}
               className="flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:from-teal-600 hover:to-emerald-600 transition-all duration-300 shadow-lg shadow-teal-500/25"
-            >
+             aria-label="Icon button">
               <Search className="w-5 h-5" />
               <span>Search</span>
             </button>
@@ -102,7 +102,7 @@ export default function Hero({ onSearch }: HeroProps) {
             (item) => (
               <button
                 key={item}
-                onClick={() => setSearchQuery(item)}
+                onClick={() = aria-label="Icon button"> setSearchQuery(item)}
                 className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm text-white/90 hover:bg-white/20 transition-colors border border-white/10"
               >
                 {item}
@@ -131,7 +131,7 @@ export default function Hero({ onSearch }: HeroProps) {
             Browse Categories
             <ArrowRight className="w-5 h-5" />
           </a>
-          <button className="flex items-center gap-2 px-6 py-3 text-white font-semibold hover:bg-white/10 rounded-full transition-colors">
+          <button className="flex items-center gap-2 px-6 py-3 text-white font-semibold hover:bg-white/10 rounded-full transition-colors" aria-label="Icon button">
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
               <Play className="w-5 h-5 fill-white" />
             </div>

@@ -194,7 +194,7 @@ export default function MaintenancePredictor({
             </div>
           </div>
           <button
-            onClick={() => setAlertsEnabled(!alertsEnabled)}
+            onClick={() = aria-label="Icon button"> setAlertsEnabled(!alertsEnabled)}
             className={`p-2 rounded-lg transition-colors ${alertsEnabled ? 'bg-white/20' : 'bg-white/10'}`}
           >
             <Bell className={`w-5 h-5 ${alertsEnabled ? 'text-white' : 'text-white/50'}`} />
@@ -335,7 +335,7 @@ export default function MaintenancePredictor({
                     </div>
                   </div>
                   <button
-                    onClick={(e) => {
+                    onClick={(e) = aria-label="Icon button"> {
                       e.stopPropagation();
                       const serviceDate = new Date();
                       serviceDate.setDate(serviceDate.getDate() + Math.max(item.daysUntilService, 1));

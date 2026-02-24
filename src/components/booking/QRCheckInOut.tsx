@@ -266,14 +266,14 @@ export default function QRCheckInOut({
                   <button
                     onClick={downloadQR}
                     className="flex-1 flex items-center justify-center gap-2 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
-                  >
+                   aria-label="Icon button">
                     <Download className="w-5 h-5" />
                     Download
                   </button>
                   <button
                     onClick={shareQR}
                     className="flex-1 flex items-center justify-center gap-2 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
-                  >
+                   aria-label="Icon button">
                     <Share2 className="w-5 h-5" />
                     Share
                   </button>
@@ -319,7 +319,7 @@ export default function QRCheckInOut({
                       <button
                         onClick={startCamera}
                         className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
-                      >
+                       aria-label="Icon button">
                         <Camera className="w-5 h-5" />
                         Start Scanning
                       </button>
@@ -354,7 +354,7 @@ export default function QRCheckInOut({
                       <button
                         onClick={stopCamera}
                         className="w-full py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
-                      >
+                       aria-label="Icon button">
                         Cancel
                       </button>
                     </div>
@@ -407,7 +407,7 @@ export default function QRCheckInOut({
                       <button
                         onClick={onClose}
                         className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
-                      >
+                       aria-label="Icon button">
                         Done
                       </button>
                     </div>

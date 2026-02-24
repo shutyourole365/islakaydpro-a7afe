@@ -358,7 +358,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           <ShoppingCart className="w-12 h-12 mx-auto text-gray-300 mb-3" />
           <p className="text-gray-500 mb-4">Your cart is empty</p>
           <button
-            onClick={() => setShowEquipmentPicker(true)}
+            onClick={() = aria-label="Icon button"> setShowEquipmentPicker(true)}
             className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
           >
             <Plus className="w-4 h-4 inline mr-1" />
@@ -391,14 +391,14 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
                 </div>
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => updateQuantity(item.equipment.id, -1)}
+                    onClick={() = aria-label="Icon button"> updateQuantity(item.equipment.id, -1)}
                     className="p-1 hover:bg-gray-100 rounded"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
                   <span className="w-8 text-center font-medium">{item.quantity}</span>
                   <button
-                    onClick={() => updateQuantity(item.equipment.id, 1)}
+                    onClick={() = aria-label="Icon button"> updateQuantity(item.equipment.id, 1)}
                     className="p-1 hover:bg-gray-100 rounded"
                   >
                     <Plus className="w-4 h-4" />
@@ -413,7 +413,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
                   )}
                 </div>
                 <button
-                  onClick={() => removeFromCart(item.equipment.id)}
+                  onClick={() = aria-label="Icon button"> removeFromCart(item.equipment.id)}
                   className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -423,7 +423,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           ))}
 
           <button
-            onClick={() => setShowEquipmentPicker(true)}
+            onClick={() = aria-label="Icon button"> setShowEquipmentPicker(true)}
             className="w-full py-3 border-2 border-dashed rounded-lg text-gray-500 hover:border-teal-500 hover:text-teal-600 transition-colors flex items-center justify-center gap-2"
           >
             <Plus className="w-4 h-4" />
@@ -438,7 +438,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           <div className="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
             <div className="p-4 border-b flex items-center justify-between">
               <h3 className="font-semibold">Add Equipment to Cart</h3>
-              <button onClick={() => setShowEquipmentPicker(false)} className="p-2 hover:bg-gray-100 rounded-lg">
+              <button onClick={() = aria-label="Icon button"> setShowEquipmentPicker(false)} className="p-2 hover:bg-gray-100 rounded-lg">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -659,7 +659,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
                 name="payment"
                 value={id}
                 checked={paymentMethod === id}
-                onChange={(e) => setPaymentMethod(e.target.value as typeof paymentMethod)}
+                onChange={(e) = aria-label="payment"> setPaymentMethod(e.target.value as typeof paymentMethod)}
                 className="w-4 h-4 text-teal-600"
               />
               <Icon className="w-5 h-5 text-gray-500" />
@@ -686,13 +686,13 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
         <div className="text-lg font-mono font-bold text-gray-900">BULK-{Date.now().toString(36).toUpperCase()}</div>
       </div>
       <div className="flex justify-center gap-4">
-        <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
+        <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors" aria-label="Icon button">
           View Bookings
         </button>
         <button
           onClick={onClose}
           className="px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
-        >
+         aria-label="Icon button">
           Close
         </button>
       </div>
@@ -791,7 +791,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           <div className="flex gap-3">
             {step !== 'cart' && (
               <button
-                onClick={() => {
+                onClick={() = aria-label="Icon button"> {
                   const steps: ('cart' | 'dates' | 'review' | 'payment' | 'complete')[] = ['cart', 'dates', 'review', 'payment'];
                   const currentIndex = steps.indexOf(step);
                   if (currentIndex > 0) setStep(steps[currentIndex - 1]);
@@ -806,7 +806,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
                 onClick={processBooking}
                 disabled={isLoading}
                 className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 disabled:opacity-50"
-              >
+               aria-label="Icon button">
                 {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -821,7 +821,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
               </button>
             ) : (
               <button
-                onClick={() => {
+                onClick={() = aria-label="Icon button"> {
                   const steps: ('cart' | 'dates' | 'review' | 'payment' | 'complete')[] = ['cart', 'dates', 'review'];
                   const currentIndex = steps.indexOf(step);
                   if (currentIndex < steps.length - 1) setStep(steps[currentIndex + 1]);

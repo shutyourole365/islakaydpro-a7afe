@@ -132,7 +132,7 @@ export default function BrowsePage({
             <button
               onClick={onBack}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-            >
+             aria-label="Icon button">
               <ArrowLeft className="w-5 h-5" />
               <span className="hidden sm:inline">Back</span>
             </button>
@@ -147,7 +147,7 @@ export default function BrowsePage({
                 className="flex-1 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')}>
+                <button onClick={() = aria-label="Icon button"> setSearchQuery('')}>
                   <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                 </button>
               )}
@@ -168,7 +168,7 @@ export default function BrowsePage({
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2 overflow-x-auto pb-2 -mb-2">
               <button
-                onClick={() => setSelectedCategory('')}
+                onClick={() = aria-label="Icon button"> setSelectedCategory('')}
                 className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                   !selectedCategory
                     ? 'bg-teal-500 text-white'
@@ -180,7 +180,7 @@ export default function BrowsePage({
               {categories.slice(0, 6).map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => setSelectedCategory(category.slug)}
+                  onClick={() = aria-label="Icon button"> setSelectedCategory(category.slug)}
                   className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                     selectedCategory === category.slug
                       ? 'bg-teal-500 text-white'
@@ -194,7 +194,7 @@ export default function BrowsePage({
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setShowFilters(!showFilters)}
+                onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-colors ${
                   showFilters || activeFiltersCount > 0
                     ? 'border-teal-500 bg-teal-50 text-teal-700'
@@ -212,7 +212,7 @@ export default function BrowsePage({
 
               <div className="hidden sm:flex items-center gap-1 border border-gray-200 rounded-xl p-1">
                 <button
-                  onClick={() => setViewMode('grid')}
+                  onClick={() = aria-label="Icon button"> setViewMode('grid')}
                   className={`p-2 rounded-lg transition-colors ${
                     viewMode === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'
                   }`}
@@ -221,7 +221,7 @@ export default function BrowsePage({
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => setViewMode('list')}
+                  onClick={() = aria-label="Icon button"> setViewMode('list')}
                   className={`p-2 rounded-lg transition-colors ${
                     viewMode === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'
                   }`}
@@ -230,7 +230,7 @@ export default function BrowsePage({
                   <List className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => setViewMode('map')}
+                  onClick={() = aria-label="Icon button"> setViewMode('map')}
                   className={`p-2 rounded-lg transition-colors ${
                     viewMode === 'map' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'
                   }`}
@@ -325,7 +325,7 @@ export default function BrowsePage({
                   <button
                     onClick={clearFilters}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-100 transition-colors"
-                  >
+                   aria-label="Icon button">
                     Clear All Filters
                   </button>
                 </div>
@@ -361,7 +361,7 @@ export default function BrowsePage({
             <button
               onClick={clearFilters}
               className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-            >
+             aria-label="Icon button">
               Clear All Filters
             </button>
           </div>
@@ -382,7 +382,7 @@ export default function BrowsePage({
               {filteredEquipment.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => {
+                  onClick={() = aria-label="Icon button"> {
                     setSelectedMapEquipment(item.id);
                     onEquipmentClick(item);
                   }}
@@ -440,7 +440,7 @@ export default function BrowsePage({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
                   <button
-                    onClick={(e) => {
+                    onClick={(e) = aria-label="Icon button"> {
                       e.stopPropagation();
                       onFavoriteClick(item.id);
                     }}
@@ -477,7 +477,7 @@ export default function BrowsePage({
                 </div>
 
                 <button
-                  onClick={() => onEquipmentClick(item)}
+                  onClick={() = aria-label="Icon button"> onEquipmentClick(item)}
                   className="w-full p-5 text-left"
                 >
                   <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-teal-600 transition-colors mb-2">
@@ -523,7 +523,7 @@ export default function BrowsePage({
             {filteredEquipment.map((item) => (
               <button
                 key={item.id}
-                onClick={() => onEquipmentClick(item)}
+                onClick={() = aria-label="Icon button"> onEquipmentClick(item)}
                 className="w-full bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 flex"
               >
                 <div className="w-64 h-48 flex-shrink-0 relative overflow-hidden">
@@ -544,7 +544,7 @@ export default function BrowsePage({
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>
                     <button
-                      onClick={(e) => {
+                      onClick={(e) = aria-label="Icon button"> {
                         e.stopPropagation();
                         onFavoriteClick(item.id);
                       }}

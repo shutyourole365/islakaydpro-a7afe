@@ -103,7 +103,7 @@ export default function NotificationsDropdown({
             <button
               onClick={markAllAsRead}
               className="text-sm text-teal-600 hover:text-teal-700"
-            >
+             aria-label="Icon button">
               Mark all read
             </button>
           )}
@@ -160,7 +160,7 @@ export default function NotificationsDropdown({
       </div>
 
       <div className="px-6 py-3 border-t border-gray-100 bg-gray-50">
-        <button className="w-full text-center text-sm text-teal-600 hover:text-teal-700 font-medium">
+        <button className="w-full text-center text-sm text-teal-600 hover:text-teal-700 font-medium" aria-label="Icon button">
           View All Notifications
         </button>
       </div>

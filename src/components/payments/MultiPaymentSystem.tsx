@@ -153,7 +153,7 @@ export default function MultiPaymentSystem({
             <button
               onClick={onClose}
               className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
-            >
+             aria-label="Icon button">
               ×
             </button>
           </div>
@@ -197,7 +197,7 @@ export default function MultiPaymentSystem({
               {paymentMethods.map((method) => (
                 <button
                   key={method.id}
-                  onClick={() => {
+                  onClick={() = aria-label="Icon button"> {
                     if (method.available) {
                       setSelectedMethod(method.id);
                       setUseInstallments(method.id === 'installments');
@@ -254,7 +254,7 @@ export default function MultiPaymentSystem({
                   {(['weekly', 'biweekly', 'monthly'] as const).map((freq) => (
                     <button
                       key={freq}
-                      onClick={() => setInstallmentFrequency(freq)}
+                      onClick={() = aria-label="Icon button"> setInstallmentFrequency(freq)}
                       className={`py-2 px-3 rounded-lg font-medium capitalize transition-colors ${
                         installmentFrequency === freq
                           ? 'bg-violet-600 text-white'
@@ -305,7 +305,7 @@ export default function MultiPaymentSystem({
                 {savedCards.map((card) => (
                   <button
                     key={card.id}
-                    onClick={() => setSelectedCard(card.id)}
+                    onClick={() = aria-label="Icon button"> setSelectedCard(card.id)}
                     className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
                       selectedCard === card.id
                         ? 'border-teal-500 bg-teal-50'
@@ -333,7 +333,7 @@ export default function MultiPaymentSystem({
                   </button>
                 ))}
                 
-                <button className="w-full p-4 rounded-xl border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors text-gray-600 font-medium">
+                <button className="w-full p-4 rounded-xl border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors text-gray-600 font-medium" aria-label="Icon button">
                   + Add New Card
                 </button>
               </div>
@@ -367,7 +367,7 @@ export default function MultiPaymentSystem({
           <button
             onClick={onClose}
             className="px-6 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
-          >
+           aria-label="Icon button">
             Cancel
           </button>
 
@@ -375,7 +375,7 @@ export default function MultiPaymentSystem({
             onClick={handlePayment}
             disabled={isProcessing}
             className="px-8 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-          >
+           aria-label="Icon button">
             {isProcessing ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

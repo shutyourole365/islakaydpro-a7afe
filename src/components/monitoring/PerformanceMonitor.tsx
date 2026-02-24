@@ -73,7 +73,7 @@ export default function PerformanceMonitor({ onClose }: PerformanceMonitorProps)
           <button
             onClick={onClose}
             className="p-2 rounded-full hover:bg-white/20 transition-colors text-white"
-          >
+           aria-label="Icon button">
             ✕
           </button>
         </div>
@@ -185,7 +185,7 @@ export default function PerformanceMonitor({ onClose }: PerformanceMonitorProps)
                 <button
                   onClick={onClose}
                   className="px-6 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 transition-colors"
-                >
+                 aria-label="Icon button">
                   Close
                 </button>
               </div>

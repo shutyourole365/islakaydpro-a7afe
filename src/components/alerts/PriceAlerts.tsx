@@ -158,7 +158,7 @@ export default function PriceAlerts({
           
           {!isCreating && (
             <button
-              onClick={() => setIsCreating(true)}
+              onClick={() = aria-label="Icon button"> setIsCreating(true)}
               className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl transition-colors"
             >
               <Plus className="w-5 h-5" />
@@ -234,7 +234,7 @@ export default function PriceAlerts({
                 min={Math.floor(equipment.daily_rate * 0.5)}
                 max={equipment.daily_rate - 1}
                 value={newAlert.targetPrice}
-                onChange={(e) => setNewAlert(prev => ({ ...prev, targetPrice: Number(e.target.value) }))}
+                onChange={(e) = aria-label="target-price-range"> setNewAlert(prev => ({ ...prev, targetPrice: Number(e.target.value) }))}
                 className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-orange-500"
                 aria-label="Target price slider"
                 title="Adjust target price"
@@ -272,12 +272,12 @@ export default function PriceAlerts({
               <button
                 onClick={handleCreateAlert}
                 className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium rounded-xl hover:shadow-lg transition-all"
-              >
+               aria-label="Icon button">
                 <Bell className="w-5 h-5" />
                 Create Alert
               </button>
               <button
-                onClick={() => setIsCreating(false)}
+                onClick={() = aria-label="Icon button"> setIsCreating(false)}
                 className="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-colors"
               >
                 Cancel
@@ -337,7 +337,7 @@ export default function PriceAlerts({
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => handleToggleAlert(alert.id)}
+                  onClick={() = aria-label="Icon button"> handleToggleAlert(alert.id)}
                   className={`p-2 rounded-lg transition-colors ${
                     alert.isActive
                       ? 'bg-orange-100 text-orange-600 hover:bg-orange-200'
@@ -348,7 +348,7 @@ export default function PriceAlerts({
                   {alert.isActive ? <Bell className="w-5 h-5" /> : <BellOff className="w-5 h-5" />}
                 </button>
                 <button
-                  onClick={() => handleDeleteAlert(alert.id)}
+                  onClick={() = aria-label="Icon button"> handleDeleteAlert(alert.id)}
                   className="p-2 rounded-lg bg-gray-100 text-gray-400 hover:bg-red-100 hover:text-red-600 transition-colors"
                   title="Delete alert"
                 >
@@ -365,7 +365,7 @@ export default function PriceAlerts({
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No price alerts yet</h3>
             <p className="text-gray-500 mb-4">Create alerts to get notified when prices drop</p>
             <button
-              onClick={() => setIsCreating(true)}
+              onClick={() = aria-label="Icon button"> setIsCreating(true)}
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium rounded-xl hover:shadow-lg transition-all"
             >
               <Plus className="w-5 h-5" />

@@ -291,7 +291,7 @@ export default function EquipmentShowcase({
             <button
               onClick={goToNext}
               className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
-            >
+             aria-label="Icon button">
               <ChevronRight className="w-6 h-6" />
             </button>
           </>
@@ -303,7 +303,7 @@ export default function EquipmentShowcase({
             {equipment.map((_, index) => (
               <button
                 key={index}
-                onClick={() => goToSlide(index)}
+                onClick={() = aria-label="Icon button"> goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
                   index === currentIndex ? 'bg-white' : 'bg-white/50'
                 }`}
@@ -323,7 +323,7 @@ export default function EquipmentShowcase({
               {animationType === 'fade' ? 'F' : animationType === 'slide' ? 'S' : 'Z'}
             </button>
             <button
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              onClick={() = aria-label="Icon button"> setIsAutoPlaying(!isAutoPlaying)}
               className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
               title={isAutoPlaying ? 'Pause auto-play' : 'Start auto-play'}
             >

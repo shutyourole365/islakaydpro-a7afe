@@ -254,7 +254,7 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-3 border-b-2 font-medium text-sm transition-colors ${
                 activeTab === tab.id
                   ? 'border-blue-600 text-blue-600'
@@ -298,7 +298,7 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
                     onClick={handleCreatePost}
                     disabled={!newPost.trim()}
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
+                   aria-label="Icon button">
                     <Send className="w-4 h-4" />
                     Post
                   </button>
@@ -338,7 +338,7 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <button
-                          onClick={() => handleLikePost(post.id)}
+                          onClick={() = aria-label="Icon button"> handleLikePost(post.id)}
                           className={`flex items-center gap-1 px-3 py-1 rounded-lg transition-colors ${
                             post.isLiked
                               ? 'bg-red-100 text-red-600'
@@ -349,19 +349,19 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
                           <span className="text-sm">{post.likes}</span>
                         </button>
 
-                        <button className="flex items-center gap-1 px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button className="flex items-center gap-1 px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Icon button">
                           <MessageCircle className="w-4 h-4" />
                           <span className="text-sm">{post.comments}</span>
                         </button>
 
-                        <button className="flex items-center gap-1 px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button className="flex items-center gap-1 px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Icon button">
                           <Share2 className="w-4 h-4" />
                           <span className="text-sm">{post.shares}</span>
                         </button>
                       </div>
 
                       <button
-                        onClick={() => handleBookmarkPost(post.id)}
+                        onClick={() = aria-label="Icon button"> handleBookmarkPost(post.id)}
                         className={`p-1 rounded-lg transition-colors ${
                           post.isBookmarked
                             ? 'text-blue-600 bg-blue-100'
@@ -421,7 +421,7 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
                 ))}
               </div>
 
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" aria-label="Icon button">
                 <UserPlus className="w-4 h-4" />
                 Connect
               </button>

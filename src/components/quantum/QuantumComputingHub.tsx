@@ -413,7 +413,7 @@ setEquipment(Array.isArray(equipmentData) ? equipmentData : ((equipmentData as {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={() => setActiveTab(id as 'optimizations' | 'simulations' | 'analytics')}
+            onClick={() = aria-label="Icon button"> setActiveTab(id as 'optimizations' | 'simulations' | 'analytics')}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-purple-500 text-purple-600'
@@ -442,7 +442,7 @@ setEquipment(Array.isArray(equipmentData) ? equipmentData : ((equipmentData as {
               ].map(({ type, label, description }) => (
                 <button
                   key={type}
-                  onClick={() => startOptimization(type as QuantumOptimization['type'])}
+                  onClick={() = aria-label="Icon button"> startOptimization(type as QuantumOptimization['type'])}
                   className="w-full p-4 border rounded-lg text-left hover:bg-gray-50 transition-colors"
                 >
                   <h4 className="font-medium">{label}</h4>
@@ -474,7 +474,7 @@ setEquipment(Array.isArray(equipmentData) ? equipmentData : ((equipmentData as {
                     <div className="flex gap-2">
                       {optimization.status === 'completed' && (
                         <button
-                          onClick={() => exportResults(optimization)}
+                          onClick={() = aria-label="Icon button"> exportResults(optimization)}
                           className="p-2 text-gray-600 hover:text-gray-800"
                           title="Export Results"
                         >
@@ -482,7 +482,7 @@ setEquipment(Array.isArray(equipmentData) ? equipmentData : ((equipmentData as {
                         </button>
                       )}
                       <button
-                        onClick={() => setActiveOptimization(optimization)}
+                        onClick={() = aria-label="Icon button"> setActiveOptimization(optimization)}
                         className="px-3 py-1 bg-purple-500 text-white rounded text-sm hover:bg-purple-600"
                       >
                         View
@@ -551,7 +551,7 @@ setEquipment(Array.isArray(equipmentData) ? equipmentData : ((equipmentData as {
                   </div>
 
                   <button
-                    onClick={() => startSimulation(simulation)}
+                    onClick={() = aria-label="Icon button"> startSimulation(simulation)}
                     disabled={simulation.status === 'running'}
                     className="w-full px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 transition-colors"
                   >
@@ -689,7 +689,7 @@ setEquipment(Array.isArray(equipmentData) ? equipmentData : ((equipmentData as {
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold capitalize">{activeOptimization.type} Optimization Results</h2>
                 <button
-                  onClick={() => setActiveOptimization(null)}
+                  onClick={() = aria-label="Icon button"> setActiveOptimization(null)}
                   className="text-gray-500 hover:text-gray-700"
                 >
                   ✕

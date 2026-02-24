@@ -319,7 +319,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             />
           </div>
           <button
-            onClick={() => setShowFilters(!showFilters)}
+            onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
             className={`px-4 py-2 border rounded-lg flex items-center gap-2 transition-colors ${
               showFilters ? 'bg-teal-50 border-teal-500 text-teal-700' : 'hover:bg-gray-50'
             }`}
@@ -328,7 +328,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             Filters
           </button>
           <button
-            onClick={() => setIsAddingNew(true)}
+            onClick={() = aria-label="Icon button"> setIsAddingNew(true)}
             className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
@@ -458,7 +458,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             <div className="flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() => setIsAddingNew(false)}
+                onClick={() = aria-label="Icon button"> setIsAddingNew(false)}
                 className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 Cancel
@@ -466,7 +466,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
               <button
                 type="submit"
                 className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
-              >
+               aria-label="Icon button">
                 Save Warranty
               </button>
             </div>
@@ -554,7 +554,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                             <button
                               key={idx}
                               className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
-                            >
+                             aria-label="Icon button">
                               <FileText className="w-4 h-4 text-gray-500" />
                               {doc}
                               <Download className="w-3 h-3 text-gray-400" />
@@ -566,17 +566,17 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
 
                     <div className="flex justify-end gap-2">
                       <button
-                        onClick={() => handleSetReminder(warranty)}
+                        onClick={() = aria-label="Icon button"> handleSetReminder(warranty)}
                         className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors"
                       >
                         <Bell className="w-4 h-4" />
                         Set Reminder
                       </button>
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors">
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors" aria-label="Icon button">
                         <Edit2 className="w-4 h-4" />
                         Edit
                       </button>
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg text-sm transition-colors">
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg text-sm transition-colors" aria-label="Icon button">
                         <Trash2 className="w-4 h-4" />
                         Delete
                       </button>
@@ -593,7 +593,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
       <div className="p-4 border-t bg-gray-50 rounded-b-xl">
         <div className="flex items-center justify-between text-sm text-gray-500">
           <span>Showing {filteredWarranties.length} of {warranties.length} warranties</span>
-          <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700">
+          <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700" aria-label="Icon button">
             <RefreshCw className="w-4 h-4" />
             Refresh
           </button>
