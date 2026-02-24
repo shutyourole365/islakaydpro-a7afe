@@ -11,6 +11,11 @@ import { PerformanceMonitor } from './utils/performance';
 import { validateEnvironment, logValidationResults } from './utils/envValidation';
 import './index.css';
 
+// Dev-only: hide Vite error overlay from accessibility scans
+if (import.meta.env.DEV) {
+  import('./utils/dev-overlay-a11y');
+}
+
 // Initialize error monitoring first
 errorMonitoring.initialize();
 
