@@ -466,13 +466,7 @@ export default function AIAssistantEnhanced() {
             <span className="text-xs text-white font-bold">AI</span>
           </div>
         </div>
-      </button>
-
-      {isOpen && (
-        <div
-          className={`fixed z-50 bg-white shadow-2xl flex flex-col transition-all duration-300 ${
-            isExpanded ? 'inset-4 rounded-3xl' : 'bottom-6 right-6 w-[420px] h-[680px] rounded-3xl'
-          }`}
+              
         >
           <div className="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-t-3xl">
             <div className="flex items-center gap-3">
@@ -495,10 +489,10 @@ export default function AIAssistantEnhanced() {
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() = aria-label="Icon button"> setShowSettings(!showSettings)}
-                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
-                aria-label="Open assistant settings"
-              >
+                  onClick={() => setShowSettings(!showSettings)}
+                  aria-label={showSettings ? 'Close settings' : 'Open settings'}
+                  className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
+                >
                 <Settings className="w-5 h-5" />
               </button>
               <button
@@ -508,10 +502,10 @@ export default function AIAssistantEnhanced() {
               >
                 {isExpanded ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
               </button>
-              <button
-                onClick={() = aria-label="Icon button"> setIsOpen(false)}
-                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
-                aria-label="Close assistant"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  aria-label={isExpanded ? 'Collapse assistant' : 'Expand assistant'}
+                  className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
+                >
               >
                 <X className="w-5 h-5" />
               </button>

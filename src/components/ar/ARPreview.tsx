@@ -368,7 +368,8 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
                   <Share2 className="w-6 h-6" />
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> setCapturedImage(null)}
+                  onClick={() => setCapturedImage(null)}
+                  aria-label="Clear captured image"
                   className="flex items-center gap-2 px-6 py-3 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors"
                 >
                   <Check className="w-5 h-5" />

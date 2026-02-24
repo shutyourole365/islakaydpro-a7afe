@@ -98,10 +98,11 @@ export default function SocialAuth({ onError, onLoading, mode }: SocialAuthProps
 
       {/* Magic Link Option */}
       <button
-        onClick={async () = aria-label="Icon button"> {
+        onClick={async () => {
           const email = prompt('Enter your email for passwordless login:');
           if (!email) return;
-          
+        }}
+        aria-label="Send magic link"
           onLoading(true);
           const { error } = await supabase.auth.signInWithOtp({
             email,

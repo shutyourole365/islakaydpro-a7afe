@@ -331,10 +331,11 @@ export default function ARVRExperience() {
                     </div>
                     <div className="flex gap-2">
                       <button
-                        onClick={(e) = aria-label="Icon button"> {
+                        onClick={(e) => {
                           e.stopPropagation();
                           startARSession(eq);
                         }}
+                        aria-label={`Start AR session for ${eq.brand} ${eq.model}`}
                         disabled={!arSupported}
                         className="px-3 py-1 bg-purple-500 text-white rounded text-sm hover:bg-purple-600 disabled:opacity-50"
                       >

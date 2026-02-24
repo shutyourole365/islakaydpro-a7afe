@@ -1330,7 +1330,8 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-indigo-50 to-violet-100">
             <div className="max-w-6xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                onClick={() => setCurrentPage('dashboard')}
+                aria-label="Back to dashboard"
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard

@@ -422,7 +422,8 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 />
               </div>
               <button
-                onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
+                onClick={() => setShowFilters(!showFilters)}
+                aria-label={showFilters ? 'Hide filters' : 'Show filters'}
                 className={`p-2 border rounded-lg hover:bg-gray-50 transition-colors ${
                   showFilters ? 'bg-teal-50 border-teal-200' : ''
                 }`}

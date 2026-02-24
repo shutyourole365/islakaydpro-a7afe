@@ -292,7 +292,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   </label>
                   <button
                     type="button"
-                    onClick={() = aria-label="Icon button"> setMode('forgot')}
+                    onClick={() => setMode('forgot')}
+                    aria-label="Forgot password"
                     className="text-sm text-teal-600 hover:text-teal-700 font-medium"
                   >
                     Forgot password?
