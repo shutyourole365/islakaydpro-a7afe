@@ -306,7 +306,8 @@ export default function SmartRecommendations({
 
                   {/* Favorite button */}
                   <button
-                    onClick={(e) = aria-label="Icon button"> {
+                    aria-label="Favorite equipment"
+                    onClick={e => {
                       e.stopPropagation();
                       handleFavoriteClick(eq.id);
                     }}
@@ -352,7 +353,8 @@ export default function SmartRecommendations({
                     {!feedbackGiven.has(eq.id) ? (
                       <div className="flex items-center gap-1">
                         <button
-                          onClick={(e) = aria-label="Icon button"> {
+                          aria-label="Thumbs up feedback"
+                          onClick={e => {
                             e.stopPropagation();
                             handleFeedback(eq.id, true);
                           }}
@@ -362,7 +364,8 @@ export default function SmartRecommendations({
                           <ThumbsUp className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={(e) = aria-label="Icon button"> {
+                          aria-label="Thumbs down feedback"
+                          onClick={e => {
                             e.stopPropagation();
                             handleFeedback(eq.id, false);
                           }}

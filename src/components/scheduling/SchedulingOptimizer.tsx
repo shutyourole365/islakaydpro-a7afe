@@ -294,11 +294,13 @@ export default function SchedulingOptimizer({
 
             <button
               onClick={handleAutoOptimize}
+              aria-label="Auto optimize"
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 autoOptimize
                   ? 'bg-green-600 text-white hover:bg-green-700'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              } aria-label="Icon button">
+              }`}
+            >
               <Zap className="w-4 h-4" />
               {autoOptimize ? 'Auto-Optimizing' : 'Auto Optimize'}
             </button>

@@ -154,7 +154,9 @@ export function LoadingButton({
     <button
       onClick={onClick}
       disabled={loading || disabled}
-      className={`relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${className} aria-label="Icon button">
+      aria-label={loading ? loadingText : 'Button'}
+      className={`relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+    >
       {loading && <LoadingSpinner size="sm" color="white" />}
       <span>{loading ? loadingText : children}</span>
     </button>

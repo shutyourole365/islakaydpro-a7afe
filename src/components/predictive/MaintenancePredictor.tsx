@@ -335,7 +335,8 @@ export default function MaintenancePredictor({
                     </div>
                   </div>
                   <button
-                    onClick={(e) = aria-label="Icon button"> {
+                    aria-label={`Schedule ${item.component} service`}
+                    onClick={e => {
                       e.stopPropagation();
                       const serviceDate = new Date();
                       serviceDate.setDate(serviceDate.getDate() + Math.max(item.daysUntilService, 1));

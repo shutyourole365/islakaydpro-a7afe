@@ -119,7 +119,8 @@ export default function EquipmentRecommendations({
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
         <button
-          onClick={(e) = aria-label="Icon button"> {
+          aria-label="Favorite equipment"
+          onClick={e => {
             e.stopPropagation();
             onFavoriteClick(equipment.id);
           }}
@@ -162,7 +163,8 @@ export default function EquipmentRecommendations({
             <span className="text-sm text-gray-500">/day</span>
           </div>
           <button
-            onClick={(e) = aria-label="Icon button"> {
+            aria-label="View equipment"
+            onClick={e => {
               e.stopPropagation();
               onEquipmentClick(equipment);
             }}
