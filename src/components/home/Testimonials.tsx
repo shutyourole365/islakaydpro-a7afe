@@ -135,6 +135,7 @@ const Testimonials = memo(function Testimonials() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={prevTestimonial}
+              aria-label="Previous testimonial"
               className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
             >
               <ChevronLeft className="w-6 h-6" />
@@ -144,7 +145,8 @@ const Testimonials = memo(function Testimonials() {
               {testimonials.map((_, index) => (
                 <button
                   key={index}
-                  aria-label="Icon button" onClick={() => setCurrentIndex(index)}
+                  onClick={() => setCurrentIndex(index)}
+                  aria-label={`Go to testimonial ${index + 1}`}
                   className={`w-2 h-2 rounded-full transition-all ${
                     index === currentIndex
                       ? 'bg-teal-500 w-8'
@@ -156,8 +158,9 @@ const Testimonials = memo(function Testimonials() {
 
             <button
               onClick={nextTestimonial}
+              aria-label="Next testimonial"
               className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-             aria-label="Icon button">
+             >
               <ChevronRight className="w-6 h-6" />
             </button>
           </div>

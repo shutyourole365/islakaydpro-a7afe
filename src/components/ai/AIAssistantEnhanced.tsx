@@ -451,22 +451,27 @@ export default function AIAssistantEnhanced() {
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true) aria-label="Open AI assistant"
-        className={`fixed bottom-6 right-6 z-50 group ${isOpen ? 'hidden' : ''}`}
-      >
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity animate-pulse" />
-          <div className="relative w-16 h-16 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110">
-            <Bot className="w-8 h-8 text-white" />
-            <Sparkles className="w-4 h-4 text-white absolute -top-1 -right-1 animate-bounce" />
-          </div>
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
-            <span className="text-xs text-white font-bold">AI</span>
-          </div>
-        </div>
-              
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          aria-label="Open AI assistant"
+          className="fixed bottom-6 right-6 z-50 group"
         >
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity animate-pulse" />
+            <div className="relative w-16 h-16 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110">
+              <Bot className="w-8 h-8 text-white" />
+              <Sparkles className="w-4 h-4 text-white absolute -top-1 -right-1 animate-bounce" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+              <span className="text-xs text-white font-bold">AI</span>
+            </div>
+          </div>
+        </button>
+      )}
+
+      {isOpen && (
+        <div className={`fixed bottom-4 right-4 z-50 bg-white rounded-3xl shadow-2xl flex flex-col ${isExpanded ? 'w-[420px] h-[720px]' : 'w-[360px] h-[620px]'}`}>
           <div className="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-t-3xl">
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -481,28 +486,29 @@ export default function AIAssistantEnhanced() {
                   <span className="px-2 py-0.5 bg-white/20 rounded-full text-xs">Pro</span>
                 </h3>
                 <p className="text-sm text-white/80 flex items-center gap-1">
-                  <Zap className="w-3 h-3" />
-                  Powered by Advanced AI
+                  <Zap className="w-3 h-3" /> Powered by Advanced AI
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <button
-                  onClick={() => setShowSettings(!showSettings) aria-label={showSettings ? 'Close settings' : 'Open settings'}
-                  className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
-                >
+                onClick={() => setShowSettings(!showSettings)}
+                aria-label={showSettings ? 'Close settings' : 'Open settings'}
+                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
+              >
                 <Settings className="w-5 h-5" />
               </button>
               <button
-                aria-label="Icon button" onClick={() => setIsExpanded(!isExpanded)}
-                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
+                onClick={() => setIsExpanded(!isExpanded)}
                 aria-label={isExpanded ? 'Minimize assistant' : 'Maximize assistant'}
+                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
               >
                 {isExpanded ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
               </button>
-                  onClick={() => setIsExpanded(!isExpanded) aria-label={isExpanded ? 'Collapse assistant' : 'Expand assistant'}
-                  className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
-                >
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Close assistant"
+                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -517,9 +523,10 @@ export default function AIAssistantEnhanced() {
                   <span className="text-sm font-medium">Voice Responses</span>
                 </div>
                 <button
-                  aria-label="Icon button" onClick={() => setVoiceEnabled(!voiceEnabled)}
-                  className={`w-12 h-6 rounded-full transition-colors ${voiceEnabled ? 'bg-teal-500' : 'bg-gray-300'} aria-label="Toggle voice responses"
-                  aria-pressed={!!voiceEnabled}
+                  onClick={() => setVoiceEnabled(!voiceEnabled)}
+                  aria-label="Toggle voice responses"
+                  aria-pressed={voiceEnabled ? "true" : "false"}
+                  className={`w-12 h-6 rounded-full transition-colors ${voiceEnabled ? 'bg-teal-500' : 'bg-gray-300'}`}
                 >
                   <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${voiceEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
                 </button>
@@ -535,29 +542,25 @@ export default function AIAssistantEnhanced() {
                 </div>
                 <div className="flex items-center gap-3">
                   <button
-                    onClick={async () = aria-label="Icon button"> {
+                    onClick={async () => {
                       const newVal = !aiEnabledByUser;
                       setAiEnabledByUser(prev => !prev);
-
-                      // persist to server if signed in
                       try {
-                        // dynamic require to avoid circular imports in module graph
-                         
                         const { useAuth } = await import('../../contexts/AuthContext');
                         const auth = useAuth ? useAuth() : null;
                         if (auth?.user?.id) {
-                           
                           const db = await import('../../services/database');
                           await db.updateProfile(auth.user.id, { ai_assistant_enabled: newVal });
                           await auth.refreshProfile();
                         }
                       } catch (err) {
-                        // ignore — preference still saved to localStorage
                         console.error('Failed to persist AI preference:', err);
                       }
                     }}
                     disabled={!GLOBAL_AI_ENABLED}
-                    className={`w-12 h-6 rounded-full transition-colors ${aiEnabledByUser && GLOBAL_AI_ENABLED ? 'bg-teal-500' : 'bg-gray-300'} ${!GLOBAL_AI_ENABLED ? 'opacity-50 cursor-not-allowed' : ''} aria-pressed={!!(aiEnabledByUser && GLOBAL_AI_ENABLED)} aria-label="Toggle LLM (Kayd AI)"
+                    aria-label="Toggle LLM (Kayd AI)"
+                    aria-pressed={aiEnabledByUser && GLOBAL_AI_ENABLED ? "true" : "false"}
+                    className={`w-12 h-6 rounded-full transition-colors ${aiEnabledByUser && GLOBAL_AI_ENABLED ? 'bg-teal-500' : 'bg-gray-300'} ${!GLOBAL_AI_ENABLED ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${aiEnabledByUser && GLOBAL_AI_ENABLED ? 'translate-x-6' : 'translate-x-0.5'}`} />
                   </button>
@@ -567,7 +570,11 @@ export default function AIAssistantEnhanced() {
                 </div>
               </div>
 
-              <button onClick={clearConversation} className="mt-1 w-full py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors" aria-label="Icon button">
+              <button
+                onClick={clearConversation}
+                className="mt-1 w-full py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                aria-label="Clear conversation"
+              >
                 Clear Conversation
               </button>
             </div>
@@ -579,6 +586,7 @@ export default function AIAssistantEnhanced() {
                 AI is currently disabled; using offline response rules.
               </div>
             )}
+
             {messages.map((message) => (
               <div key={message.id} className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}>
                 <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${message.role === 'user' ? 'bg-gray-200' : 'bg-gradient-to-br from-teal-500 to-emerald-500'}`}>
@@ -595,7 +603,6 @@ export default function AIAssistantEnhanced() {
                   <div className={`px-4 py-3 rounded-2xl ${message.role === 'user' ? 'bg-teal-500 text-white rounded-tr-sm' : 'bg-gray-100 text-gray-800 rounded-tl-sm'}`}>
                     <div className="text-sm whitespace-pre-line">
                       {message.content.split('\n').map((line, i) => {
-                        // Escape HTML to prevent XSS
                         const escapeHtml = (text: string) => {
                           const htmlMap: Record<string, string> = {
                             '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;',
@@ -607,7 +614,7 @@ export default function AIAssistantEnhanced() {
                       })}
                     </div>
                   </div>
-                  
+
                   {message.role === 'assistant' && (
                     <div className="flex items-center gap-2 mt-2 ml-1">
                       {!feedbackGiven.has(message.id) ? (
@@ -632,7 +639,12 @@ export default function AIAssistantEnhanced() {
                   {message.suggestions && message.suggestions.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-3">
                       {message.suggestions.map((suggestion, index) => (
-                        <button key={index} aria-label="Icon button" onClick={() => handleSuggestionClick(suggestion)} className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-teal-300 hover:bg-teal-50">
+                        <button
+                          key={index}
+                          aria-label="Use suggestion"
+                          onClick={() => handleSuggestionClick(suggestion)}
+                          className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-teal-300 hover:bg-teal-50"
+                        >
                           {suggestion}
                         </button>
                       ))}
@@ -663,7 +675,12 @@ export default function AIAssistantEnhanced() {
                 </p>
                 <div className="grid grid-cols-2 gap-2">
                   {quickActions.map((action, index) => (
-                    <button key={index} aria-label="Icon button" onClick={() => handleSuggestionClick(action.query)} className="flex items-center gap-2 p-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-teal-300 hover:bg-teal-50 text-left">
+                    <button
+                      key={index}
+                      aria-label="Run quick action"
+                      onClick={() => handleSuggestionClick(action.query)}
+                      className="flex items-center gap-2 p-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-teal-300 hover:bg-teal-50 text-left"
+                    >
                       <span className={`w-8 h-8 rounded-lg ${action.color} flex items-center justify-center text-white`}>{action.icon}</span>
                       {action.label}
                     </button>
@@ -679,7 +696,11 @@ export default function AIAssistantEnhanced() {
             <div className="px-4 pb-2">
               <div className="relative inline-block">
                 <img src={uploadedImage} alt="Upload preview" className="w-20 h-20 object-cover rounded-xl" />
-                <button aria-label="Remove uploaded image" onClick={() => setUploadedImage(null)} className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center">
+                <button
+                  aria-label="Remove uploaded image"
+                  onClick={() => setUploadedImage(null)}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center"
+                >
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -694,8 +715,19 @@ export default function AIAssistantEnhanced() {
               <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" /> Trending</span>
             </div>
             <div className="flex items-center gap-2 bg-gray-50 rounded-2xl p-2">
-              <input aria-label="Upload an image" type="file" ref={fileInputRef} accept="image/*" onChange={handleImageUpload} className="hidden" />
-              <button aria-label="Upload an image" onClick={() => fileInputRef.current?.click()} className="p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100">
+              <input
+                aria-label="Upload an image"
+                type="file"
+                ref={fileInputRef}
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+              <button
+                aria-label="Upload an image"
+                onClick={() => fileInputRef.current?.click()}
+                className="p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+              >
                 <Paperclip className="w-5 h-5" />
               </button>
               <input
@@ -707,10 +739,21 @@ export default function AIAssistantEnhanced() {
                 placeholder={isListening ? 'Listening...' : aiIsEnabled ? 'Ask Kayd anything...' : 'AI disabled (offline mode)'}
                 className={`flex-1 bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none text-sm ${isListening ? 'text-teal-600' : ''}`}
               />
-              <button onClick={toggleVoiceInput} disabled={!aiIsEnabled} title={!aiIsEnabled ? 'Voice requires AI enabled' : undefined aria-label={isListening ? 'Stop voice input' : 'Start voice input'} className={`p-2 rounded-xl ${isListening ? 'bg-red-100 text-red-600 animate-pulse' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'} ${!aiIsEnabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <button
+                onClick={toggleVoiceInput}
+                disabled={!aiIsEnabled}
+                title={!aiIsEnabled ? 'Voice requires AI enabled' : undefined}
+                aria-label={isListening ? 'Stop voice input' : 'Start voice input'}
+                className={`p-2 rounded-xl ${isListening ? 'bg-red-100 text-red-600 animate-pulse' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'} ${!aiIsEnabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
                 {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
               </button>
-              <button onClick={handleSend} disabled={(!input.trim() && !uploadedImage) || isTyping} className="p-2 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white disabled:opacity-50" aria-label="Send message">
+              <button
+                onClick={handleSend}
+                disabled={(!input.trim() && !uploadedImage) || isTyping}
+                className="p-2 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white disabled:opacity-50"
+                aria-label="Send message"
+              >
                 <Send className="w-5 h-5" />
               </button>
             </div>

@@ -198,7 +198,6 @@ export default function EquipmentMapEnhanced({
         mapInstance.remove();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handle user location
@@ -337,6 +336,7 @@ export default function EquipmentMapEnhanced({
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
+                  aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 rounded-full"
                 >
                   <X className="w-4 h-4 text-gray-400" />
@@ -346,7 +346,7 @@ export default function EquipmentMapEnhanced({
 
             {showFilters && (
               <button
-                aria-label="Icon button" onClick={() => setShowFilterPanel(!showFilterPanel)}
+                aria-label="Toggle filter panel" onClick={() => setShowFilterPanel(!showFilterPanel)}
                 className={`p-3 rounded-xl shadow-lg transition-colors relative ${
                   showFilterPanel ? 'bg-teal-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                 }`}
@@ -369,7 +369,7 @@ export default function EquipmentMapEnhanced({
                 <button
                   onClick={clearFilters}
                   className="text-sm text-teal-600 hover:text-teal-700"
-                 aria-label="Icon button">
+                 >
                   Clear all
                 </button>
               </div>
@@ -380,7 +380,8 @@ export default function EquipmentMapEnhanced({
                   <input
                     type="number"
                     value={filters.priceMin}
-                    onChange={(e) = "min-price" onClick={() => setFilters({ ...filters, priceMin: Number(e.target.value)})}
+                    onChange={(e) => setFilters({ ...filters, priceMin: Number(e.target.value) })}
+                    placeholder="Min"
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500"
                   />
                 </div>
@@ -389,7 +390,8 @@ export default function EquipmentMapEnhanced({
                   <input
                     type="number"
                     value={filters.priceMax}
-                    onChange={(e) = "max-price" onClick={() => setFilters({ ...filters, priceMax: Number(e.target.value)})}
+                    onChange={(e) => setFilters({ ...filters, priceMax: Number(e.target.value) })}
+                    placeholder="Max"
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500"
                   />
                 </div>
@@ -401,7 +403,7 @@ export default function EquipmentMapEnhanced({
                   {[0, 3, 4, 4.5].map((rating) => (
                     <button
                       key={rating}
-                      aria-label="Icon button" onClick={() => setFilters({ ...filters, rating })}
+                      onClick={() => setFilters({ ...filters, rating })}
                       className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
                         filters.rating === rating
                           ? 'bg-teal-500 text-white'
@@ -416,7 +418,7 @@ export default function EquipmentMapEnhanced({
 
               <div className="flex justify-end mt-4">
                 <button
-                  aria-label="Icon button" onClick={() => setShowFilterPanel(false)}
+                  onClick={() => setShowFilterPanel(false)}
                   className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
                 >
                   Apply Filters
@@ -431,6 +433,7 @@ export default function EquipmentMapEnhanced({
       <div className="absolute top-4 right-4 flex flex-col gap-2 z-[1000]">
         <button
           onClick={toggleFullscreen}
+          aria-label="Toggle fullscreen"
           className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
         >
           <Maximize2 className="w-5 h-5 text-gray-700" />
@@ -438,12 +441,14 @@ export default function EquipmentMapEnhanced({
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <button
             onClick={handleZoomIn}
+            aria-label="Zoom in"
             className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 transition-colors border-b border-gray-100"
           >
             <Plus className="w-5 h-5 text-gray-700" />
           </button>
           <button
             onClick={handleZoomOut}
+            aria-label="Zoom out"
             className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 transition-colors"
           >
             <Minus className="w-5 h-5 text-gray-700" />
@@ -451,6 +456,7 @@ export default function EquipmentMapEnhanced({
         </div>
         <button
           onClick={handleLocate}
+          aria-label="Find my location"
           className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
         >
           <LocateFixed className="w-5 h-5 text-gray-700" />
@@ -468,7 +474,7 @@ export default function EquipmentMapEnhanced({
               ].map((layer) => (
                 <button
                   key={layer.id}
-                  aria-label="Icon button" onClick={() => setMapStyle(layer.id as MapStyle)}
+                  aria-label={layer.label} onClick={() => setMapStyle(layer.id as MapStyle)}
                   className={`p-2 rounded-lg transition-colors ${
                     mapStyle === layer.id
                       ? 'bg-teal-500 text-white'
@@ -488,7 +494,7 @@ export default function EquipmentMapEnhanced({
       <div className="absolute bottom-4 left-4 z-[1000]">
         <div className="bg-white rounded-lg shadow-lg p-1 flex">
           <button
-            aria-label="Icon button" onClick={() => setViewMode('map')}
+            aria-label="Map view" onClick={() => setViewMode('map')}
             className={`p-2 rounded-lg transition-colors ${
               viewMode === 'map' ? 'bg-teal-500 text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
@@ -496,7 +502,7 @@ export default function EquipmentMapEnhanced({
             <MapPin className="w-4 h-4" />
           </button>
           <button
-            aria-label="Icon button" onClick={() => setViewMode('list')}
+            aria-label="List view" onClick={() => setViewMode('list')}
             className={`p-2 rounded-lg transition-colors ${
               viewMode === 'list' ? 'bg-teal-500 text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
@@ -522,12 +528,10 @@ export default function EquipmentMapEnhanced({
               <img
                 src={hoveredEquipment.images[0]}
                 alt={hoveredEquipment.title}
-                className="w-20 h-20 rounded-lg object-cover"
+                className="w-16 h-16 rounded-lg object-cover"
               />
-              <div className="flex-1 min-w-0">
-                <h4 className="font-semibold text-gray-900 truncate">
-                  {hoveredEquipment.title}
-                </h4>
+              <div className="flex-1">
+                <h4 className="font-semibold text-gray-900 truncate">{hoveredEquipment.title}</h4>
                 <p className="text-sm text-gray-500 flex items-center gap-1 mt-1">
                   <MapPin className="w-3 h-3" />
                   {hoveredEquipment.location}
@@ -544,7 +548,7 @@ export default function EquipmentMapEnhanced({
       {/* Fullscreen Close Button */}
       {isFullscreen && (
         <button
-          aria-label="Icon button" onClick={() => setIsFullscreen(false)}
+          aria-label="Exit fullscreen" onClick={() => setIsFullscreen(false)}
           className="absolute top-4 right-16 z-[1001] w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
         >
           <X className="w-5 h-5 text-gray-700" />

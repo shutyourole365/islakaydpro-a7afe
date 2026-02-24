@@ -5,21 +5,18 @@ function hideOverlay(overlay: Element) {
   try {
     overlay.setAttribute('aria-hidden', 'true');
     // If the browser supports inert, use it to make the subtree non-interactive
-    // @ts-ignore
     if ('inert' in HTMLElement.prototype) {
-      // @ts-ignore
       (overlay as HTMLElement).inert = true;
     } else {
       // Fallback: remove tabindex from any focusable descendants
       const els = overlay.querySelectorAll('[tabindex], a, button, input, textarea, select');
       els.forEach((el) => {
-        try { (el as HTMLElement).removeAttribute('tabindex'); } catch (e) {}
+        try { (el as HTMLElement).removeAttribute('tabindex'); } catch { /* ignored */ }
       });
     }
-  } catch (e) {
+  } catch {
     // swallow errors in dev-only helper
-    // eslint-disable-next-line no-console
-    console.debug('dev-overlay-a11y: failed to hide overlay', e);
+    console.debug('dev-overlay-a11y: failed to hide overlay');
   }
 }
 

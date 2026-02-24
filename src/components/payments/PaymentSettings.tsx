@@ -115,7 +115,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              aria-label="Icon button" onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-teal-500 text-white'
@@ -136,7 +136,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
               <div className="bg-gradient-to-br from-teal-500 to-emerald-500 rounded-2xl p-6 text-white">
                 <p className="text-white/80 text-sm mb-1">Available Balance</p>
                 <p className="text-3xl font-bold">${balance.available.toLocaleString()}</p>
-                <button className="mt-4 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors" aria-label="Icon button">
+                <button className="mt-4 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors">
                   Withdraw Funds
                 </button>
               </div>
@@ -184,7 +184,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-gray-900">Recent Transactions</h2>
                 <button
-                  aria-label="Icon button" onClick={() => setActiveTab('transactions')}
+                  onClick={() => setActiveTab('transactions')}
                   className="text-sm text-teal-600 hover:text-teal-700 font-medium"
                 >
                   View all
@@ -223,7 +223,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900">Your Payment Methods</h2>
               <button
-                aria-label="Icon button" onClick={() => setShowAddMethod(true)}
+                onClick={() => setShowAddMethod(true)}
                 className="flex items-center gap-2 px-4 py-2.5 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-colors"
               >
                 <Plus className="w-4 h-4" />
@@ -268,14 +268,14 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
                     </div>
                     <div className="flex items-center gap-2">
                       {!method.isDefault && (
-                        <button className="px-3 py-1.5 text-sm text-teal-600 hover:bg-teal-50 rounded-lg transition-colors" aria-label="Icon button">
+                        <button className="px-3 py-1.5 text-sm text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
                           Set as default
                         </button>
                       )}
                       <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                         <Edit className="w-4 h-4 text-gray-600" />
                       </button>
-                      <button className="p-2 hover:bg-red-50 rounded-lg transition-colors" aria-label="Icon button">
+                      <button className="p-2 hover:bg-red-50 rounded-lg transition-colors" aria-label="Delete payment method">
                         <Trash2 className="w-4 h-4 text-red-600" />
                       </button>
                     </div>
@@ -304,11 +304,11 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900">Transaction History</h2>
               <div className="flex items-center gap-2">
-                <button className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors" aria-label="Icon button">
+                <button className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                   <Filter className="w-4 h-4" />
                   Filter
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors" aria-label="Icon button">
+                <button className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                   <Download className="w-4 h-4" />
                   Export
                 </button>
@@ -367,7 +367,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
                   <div className="flex items-center gap-2">
                     <Building2 className="w-5 h-5 text-gray-400" />
                     <span className="text-gray-900">Chase Bank •••• 9876</span>
-                    <button className="text-teal-600 hover:text-teal-700 font-medium text-sm" aria-label="Icon button">Change</button>
+                    <button className="text-teal-600 hover:text-teal-700 font-medium text-sm">Change</button>
                   </div>
                 </div>
 
@@ -376,7 +376,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
                     <p className="font-medium text-gray-900">Payout Schedule</p>
                     <p className="text-sm text-gray-500">How often you get paid</p>
                   </div>
-                  <select className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
+                  <select aria-label="Payout schedule" className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
                     <option>Weekly (every Monday)</option>
                     <option>Bi-weekly</option>
                     <option>Monthly</option>
@@ -393,6 +393,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
                     <input
                       type="number"
                       defaultValue={50}
+                      aria-label="Minimum payout amount"
                       className="w-24 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                   </div>
@@ -419,11 +420,11 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
               <h2 className="text-xl font-bold text-gray-900 mb-4">Add Payment Method</h2>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
-                  <button className="p-4 border-2 border-teal-500 bg-teal-50 rounded-xl text-center" aria-label="Icon button">
+                  <button className="p-4 border-2 border-teal-500 bg-teal-50 rounded-xl text-center">
                     <CreditCard className="w-8 h-8 text-teal-600 mx-auto mb-2" />
                     <span className="font-medium text-gray-900">Credit Card</span>
                   </button>
-                  <button className="p-4 border-2 border-gray-200 rounded-xl text-center hover:border-gray-300 transition-colors" aria-label="Icon button">
+                  <button className="p-4 border-2 border-gray-200 rounded-xl text-center hover:border-gray-300 transition-colors">
                     <Building2 className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                     <span className="font-medium text-gray-600">Bank Account</span>
                   </button>
@@ -456,12 +457,12 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
                 </div>
                 <div className="flex gap-3 pt-4">
                   <button
-                    aria-label="Icon button" onClick={() => setShowAddMethod(false)}
+                    onClick={() => setShowAddMethod(false)}
                     className="flex-1 py-3 border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
                   >
                     Cancel
                   </button>
-                  <button className="flex-1 py-3 bg-teal-500 text-white font-medium rounded-xl hover:bg-teal-600 transition-colors" aria-label="Icon button">
+                  <button className="flex-1 py-3 bg-teal-500 text-white font-medium rounded-xl hover:bg-teal-600 transition-colors">
                     Add Card
                   </button>
                 </div>

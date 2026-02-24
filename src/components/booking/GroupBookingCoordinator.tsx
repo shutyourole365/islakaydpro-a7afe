@@ -269,7 +269,7 @@ export default function GroupBookingCoordinator({
             <button
               onClick={copyInviteLink}
               className="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg relative"
-             aria-label="Icon button">
+            >
               {copySuccess ? (
                 <Check className="w-5 h-5 text-green-500" />
               ) : (
@@ -277,7 +277,8 @@ export default function GroupBookingCoordinator({
               )}
             </button>
             <button
-              aria-label="Icon button" onClick={() => setShowInviteModal(true)}
+              aria-label="Open invite modal"
+              onClick={() => setShowInviteModal(true)}
               className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />
@@ -442,7 +443,8 @@ export default function GroupBookingCoordinator({
                     </span>
                     {member.role !== 'organizer' && (
                       <button
-                        aria-label="Icon button" onClick={() => removeMember(member.id)}
+                        aria-label="Remove member"
+                        onClick={() => removeMember(member.id)}
                         className="p-1 text-gray-400 hover:text-red-500"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -473,11 +475,11 @@ export default function GroupBookingCoordinator({
 
                 {member.status === 'pending' && (
                   <div className="mt-3 flex gap-2">
-                    <button className="flex-1 py-2 text-sm border dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-center gap-1" aria-label="Icon button">
+                    <button className="flex-1 py-2 text-sm border dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-center gap-1">
                       <Mail className="w-4 h-4" />
                       Resend Invite
                     </button>
-                    <button className="flex-1 py-2 text-sm border dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-center gap-1" aria-label="Icon button">
+                    <button className="flex-1 py-2 text-sm border dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-center gap-1">
                       <MessageCircle className="w-4 h-4" />
                       Send Reminder
                     </button>
@@ -488,7 +490,7 @@ export default function GroupBookingCoordinator({
                   <div className="mt-3">
                     <button
                       className="w-full py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center gap-1"
-                     aria-label="Icon button">
+                     >
                       <CreditCard className="w-4 h-4" />
                       Request Payment
                     </button>
@@ -504,14 +506,16 @@ export default function GroupBookingCoordinator({
       <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-t dark:border-gray-700">
         <div className="flex gap-3">
           <button
-            aria-label="Icon button" onClick={() => setShowSplitModal(true)}
+            aria-label="Adjust split"
+            onClick={() => setShowSplitModal(true)}
             className="flex-1 py-3 border dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-white dark:hover:bg-gray-700 flex items-center justify-center gap-2"
           >
             <Split className="w-5 h-5" />
             Adjust Split
           </button>
           <button
-            disabled={pendingMembers  aria-label="Icon button"> 0 || totalCollected < booking.depositRequired}
+            aria-label="Confirm booking"
+            disabled={pendingMembers > 0 || totalCollected < booking.depositRequired}
             className="flex-1 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             <Check className="w-5 h-5" />
@@ -570,7 +574,7 @@ export default function GroupBookingCoordinator({
 
             <div className="flex gap-3 mt-6">
               <button
-                aria-label="Icon button" onClick={() => setShowInviteModal(false)}
+                onClick={() => setShowInviteModal(false)}
                 className="flex-1 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl"
               >
                 Cancel
@@ -579,7 +583,7 @@ export default function GroupBookingCoordinator({
                 onClick={handleInvite}
                 disabled={!newMemberEmail || !newMemberName}
                 className="flex-1 py-3 bg-purple-600 text-white rounded-xl font-medium disabled:bg-gray-300"
-               aria-label="Icon button">
+               >
                 Send Invite
               </button>
             </div>
@@ -599,7 +603,11 @@ export default function GroupBookingCoordinator({
               {['equal', 'custom', 'by_usage'].map(method => (
                 <button
                   key={method}
-                  aria-label="Icon button"> setBooking(prev => ({ ...prev, splitMethod: method as GroupBookingDetails['splitMethod'] }))}
+                  aria-label={`Select ${method} split`}
+                  onClick={() => setBooking(prev => ({
+                    ...prev,
+                    splitMethod: method as GroupBookingDetails['splitMethod'],
+                  }))}
                   className={`w-full p-4 border-2 rounded-xl text-left ${
                     booking.splitMethod === method
                       ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
@@ -646,13 +654,13 @@ export default function GroupBookingCoordinator({
 
             <div className="flex gap-3">
               <button
-                aria-label="Icon button" onClick={() => setShowSplitModal(false)}
+                onClick={() => setShowSplitModal(false)}
                 className="flex-1 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl"
               >
                 Cancel
               </button>
               <button
-                aria-label="Icon button" onClick={() => setShowSplitModal(false)}
+                onClick={() => setShowSplitModal(false)}
                 className="flex-1 py-3 bg-purple-600 text-white rounded-xl font-medium"
               >
                 Apply Changes

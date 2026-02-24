@@ -381,7 +381,8 @@ export default function EnhancedMap({
                 {[1, 2, 3, 4, 5].map(rating => (
                   <button
                     key={rating}
-                    aria-label="Icon button"> setFilters(f => ({ ...f, rating })) aria-label={`Filter by ${rating} stars and up`}
+                    aria-label={`Filter by ${rating} stars and up`}
+                    onClick={() => setFilters(f => ({ ...f, rating }))}
                     title={`Filter by ${rating} stars and up`}
                     className={`p-1 ${filters.rating >= rating ? 'text-amber-500' : 'text-gray-300'}`}
                   >
@@ -433,10 +434,10 @@ export default function EnhancedMap({
 
       {/* Map Controls */}
       <div className="absolute top-4 right-4 flex flex-col gap-2 z-[1000]">
-        <button onClick={handleZoomIn aria-label="Zoom in" className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50">
+        <button onClick={handleZoomIn} aria-label="Zoom in" className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50">
           <Plus className="w-5 h-5 text-gray-700" />
         </button>
-        <button onClick={handleZoomOut aria-label="Zoom out" className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50">
+        <button onClick={handleZoomOut} aria-label="Zoom out" className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50">
           <Minus className="w-5 h-5 text-gray-700" />
         </button>
         <div className="w-10 h-px bg-gray-200 my-1" />
@@ -458,7 +459,8 @@ export default function EnhancedMap({
           {(['roadmap', 'satellite', 'terrain', 'dark'] as MapStyle[]).map(style => (
             <button
               key={style}
-              aria-label="Icon button" onClick={() => setMapStyle(style)}
+              aria-label={`Set map style ${style}`}
+              onClick={() => setMapStyle(style)}
               className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg ${mapStyle === style ? 'bg-teal-100 text-teal-700' : 'hover:bg-gray-50'}`}
             >
               {style === 'roadmap' && <MapIcon className="w-4 h-4" />}
@@ -570,7 +572,7 @@ export default function EnhancedMap({
             </div>
             {routeMode && userLocation && (
               <button
-                aria-label="Icon button" onClick={() => handleRouteToEquipment(hoveredEquipment)}
+                onClick={() => handleRouteToEquipment(hoveredEquipment)}
                 className="w-full mt-3 py-2 bg-teal-500 text-white rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-teal-600"
               >
                 <Route className="w-4 h-4" />

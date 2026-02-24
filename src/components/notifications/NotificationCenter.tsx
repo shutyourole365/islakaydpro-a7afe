@@ -188,14 +188,14 @@ export default function NotificationCenter({ onBack }: NotificationCenterProps) 
             <button
               onClick={markAllAsRead}
               className="flex items-center gap-2 px-4 py-2.5 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
-             aria-label="Icon button">
+             >
               <MailOpen className="w-4 h-4" />
               Mark all read
             </button>
             <button
               onClick={clearAll}
               className="flex items-center gap-2 px-4 py-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
-             aria-label="Icon button">
+             >
               <Trash2 className="w-4 h-4" />
               Clear all
             </button>
@@ -207,7 +207,7 @@ export default function NotificationCenter({ onBack }: NotificationCenterProps) 
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              aria-label="Icon button" onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-teal-500 text-white'
@@ -261,7 +261,7 @@ export default function NotificationCenter({ onBack }: NotificationCenterProps) 
                       <div className="flex items-center gap-1">
                         {!notification.read && (
                           <button
-                            aria-label="Icon button" onClick={() => markAsRead(notification.id)}
+                            aria-label="Mark as read" onClick={() => markAsRead(notification.id)}
                             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                             title="Mark as read"
                           >
@@ -269,7 +269,7 @@ export default function NotificationCenter({ onBack }: NotificationCenterProps) 
                           </button>
                         )}
                         <button
-                          aria-label="Icon button" onClick={() => deleteNotification(notification.id)}
+                          aria-label="Delete notification" onClick={() => deleteNotification(notification.id)}
                           className="p-2 hover:bg-red-50 rounded-lg transition-colors"
                           title="Delete"
                         >

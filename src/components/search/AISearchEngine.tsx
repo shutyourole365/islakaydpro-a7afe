@@ -191,6 +191,7 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
             <button
               onClick={onClose}
               className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+              aria-label="Close AI search"
             >
               <X className="w-5 h-5" />
             </button>
@@ -251,7 +252,7 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 {suggestions.map((suggestion, idx) => (
                   <button
                     key={idx}
-                    aria-label="Icon button" onClick={() => handleSuggestionClick(suggestion)}
+                    onClick={() => handleSuggestionClick(suggestion)}
                     className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-left group"
                   >
                     <div className="flex-1">
@@ -291,7 +292,6 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 {trendingSearches.map((trend, idx) => (
                   <button
                     key={idx}
-                    aria-label="Icon button"
                     onClick={() => { setQuery(trend.query); analyzeQuery(trend.query); }}
                     className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors text-left"
                   >
@@ -318,7 +318,6 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 ].map((example, idx) => (
                   <button
                     key={idx}
-                    aria-label="Icon button"
                     onClick={() => { setQuery(example.text); analyzeQuery(example.text); }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-gray-50 transition-colors text-left text-sm text-gray-600"
                   >

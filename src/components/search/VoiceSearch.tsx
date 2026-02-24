@@ -117,7 +117,7 @@ export default function VoiceSearch({ onSearch, placeholder = "Search equipment.
                   ? 'bg-red-500 text-white animate-pulse' 
                   : 'bg-gray-100 text-gray-600 hover:bg-teal-500 hover:text-white'
               }`}
-             aria-label="Icon button">
+             aria-label={isListening ? 'Stop voice search' : 'Start voice search'}>
               {isListening ? (
                 <div className="relative">
                   <MicOff className="w-5 h-5" />

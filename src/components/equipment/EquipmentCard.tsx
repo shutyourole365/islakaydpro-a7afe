@@ -68,11 +68,14 @@ const EquipmentCard = memo(function EquipmentCard({
               </h3>
               <button
                 onClick={handleFavoriteClick}
+                aria-label="Toggle favorite"
                 className={`p-1.5 rounded-full transition-all ${
                   isFavorite
                     ? 'bg-red-50 text-red-500'
                     : 'text-gray-400 hover:text-red-500'
-                } aria-label="Icon button">
+                }`}
+               
+                >
                 <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500' : ''}`} />
               </button>
             </div>
@@ -91,7 +94,7 @@ const EquipmentCard = memo(function EquipmentCard({
               <span className="text-gray-500 text-sm">/day</span>
             </div>
             {showQuickBook && (
-              <button className="px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors" aria-label="Icon button">
+              <button className="px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors">
                 Quick Book
               </button>
             )}
@@ -120,11 +123,14 @@ const EquipmentCard = memo(function EquipmentCard({
           />
           <button
             onClick={handleFavoriteClick}
+            aria-label="Toggle favorite"
             className={`absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all ${
               isFavorite
                 ? 'bg-red-500 text-white'
                 : 'bg-white/90 text-gray-600 hover:text-red-500'
-            } aria-label="Icon button">
+            }`}
+           
+            >
             <Heart className={`w-4 h-4 ${isFavorite ? 'fill-white' : ''}`} />
           </button>
         </div>
@@ -165,11 +171,14 @@ const EquipmentCard = memo(function EquipmentCard({
         <div className="absolute top-4 right-4 flex flex-col gap-2">
           <button
             onClick={handleFavoriteClick}
+            aria-label="Toggle favorite"
             className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
               isFavorite
                 ? 'bg-red-500 text-white scale-110'
                 : 'bg-white/90 text-gray-600 hover:bg-white hover:text-red-500'
-            } aria-label="Icon button">
+            }`}
+           
+            >
             <Heart className={`w-5 h-5 ${isFavorite ? 'fill-white' : ''}`} />
           </button>
           {showCompareButton && onAddToComparison && (
@@ -243,7 +252,8 @@ const EquipmentCard = memo(function EquipmentCard({
 
         {showQuickBook && (
           <button
-            onClick={(e) = aria-label="Icon button"> {
+           
+            onClick={(e) => {
               e.stopPropagation();
               onEquipmentClick(equipment);
             }}

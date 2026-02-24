@@ -112,7 +112,7 @@ export default function HelpCenter() {
             {filteredFAQs.map((faq, index) => (
               <div key={index} className="border border-gray-200 rounded-lg">
                 <button
-                  aria-label="Icon button" onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
+                  onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
                   <span className="font-medium text-gray-900">{faq.question}</span>

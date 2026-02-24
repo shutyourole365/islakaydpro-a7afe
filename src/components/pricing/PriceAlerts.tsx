@@ -185,7 +185,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
           ].map(tab => (
             <button
               key={tab.id}
-              aria-label="Icon button" onClick={() => setActiveTab(tab.id as 'active' | 'triggered' | 'settings')}
+              onClick={() => setActiveTab(tab.id as 'active' | 'triggered' | 'settings')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'bg-white text-orange-600'
@@ -204,7 +204,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
         {/* Create Alert Button */}
         {(activeTab === 'active' || activeTab === 'triggered') && !isCreating && (
           <button
-            aria-label="Icon button" onClick={() => setIsCreating(true)}
+            onClick={() => setIsCreating(true)}
             className="w-full mb-4 p-4 border-2 border-dashed border-orange-200 rounded-xl text-orange-600 hover:border-orange-400 hover:bg-orange-50 transition-colors flex items-center justify-center gap-2"
           >
             <Plus className="w-5 h-5" />
@@ -223,6 +223,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
               <input
                 type="text"
                 placeholder="Equipment name or search term"
+                aria-label="Equipment name or search term"
                 value={newAlert.equipmentTitle}
                 onChange={(e) => setNewAlert(prev => ({ ...prev, equipmentTitle: e.target.value }))}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
@@ -230,6 +231,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
               <div className="grid grid-cols-2 gap-3">
                 <select
                   value={newAlert.category}
+                  aria-label="Equipment category"
                   onChange={(e) => setNewAlert(prev => ({ ...prev, category: e.target.value }))}
                   className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
                 >
@@ -244,6 +246,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                   <input
                     type="number"
                     placeholder="Target Price"
+                    aria-label="Target price"
                     value={newAlert.targetPrice || ''}
                     onChange={(e) => setNewAlert(prev => ({ ...prev, targetPrice: Number(e.target.value) }))}
                     className="w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
@@ -253,6 +256,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
               <input
                 type="text"
                 placeholder="Location (optional)"
+                aria-label="Alert location"
                 value={newAlert.location}
                 onChange={(e) => setNewAlert(prev => ({ ...prev, location: e.target.value }))}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
@@ -262,11 +266,11 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                   onClick={createAlert}
                   disabled={!newAlert.equipmentTitle || !newAlert.targetPrice}
                   className="flex-1 py-2 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                 aria-label="Icon button">
+                 >
                   Create Alert
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => setIsCreating(false)}
+                  onClick={() => setIsCreating(false)}
                   className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                 >
                   Cancel
@@ -306,13 +310,13 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                       </div>
                       <div className="flex items-center gap-2">
                         <button
-                          aria-label="Icon button" onClick={() => toggleAlert(alert.id)}
+                          aria-label="Edit alert" onClick={() => toggleAlert(alert.id)}
                           className="p-2 hover:bg-gray-100 rounded-lg"
                         >
                           <Edit2 className="w-4 h-4 text-gray-400" />
                         </button>
                         <button
-                          aria-label="Icon button" onClick={() => deleteAlert(alert.id)}
+                          aria-label="Delete alert" onClick={() => deleteAlert(alert.id)}
                           className="p-2 hover:bg-red-50 rounded-lg"
                         >
                           <Trash2 className="w-4 h-4 text-red-400" />
@@ -375,7 +379,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                         <div className="font-bold text-green-600">${alert.currentPrice}/day</div>
                       </div>
                     </div>
-                    <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700" aria-label="Icon button">
+                    <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">
                       Book Now
                     </button>
                   </div>
@@ -413,7 +417,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                       </div>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
+                      <input type="checkbox" defaultChecked className="sr-only peer" aria-label={pref.label} />
                       <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600"></div>
                     </label>
                   </div>

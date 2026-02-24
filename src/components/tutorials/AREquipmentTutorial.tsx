@@ -340,7 +340,7 @@ export default function AREquipmentTutorial({
                   onClick={submitQuiz}
                   disabled={Object.keys(quizAnswers).length !== quizQuestions.length}
                   className="w-full mt-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl disabled:opacity-50"
-                 aria-label="Icon button">
+                 >
                   Submit Answers
                 </button>
               </>
@@ -386,7 +386,7 @@ export default function AREquipmentTutorial({
                   <button
                     onClick={onClose}
                     className="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl"
-                   aria-label="Icon button">
+                   >
                     {progress.quizScore >= 70 ? 'Get Started!' : 'Close'}
                   </button>
                 </div>
@@ -586,7 +586,7 @@ export default function AREquipmentTutorial({
             onClick={handlePrevStep}
             disabled={progress.currentStep === 0}
             className="flex items-center gap-2 px-4 py-2 text-gray-600 disabled:opacity-50"
-           aria-label="Icon button">
+           >
             <ChevronLeft className="w-5 h-5" />
             Previous
           </button>
@@ -614,7 +614,7 @@ export default function AREquipmentTutorial({
                 ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
                 : 'bg-gray-100 text-gray-400'
             }`}
-           aria-label="Icon button">
+           >
             {progress.currentStep === steps.length - 1 ? 'Complete' : 'Next'}
             <ChevronRight className="w-5 h-5" />
           </button>

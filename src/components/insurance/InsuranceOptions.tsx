@@ -99,7 +99,7 @@ export default function InsuranceOptions({
             <h3 className="font-semibold text-gray-900">Protection Plans</h3>
           </div>
           <button
-            aria-label="Icon button" onClick={() => setShowInfo(!showInfo)}
+            aria-label="Toggle protection plan information" onClick={() => setShowInfo(!showInfo)}
             className="p-1.5 rounded-full hover:bg-gray-100 transition-colors"
           >
             <Info className="w-4 h-4 text-gray-400" />
@@ -118,7 +118,7 @@ export default function InsuranceOptions({
 
       <div className="p-4 space-y-3">
         <button
-          aria-label="Icon button" onClick={() => onSelectPlan(null)}
+          onClick={() => onSelectPlan(null)}
           className={`
             w-full p-4 rounded-xl border-2 transition-all text-left
             ${!selectedPlan
@@ -164,7 +164,7 @@ export default function InsuranceOptions({
               `}
             >
               <button
-                aria-label="Icon button" onClick={() => onSelectPlan(plan.id)}
+                onClick={() => onSelectPlan(plan.id)}
                 className="w-full p-4 text-left"
               >
                 <div className="flex items-center justify-between">
@@ -203,7 +203,7 @@ export default function InsuranceOptions({
               </button>
 
               <button
-                aria-label="Icon button" onClick={() => toggleExpand(plan.id)}
+                onClick={() => toggleExpand(plan.id)}
                 className="w-full px-4 py-2 border-t border-gray-100 flex items-center justify-center gap-1 text-sm text-gray-500 hover:bg-gray-50 transition-colors"
               >
                 {isExpanded ? 'Hide details' : 'Show details'}

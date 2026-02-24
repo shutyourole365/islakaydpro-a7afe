@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { Component, ReactNode, ErrorInfo } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 
@@ -94,14 +93,14 @@ export class ErrorBoundary extends Component<Props, State> {
               <button
                 onClick={this.handleReset}
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-               aria-label="Icon button">
+               >
                 <RefreshCw className="w-5 h-5" />
                 Try Again
               </button>
               <button
                 onClick={this.handleGoHome}
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-300 transition-colors"
-               aria-label="Icon button">
+               >
                 <Home className="w-5 h-5" />
                 Go to Homepage
               </button>

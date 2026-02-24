@@ -90,6 +90,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
         
         <button
           onClick={onClose}
+          aria-label="Close 3D viewer"
           className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
         >
           <X className="w-6 h-6 text-gray-400" />
@@ -180,7 +181,8 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
           {images.map((img, index) => (
             <button
               key={index}
-              aria-label="Icon button"> {
+              aria-label={`View angle ${index + 1}`}
+              onClick={() => {
                 setCurrentIndex(index);
                 setRotation((index / images.length) * 360);
               }}
@@ -198,7 +200,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
       <div className="p-4 border-t border-gray-800">
         <div className="flex items-center justify-center gap-3">
           <button
-            aria-label="Icon button" onClick={() => setIsRotating(!isRotating)}
+            onClick={() => setIsRotating(!isRotating)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
               isRotating
                 ? 'bg-teal-500 text-white'
@@ -212,6 +214,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
           <div className="flex items-center bg-gray-800 rounded-lg">
             <button
               onClick={handleZoomOut}
+              aria-label="Zoom out"
               className="p-2 hover:bg-gray-700 rounded-l-lg transition-colors"
             >
               <ZoomOut className="w-5 h-5 text-gray-300" />
@@ -219,14 +222,15 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
             <div className="w-px h-6 bg-gray-700" />
             <button
               onClick={handleZoomIn}
+              aria-label="Zoom in"
               className="p-2 hover:bg-gray-700 rounded-r-lg transition-colors"
-             aria-label="Icon button">
+             >
               <ZoomIn className="w-5 h-5 text-gray-300" />
             </button>
           </div>
 
           <button
-            aria-label="Icon button" onClick={() => setShowMeasurements(!showMeasurements)}
+            onClick={() => setShowMeasurements(!showMeasurements)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
               showMeasurements
                 ? 'bg-purple-500 text-white'
@@ -240,7 +244,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
           <button
             onClick={handleReset}
             className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
-           aria-label="Icon button">
+           >
             <Maximize2 className="w-5 h-5" />
             <span>Reset</span>
           </button>

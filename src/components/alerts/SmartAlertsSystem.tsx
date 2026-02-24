@@ -387,7 +387,8 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setActiveView(activeView === 'alerts' ? 'settings' : 'alerts') aria-label="Toggle alerts view"
+              onClick={() => setActiveView(activeView === 'alerts' ? 'settings' : 'alerts')}
+              aria-label="Toggle alerts view"
               className="p-2 hover:bg-white/10 rounded-lg transition-colors"
             >
               {activeView === 'alerts' ? (
@@ -397,7 +398,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
               )}
             </button>
             {onClose && (
-              <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
+              <button onClick={onClose} aria-label="Close alerts" className="p-2 hover:bg-white/10 rounded-lg transition-colors">
                 <X className="w-5 h-5 text-white" />
               </button>
             )}
@@ -421,7 +422,8 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 />
               </div>
               <button
-                onClick={() => setShowFilters(!showFilters) aria-label={showFilters ? 'Hide filters' : 'Show filters'}
+                onClick={() => setShowFilters(!showFilters)}
+                aria-label={showFilters ? 'Hide filters' : 'Show filters'}
                 className={`p-2 border rounded-lg hover:bg-gray-50 transition-colors ${
                   showFilters ? 'bg-teal-50 border-teal-200' : ''
                 }`}
@@ -432,7 +434,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 <button
                   onClick={markAllAsRead}
                   className="px-3 py-2 text-sm text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-                 aria-label="Icon button">
+                 >
                   Mark all read
                 </button>
               )}
@@ -443,6 +445,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value as AlertType | 'all')}
+                  aria-label="Filter by alert type"
                   className="px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="all">All Types</option>
@@ -457,6 +460,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 <select
                   value={filterPriority}
                   onChange={(e) => setFilterPriority(e.target.value as AlertPriority | 'all')}
+                  aria-label="Filter by priority"
                   className="px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="all">All Priorities</option>
@@ -512,14 +516,18 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">{alert.message}</p>
                         <div className="flex items-center justify-between mt-3">
                           {alert.action_url && (
-                            <button className="text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1" aria-label="Icon button">
+                            <button
+                              aria-label={alert.action_label || 'View details'}
+                              className="text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1"
+                            >
                               {alert.action_label}
                               <ChevronRight className="w-4 h-4" />
                             </button>
                           )}
                           <div className="flex items-center gap-2">
                             <button
-                              onClick={(e) = aria-label="Icon button"> {
+                              aria-label="Dismiss"
+                              onClick={(e) => {
                                 e.stopPropagation();
                                 dismissAlert(alert.id);
                               }}
@@ -529,6 +537,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                               <X className="w-4 h-4" />
                             </button>
                             <button
+                              aria-label="More options"
                               className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors"
                               title="More options"
                             >
@@ -573,7 +582,8 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                     <div className="flex items-center gap-2">
                       <h4 className="font-medium text-gray-900">{pref.label}</h4>
                       <button
-                        aria-label="Icon button" onClick={() => togglePreference(pref.type)}
+                        onClick={() => togglePreference(pref.type)}
+                        aria-label={`Toggle ${pref.label} notifications`}
                         className={`relative w-10 h-5 rounded-full transition-colors ${
                           pref.enabled ? 'bg-teal-600' : 'bg-gray-300'
                         }`}
@@ -592,7 +602,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 {pref.enabled && (
                   <div className="mt-3 flex gap-3">
                     <button
-                      aria-label="Icon button" onClick={() => toggleChannel(pref.type, 'push')}
+                      onClick={() => toggleChannel(pref.type, 'push')}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
                         pref.channels.push
                           ? 'bg-teal-100 text-teal-700'
@@ -603,7 +613,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                       Push
                     </button>
                     <button
-                      aria-label="Icon button" onClick={() => toggleChannel(pref.type, 'email')}
+                      onClick={() => toggleChannel(pref.type, 'email')}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
                         pref.channels.email
                           ? 'bg-teal-100 text-teal-700'
@@ -614,7 +624,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                       Email
                     </button>
                     <button
-                      aria-label="Icon button" onClick={() => toggleChannel(pref.type, 'sms')}
+                      onClick={() => toggleChannel(pref.type, 'sms')}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
                         pref.channels.sms
                           ? 'bg-teal-100 text-teal-700'
@@ -633,10 +643,10 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
           {/* Quick Actions */}
           <div className="p-4 border-t bg-gray-50">
             <div className="flex gap-3">
-              <button className="flex-1 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Icon button">
+              <button className="flex-1 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
                 Turn all off
               </button>
-              <button className="flex-1 py-2 text-sm text-teal-600 hover:bg-teal-50 rounded-lg transition-colors" aria-label="Icon button">
+              <button className="flex-1 py-2 text-sm text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
                 Reset to defaults
               </button>
             </div>

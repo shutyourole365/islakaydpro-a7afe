@@ -286,13 +286,13 @@ export default function AIDamageDetection({
                     <button
                       onClick={startCamera}
                       className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-colors"
-                     aria-label="Icon button">
+                     >
                       <Camera className="w-12 h-12 text-gray-400 mb-3" />
                       <span className="font-medium text-gray-700">Take Photo</span>
                       <span className="text-sm text-gray-500">Use camera</span>
                     </button>
                     <button
-                      aria-label="Icon button"
+                     
                       onClick={() => fileInputRef.current?.click()}
                       className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-colors"
                     >
@@ -366,7 +366,7 @@ export default function AIDamageDetection({
                 onClick={analyzePhotos}
                 disabled={photos.length === 0 || analyzing}
                 className="w-full py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-               aria-label="Icon button">
+               >
                 {analyzing ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -430,9 +430,9 @@ export default function AIDamageDetection({
                     {/* Comparison Toggle */}
                     {previousPhotos.length > 0 && (
                       <button
-                        aria-label="Icon button" onClick={() => setShowComparison(!showComparison)}
-                        className="absolute top-4 right-4 px-3 py-1.5 bg-white/90 rounded-full text-sm font-medium text-gray-700 shadow"
+                        onClick={() => setShowComparison(!showComparison)}
                         aria-label={showComparison ? 'Hide comparison' : 'Show comparison'}
+                        className="absolute top-4 right-4 px-3 py-1.5 bg-white/90 rounded-full text-sm font-medium text-gray-700 shadow"
                         title={showComparison ? 'Hide comparison' : 'Show comparison'}
                       >
                         <Eye className="w-4 h-4 inline mr-1" aria-hidden="true" />
@@ -443,13 +443,14 @@ export default function AIDamageDetection({
 
                   {/* Photo Thumbnails */}
                   <div className="flex gap-2 overflow-x-auto">
-                      {photos.map((photo, index) => (
+                    {photos.map((photo, index) => (
                       <button
                         key={index}
-                        aria-label="Icon button" onClick={() => setActivePhoto(index)}
+                        aria-label={`View photo ${index + 1}`}
+                        onClick={() => setActivePhoto(index)}
                         className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
                           activePhoto === index ? 'border-orange-500' : 'border-transparent'
-                        } aria-label={`View photo ${index + 1}`}
+                        }`}
                         title={`View photo ${index + 1}`}
                       >
                         <img src={photo} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
@@ -485,7 +486,7 @@ export default function AIDamageDetection({
                       {damages.map((damage) => (
                         <button
                           key={damage.id}
-                          aria-label="Icon button" onClick={() => setSelectedDamage(damage)}
+                          onClick={() => setSelectedDamage(damage)}
                           className={`w-full text-left p-4 rounded-xl border-2 transition-colors ${
                             selectedDamage?.id === damage.id
                               ? 'border-orange-500 bg-orange-50'
@@ -549,7 +550,8 @@ export default function AIDamageDetection({
               {/* Actions */}
               <div className="flex gap-3 mt-6">
                 <button
-                  aria-label="Icon button"> {
+                 
+                  onClick={() => {
                     setAnalyzed(false);
                     setDamages([]);
                   }}
@@ -561,7 +563,8 @@ export default function AIDamageDetection({
                 <button
                   onClick={handleComplete}
                   className="flex-1 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
-                 aria-label="Icon button">
+                  aria-label="Generate damage report"
+                >
                   <FileText className="w-5 h-5" />
                   Generate Report
                 </button>

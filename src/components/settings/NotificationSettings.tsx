@@ -69,7 +69,6 @@ export default function NotificationSettings() {
   useEffect(() => {
     checkSubscriptionStatus();
     loadPreferences();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkSubscriptionStatus = async () => {
@@ -256,14 +255,14 @@ export default function NotificationSettings() {
             <button
               onClick={handleDisablePush}
               className="px-4 py-2 bg-white/20 rounded-lg text-sm font-medium hover:bg-white/30 transition-colors"
-             aria-label="Icon button">
+             >
               Disable
             </button>
           ) : subscriptionStatus !== 'unsupported' && subscriptionStatus !== 'denied' ? (
             <button
               onClick={handleEnablePush}
               className="px-4 py-2 bg-white rounded-lg text-teal-600 text-sm font-medium hover:bg-white/90 transition-colors"
-             aria-label="Icon button">
+             >
               Enable
             </button>
           ) : null}
@@ -273,7 +272,7 @@ export default function NotificationSettings() {
           <button
             onClick={testNotification}
             className="mt-4 w-full py-2.5 bg-white/20 rounded-xl text-sm font-medium hover:bg-white/30 transition-colors flex items-center justify-center gap-2"
-           aria-label="Icon button">
+           >
             <Bell className="w-4 h-4" />
             Send Test Notification
           </button>
@@ -355,8 +354,7 @@ export default function NotificationSettings() {
                   type="checkbox"
                   checked={preferences[key as keyof NotificationPreferences] as boolean}
                   onChange={(e) => updatePreference(key as keyof NotificationPreferences, e.target.checked)}
-                  disabled={subscriptionStatus !== 'subscribed' || isSaving}
-                  className="sr-only peer"
+                  disabled={subscriptionStatus !== 'subscribed' || isSaving}                aria-label={label}                  className="sr-only peer"
                 />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500 peer-disabled:opacity-50"></div>
               </div>
@@ -384,6 +382,7 @@ export default function NotificationSettings() {
                 checked={preferences.quiet_hours_enabled}
                 onChange={(e) => updatePreference('quiet_hours_enabled', e.target.checked)}
                 disabled={isSaving}
+                aria-label="Enable quiet hours"
                 className="sr-only peer"
               />
               <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500"></div>
@@ -402,6 +401,7 @@ export default function NotificationSettings() {
                   type="time"
                   value={preferences.quiet_hours_start}
                   onChange={(e) => updatePreference('quiet_hours_start', e.target.value)}
+                  title="Quiet hours start time"
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-500"
                 />
               </div>
@@ -413,6 +413,7 @@ export default function NotificationSettings() {
                   type="time"
                   value={preferences.quiet_hours_end}
                   onChange={(e) => updatePreference('quiet_hours_end', e.target.value)}
+                  title="Quiet hours end time"
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-500"
                 />
               </div>
@@ -426,6 +427,7 @@ export default function NotificationSettings() {
               <select
                 value={preferences.timezone}
                 onChange={(e) => updatePreference('timezone', e.target.value)}
+                aria-label="Timezone"
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-500"
               >
                 <option value="America/Los_Angeles">Pacific Time (PT)</option>

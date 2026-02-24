@@ -73,6 +73,7 @@ export function Modal({
               <button
                 onClick={onClose}
                 className="p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors -m-2"
+                aria-label="Close dialog"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -130,7 +131,9 @@ export function ConfirmModal({
           <button
             onClick={onConfirm}
             disabled={loading}
-            className={`px-5 py-2.5 rounded-xl text-white font-medium transition-colors focus:outline-none focus:ring-4 disabled:opacity-50 ${confirmStyles[variant]} aria-label="Icon button">
+            aria-label="Confirm action"
+            className={`px-5 py-2.5 rounded-xl text-white font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 ${confirmStyles[variant]}`}
+          >
             {loading ? 'Processing...' : confirmText}
           </button>
         </div>

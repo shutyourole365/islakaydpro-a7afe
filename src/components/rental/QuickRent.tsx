@@ -211,7 +211,7 @@ export default function QuickRent({
             <button
               onClick={onClose}
               className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl font-medium hover:bg-gray-200"
-             aria-label="Icon button">
+             >
               Close
             </button>
           </div>
@@ -274,7 +274,7 @@ export default function QuickRent({
                 {quickRentDurations.map((duration) => (
                   <button
                     key={duration.days}
-                    aria-label="Icon button" onClick={() => setSelectedDuration(duration)}
+                    onClick={() => setSelectedDuration(duration)}
                     className={`p-3 rounded-xl border-2 text-center transition-all ${
                       selectedDuration.days === duration.days
                         ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -306,7 +306,7 @@ export default function QuickRent({
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 <button
-                  aria-label="Icon button" onClick={() => setDeliveryOption('pickup')}
+                  onClick={() => setDeliveryOption('pickup')}
                   className={`p-3 rounded-xl border-2 flex items-center gap-3 ${
                     deliveryOption === 'pickup'
                       ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -320,7 +320,7 @@ export default function QuickRent({
                   </div>
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => setDeliveryOption('delivery')}
+                  onClick={() => setDeliveryOption('delivery')}
                   className={`p-3 rounded-xl border-2 flex items-center gap-3 ${
                     deliveryOption === 'delivery'
                       ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -345,7 +345,7 @@ export default function QuickRent({
                 {savedPaymentMethods.map((method) => (
                   <button
                     key={method.id}
-                    aria-label="Icon button" onClick={() => setSelectedPayment(method.id)}
+                    onClick={() => setSelectedPayment(method.id)}
                     className={`w-full p-3 rounded-xl border-2 flex items-center gap-3 ${
                       selectedPayment === method.id
                         ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -411,7 +411,7 @@ export default function QuickRent({
                 onClick={handleQuickRent}
                 disabled={!selectedPayment}
                 className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold flex items-center justify-center gap-3 hover:from-emerald-600 hover:to-teal-700 disabled:opacity-50 disabled:cursor-not-allowed group"
-               aria-label="Icon button">
+               >
                 <Zap className="w-6 h-6 group-hover:animate-pulse" />
                 Quick Rent Now
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -456,7 +456,7 @@ export default function QuickRent({
                 <button
                   onClick={cancelQuickRent}
                   className="px-8 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                 aria-label="Icon button">
+                 >
                   Cancel
                 </button>
               </>

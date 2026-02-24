@@ -306,7 +306,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
             />
           </div>
           <button
-            aria-label="Icon button" onClick={() => setShowFilters(!showFilters)}
+            onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center gap-2 px-4 py-3 rounded-lg border transition-colors ${
               showFilters
                 ? 'bg-blue-100 text-blue-700 border-blue-300'
@@ -329,7 +329,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
               {aiSuggestions.map((suggestion, index) => (
                 <button
                   key={index}
-                  aria-label="Icon button" onClick={() => handleSuggestionClick(suggestion)}
+                  onClick={() => handleSuggestionClick(suggestion)}
                   className="flex-shrink-0 bg-purple-50 hover:bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-purple-200"
                 >
                   {suggestion.title}
@@ -366,7 +366,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
             <button
               onClick={clearFilters}
               className="text-sm text-gray-500 hover:text-gray-700 underline"
-             aria-label="Icon button">
+             >
               Clear all
             </button>
           </div>
@@ -441,7 +441,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
                     key={rating}
-                    aria-label="Icon button"
+                    aria-label={`Set minimum rating to ${rating} stars`}
                     onClick={() => setFilters(prev => ({ ...prev, rating: prev.rating === rating ? 0 : rating }))}
                     className={`flex items-center gap-1 px-2 py-1 rounded ${
                       filters.rating >= rating
@@ -465,7 +465,6 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
               {availableFeatures.slice(0, 12).map((feature) => (
                 <button
                   key={feature}
-                  aria-label="Icon button"
                   onClick={() => setFilters(prev => ({
                     ...prev,
                     features: prev.features.includes(feature)
@@ -549,7 +548,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
                   <span className="text-lg font-bold text-gray-900">${eq.daily_rate}</span>
                   <span className="text-sm text-gray-600">/day</span>
                 </div>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium" aria-label="Icon button">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
                   View Details
                 </button>
               </div>
@@ -582,7 +581,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
           <button
             onClick={clearFilters}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-           aria-label="Icon button">
+           >
             Clear Filters
           </button>
         </div>

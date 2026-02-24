@@ -193,7 +193,7 @@ export default function BlockchainContract({
               <span className="text-sm text-gray-500">Contract Address</span>
               <div className="flex items-center gap-2">
                 <button
-                  aria-label="Icon button" onClick={() => copyToClipboard(contractAddress)}
+                  onClick={() => copyToClipboard(contractAddress)}
                   className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   <Copy className="w-4 h-4 text-gray-400" />
@@ -251,7 +251,7 @@ export default function BlockchainContract({
           {/* Contract Terms Accordion */}
           <div className="space-y-3 mb-6">
             <button
-              aria-label="Icon button" onClick={() => setExpandedSection(expandedSection === 'terms' ? null : 'terms')}
+              onClick={() => setExpandedSection(expandedSection === 'terms' ? null : 'terms')}
               className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             >
               <div className="flex items-center gap-3">
@@ -292,7 +292,7 @@ export default function BlockchainContract({
             )}
 
             <button
-              aria-label="Icon button" onClick={() => setExpandedSection(expandedSection === 'security' ? null : 'security')}
+              onClick={() => setExpandedSection(expandedSection === 'security' ? null : 'security')}
               className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             >
               <div className="flex items-center gap-3">
@@ -349,7 +349,7 @@ export default function BlockchainContract({
               </p>
 
               <div className="flex items-center justify-center gap-2 text-sm text-gray-500 mb-6">
-                <input type="checkbox" id="agree" className="rounded border-gray-300" / aria-label="agree">
+                <input type="checkbox" id="agree" className="rounded border-gray-300" />
                 <label htmlFor="agree">I have read and agree to the contract terms</label>
               </div>
 
@@ -357,7 +357,7 @@ export default function BlockchainContract({
                 onClick={handleSign}
                 disabled={signing}
                 className="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-               aria-label="Icon button">
+               >
                 {signing ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -387,7 +387,7 @@ export default function BlockchainContract({
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-gray-500">Transaction Hash</span>
                   <button
-                    aria-label="Icon button" onClick={() => copyToClipboard(transactionHash)}
+                    onClick={() => copyToClipboard(transactionHash)}
                     className="p-1 hover:bg-gray-100 rounded"
                   >
                     <Copy className="w-4 h-4 text-gray-400" />

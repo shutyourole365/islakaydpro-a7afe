@@ -172,6 +172,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+            aria-label="Close authentication dialog"
           >
             <X className="w-6 h-6 text-gray-500" />
           </button>
@@ -267,7 +268,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                     />
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword) aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                     >
                       {showPassword ? (
@@ -291,7 +293,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   </label>
                   <button
                     type="button"
-                    onClick={() => setMode('forgot') aria-label="Forgot password"
+                    onClick={() => setMode('forgot')}
+                    aria-label="Forgot password"
                     className="text-sm text-teal-600 hover:text-teal-700 font-medium"
                   >
                     Forgot password?
@@ -303,7 +306,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 type="submit"
                 disabled={loading}
                 className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-               aria-label="Icon button">
+               >
                 {loading ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
@@ -352,7 +355,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 <p className="text-gray-600">
                   Don't have an account?{' '}
                   <button
-                    aria-label="Icon button"> {
+                   
+                    onClick={() => {
                       setMode('signup');
                       setError('');
                     }}
@@ -366,7 +370,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 <p className="text-gray-600">
                   Already have an account?{' '}
                   <button
-                    aria-label="Icon button"> {
+                   
+                    onClick={() => {
                       setMode('signin');
                       setError('');
                       setSuccess('');

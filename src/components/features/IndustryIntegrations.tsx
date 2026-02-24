@@ -206,7 +206,7 @@ export default function IndustryIntegrations({ onBack }: IndustryIntegrationsPro
               ].map(category => (
                 <button
                   key={category.id}
-                  aria-label="Icon button" onClick={() => setSelectedCategory(category.id as 'construction' | 'project-management' | 'equipment' | 'analytics')}
+                  onClick={() => setSelectedCategory(category.id as 'construction' | 'project-management' | 'equipment' | 'analytics')}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === category.id
                       ? 'bg-white text-blue-600'

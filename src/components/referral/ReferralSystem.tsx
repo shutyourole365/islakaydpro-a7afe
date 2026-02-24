@@ -235,7 +235,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
           </div>
           <div className="flex items-center gap-3">
             <button
-              aria-label="Icon button" onClick={() => setShowShareModal(true)}
+              onClick={() => setShowShareModal(true)}
               className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
             >
               <Share2 className="w-4 h-4" />
@@ -300,7 +300,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
           <button
             onClick={handleCopyReferralCode}
             className="flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-200 transition-colors"
-           aria-label="Icon button">
+           >
             <Copy className="w-4 h-4" />
             {copied ? 'Copied!' : 'Copy'}
           </button>
@@ -402,7 +402,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
             <h4 className="text-lg font-medium text-gray-900 mb-2">No referrals yet</h4>
             <p className="text-gray-600 mb-4">Start sharing your referral code to earn rewards!</p>
             <button
-              aria-label="Icon button" onClick={() => setShowShareModal(true)}
+              onClick={() => setShowShareModal(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Share Referral Code
@@ -459,7 +459,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
 
             <div className="space-y-3 mb-6">
               <button
-                aria-label="Icon button" onClick={() => handleShare('email')}
+                onClick={() => handleShare('email')}
                 className="w-full flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <Mail className="w-5 h-5 text-gray-600" />
@@ -467,7 +467,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
               </button>
 
               <button
-                aria-label="Icon button" onClick={() => handleShare('whatsapp')}
+                onClick={() => handleShare('whatsapp')}
                 className="w-full flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <MessageSquare className="w-5 h-5 text-green-600" />
@@ -475,7 +475,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
               </button>
 
               <button
-                aria-label="Icon button" onClick={() => handleShare('twitter')}
+                onClick={() => handleShare('twitter')}
                 className="w-full flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <span className="text-blue-500 font-bold text-lg">𝕏</span>
@@ -483,7 +483,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
               </button>
 
               <button
-                aria-label="Icon button" onClick={() => handleShare('facebook')}
+                onClick={() => handleShare('facebook')}
                 className="w-full flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="w-5 h-5 bg-blue-600 rounded"></div>
@@ -493,7 +493,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
 
             <div className="flex gap-3">
               <button
-                aria-label="Icon button" onClick={() => setShowShareModal(false)}
+                onClick={() => setShowShareModal(false)}
                 className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
               >
                 Cancel
@@ -501,7 +501,7 @@ export default function ReferralSystem({ className = '' }: ReferralSystemProps) 
               <button
                 onClick={handleCopyReferralCode}
                 className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-               aria-label="Icon button">
+               >
                 {copied ? 'Copied!' : 'Copy Code'}
               </button>
             </div>

@@ -246,7 +246,7 @@ export default function PushNotificationManager({ className = '' }: PushNotifica
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-900">Notification Settings</h2>
                 <button
-                  aria-label="Icon button" onClick={() => setShowSettings(false)}
+                  aria-label="Close notification settings" onClick={() => setShowSettings(false)}
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <X className="w-6 h-6" />

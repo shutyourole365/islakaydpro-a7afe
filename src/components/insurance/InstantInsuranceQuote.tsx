@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
 import {
   Shield,
@@ -226,6 +226,7 @@ export default function InstantInsuranceQuote({
             </div>
             <button
               onClick={onClose}
+              aria-label="Close insurance quote"
               className="p-2 hover:bg-white/20 rounded-full transition-colors"
             >
               <XCircle className="w-6 h-6" />
@@ -356,8 +357,10 @@ export default function InstantInsuranceQuote({
                           </li>
                         ))}
                         {plan.features.length > 3 && (
+                          <li>
                           <button
-                            onClick={(e) = aria-label="Icon button"> {
+                            aria-label={`Show all features for ${plan.name}`}
+                            onClick={(e) => {
                               e.stopPropagation();
                               setShowDetails(showDetails === plan.id ? null : plan.id);
                             }}
@@ -368,6 +371,7 @@ export default function InstantInsuranceQuote({
                               showDetails === plan.id ? 'rotate-90' : ''
                             }`} />
                           </button>
+                          </li>
                         )}
                       </ul>
                     </div>
@@ -455,14 +459,14 @@ export default function InstantInsuranceQuote({
                 <button
                   onClick={onClose}
                   className="flex-1 py-4 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
-                 aria-label="Icon button">
+                 >
                   Skip Insurance
                 </button>
                 <button
                   onClick={handleConfirm}
                   disabled={!selectedPlan}
                   className="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                 aria-label="Icon button">
+                 >
                   {selectedPlan ? (
                     <>
                       Add {selectedPlan.name} - ${selectedPlan.totalCost.toFixed(2)}

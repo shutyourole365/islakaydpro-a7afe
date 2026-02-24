@@ -56,7 +56,7 @@ export default function AISettings({ className = '' }: { className?: string }) {
 
           <div className="flex items-center gap-3">
             <button
-              aria-label="Icon button" onClick={() => persistPreference(!aiEnabledByUser)}
+              aria-label={aiEnabledByUser ? 'Disable AI assistant' : 'Enable AI assistant'} onClick={() => persistPreference(!aiEnabledByUser)}
               disabled={!GLOBAL_AI_ENABLED}
               className={`w-12 h-6 rounded-full transition-colors ${aiEnabledByUser && GLOBAL_AI_ENABLED ? 'bg-teal-500' : 'bg-gray-300'} ${!GLOBAL_AI_ENABLED ? 'opacity-50 cursor-not-allowed' : ''}`}
             >

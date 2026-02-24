@@ -170,7 +170,7 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {[4.5, 4.0, 3.5, 3.0].map((rating) => (
                 <button
                   key={rating}
-                  aria-label="Icon button" onClick={() => setFilters({
+                  onClick={() => setFilters({
                       ...filters,
                       rating: filters.rating === rating ? null : rating,
                     })}
@@ -197,7 +197,6 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {featuresList.map((feature) => (
                 <button
                   key={feature}
-                  aria-label="Icon button"
                   onClick={() => {
                     const newFeatures = filters.features.includes(feature)
                       ? filters.features.filter((f) => f !== feature)
@@ -237,7 +236,6 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {conditionOptions.map((condition) => (
                 <button
                   key={condition}
-                  aria-label="Icon button"
                   onClick={() => {
                     const newConditions = filters.condition.includes(condition)
                       ? filters.condition.filter((c) => c !== condition)
@@ -328,13 +326,13 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
           <button
             onClick={handleReset}
             className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
-           aria-label="Icon button">
+           >
             Reset All
           </button>
           <button
             onClick={handleApply}
             className="flex-1 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold hover:shadow-lg transition-all"
-           aria-label="Icon button">
+           >
             Apply Filters ({activeFiltersCount})
           </button>
         </div>

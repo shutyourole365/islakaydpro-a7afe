@@ -371,7 +371,7 @@ export default function EquipmentInspection({
             return (
               <button
                 key={category.id}
-                aria-label="Icon button" onClick={() => setCurrentCategory(index)}
+                onClick={() => setCurrentCategory(index)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
                   index === currentCategory
                     ? 'bg-blue-100 text-blue-700 border border-blue-300'
@@ -436,7 +436,7 @@ export default function EquipmentInspection({
                         {/* Status Buttons */}
                         <div className="flex items-center gap-2 mb-4">
                           <button
-                            aria-label="Icon button" onClick={() => updateItemStatus(item.category, item.id, 'pass')}
+                            onClick={() => updateItemStatus(item.category, item.id, 'pass')}
                             className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                               item.status === 'pass'
                                 ? 'bg-green-100 text-green-700 border-2 border-green-300'
@@ -448,7 +448,7 @@ export default function EquipmentInspection({
                           </button>
 
                           <button
-                            aria-label="Icon button" onClick={() => updateItemStatus(item.category, item.id, 'fail')}
+                            onClick={() => updateItemStatus(item.category, item.id, 'fail')}
                             className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                               item.status === 'fail'
                                 ? 'bg-red-100 text-red-700 border-2 border-red-300'
@@ -461,7 +461,7 @@ export default function EquipmentInspection({
 
                           {!item.required && (
                             <button
-                              aria-label="Icon button" onClick={() => updateItemStatus(item.category, item.id, 'na')}
+                              onClick={() => updateItemStatus(item.category, item.id, 'na')}
                               className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                                 item.status === 'na'
                                   ? 'bg-gray-100 text-gray-700 border-2 border-gray-300'
@@ -489,7 +489,7 @@ export default function EquipmentInspection({
 
                         {/* Photo Upload */}
                         <div>
-                          <button className="flex items-center gap-2 px-3 py-2 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors" aria-label="Icon button">
+                          <button className="flex items-center gap-2 px-3 py-2 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors">
                             <Camera className="w-4 h-4" />
                             Add Photo
                           </button>
@@ -507,7 +507,8 @@ export default function EquipmentInspection({
       {/* Navigation & Submit */}
       <div className="flex items-center justify-between mt-6">
         <button
-          aria-label="Icon button"> setCurrentCategory(Math.max(0, currentCategory - 1))}
+         
+          onClick={() => setCurrentCategory(Math.max(0, currentCategory - 1))}
           disabled={currentCategory === 0}
           className="px-4 py-2 text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
         >
@@ -521,7 +522,7 @@ export default function EquipmentInspection({
 
           {currentCategory < categories.length - 1 ? (
             <button
-              aria-label="Icon button" onClick={() => setCurrentCategory(currentCategory + 1)}
+              onClick={() => setCurrentCategory(currentCategory + 1)}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               Next
@@ -531,7 +532,7 @@ export default function EquipmentInspection({
               onClick={handleSubmitInspection}
               disabled={!canSubmitInspection() || isSubmitting}
               className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
-             aria-label="Icon button">
+             >
               {isSubmitting ? 'Submitting...' : 'Complete Inspection'}
             </button>
           )}

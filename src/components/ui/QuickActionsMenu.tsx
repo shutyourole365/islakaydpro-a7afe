@@ -57,7 +57,6 @@ export default function QuickActionsMenu({
   onNavigate,
   unreadMessages = 3,
   unreadNotifications = 5,
-  className = '',
 }: QuickActionsMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -146,7 +145,9 @@ export default function QuickActionsMenu({
           isOpen
             ? 'bg-gray-900 rotate-45 scale-90'
             : 'bg-gradient-to-r from-teal-500 to-emerald-500 hover:shadow-xl hover:scale-110'
-        } ${className} aria-label="Icon button">
+        }`}
+        aria-label="Toggle quick actions menu"
+        >
         {isOpen ? (
           <X className="w-6 h-6 text-white" />
         ) : (
@@ -220,7 +221,7 @@ export default function QuickActionsMenu({
               {filteredActions.map((action, index) => (
                 <button
                   key={action.id}
-                  aria-label="Icon button" onClick={() => handleActionClick(action)}
+                  onClick={() => handleActionClick(action)}
                   className="group relative flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 transition-all"
                   style={{
                     animation: 'fadeInUp 0.3s ease-out forwards',
@@ -264,7 +265,7 @@ export default function QuickActionsMenu({
                 <Camera className="w-5 h-5" />
               </button>
             </div>
-            <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors" aria-label="Icon button">
+            <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors">
               <HelpCircle className="w-4 h-4" />
               Help
             </button>

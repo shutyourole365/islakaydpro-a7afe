@@ -232,7 +232,7 @@ export default function IoTEquipmentMonitor() {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            aria-label="Icon button" onClick={() => setActiveTab(id as 'overview' | 'devices' | 'alerts')}
+            onClick={() => setActiveTab(id as 'overview' | 'devices' | 'alerts')}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-teal-500 text-teal-600'
@@ -417,7 +417,7 @@ export default function IoTEquipmentMonitor() {
                     </div>
                   </div>
                   <button
-                    aria-label="Icon button" onClick={() => resolveAlert(device.id, alert.id)}
+                    onClick={() => resolveAlert(device.id, alert.id)}
                     className="px-3 py-1 bg-white text-gray-700 rounded-md hover:bg-gray-50 transition-colors text-sm"
                   >
                     Resolve
@@ -445,7 +445,7 @@ export default function IoTEquipmentMonitor() {
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">Device Details</h2>
                 <button
-                  aria-label="Icon button" onClick={() => setSelectedDevice(null)}
+                  onClick={() => setSelectedDevice(null)}
                   className="text-gray-400 hover:text-gray-600"
                 >
                   ✕

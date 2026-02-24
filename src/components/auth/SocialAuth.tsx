@@ -77,7 +77,8 @@ export default function SocialAuth({ onError, onLoading, mode }: SocialAuthProps
             {providers.map((provider) => (
               <button
                 key={provider.id}
-                onClick={() => handleSocialLogin(provider.id) aria-label={`Sign in with ${provider.name}`}
+                onClick={() => handleSocialLogin(provider.id)}
+                aria-label={`Sign in with ${provider.name}`}
                 disabled={loadingProvider !== null}
                 className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border font-medium transition-all ${provider.color} ${provider.hoverColor} disabled:opacity-50 disabled:cursor-not-allowed`}
               >
@@ -100,7 +101,6 @@ export default function SocialAuth({ onError, onLoading, mode }: SocialAuthProps
         onClick={async () => {
           const email = prompt('Enter your email for passwordless login:');
           if (!email) return;
-        } aria-label="Send magic link"
           onLoading(true);
           const { error } = await supabase.auth.signInWithOtp({
             email,
@@ -109,13 +109,14 @@ export default function SocialAuth({ onError, onLoading, mode }: SocialAuthProps
             },
           });
           onLoading(false);
-          
+
           if (error) {
             onError(error.message);
           } else {
             alert('Check your email for the magic link!');
           }
         }}
+        aria-label="Send magic link"
         className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-all"
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">

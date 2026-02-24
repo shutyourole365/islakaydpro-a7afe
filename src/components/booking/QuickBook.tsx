@@ -270,14 +270,14 @@ export default function QuickBook({
           <button
             onClick={onClose}
             className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
-           aria-label="Icon button">
+           >
             Cancel
           </button>
           <button
             onClick={handleQuickBook}
             disabled={!startDate || !endDate || days === 0 || isProcessing}
             className="flex-1 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-           aria-label="Icon button">
+           >
             {isProcessing ? (
               <>
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

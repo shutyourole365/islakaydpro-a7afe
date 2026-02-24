@@ -158,7 +158,7 @@ export default function BookingCalendar({
           <button
             onClick={nextMonth}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-           aria-label="Icon button">
+           >
             <ChevronRight className="w-5 h-5 text-gray-600" />
           </button>
         </div>
@@ -190,7 +190,8 @@ export default function BookingCalendar({
             return (
               <button
                 key={date.toISOString()}
-                onClick={() => handleDateClick(date) aria-label={`Select date ${date.toDateString()}`}
+                onClick={() => handleDateClick(date)}
+                aria-label={`Select date ${date.toDateString()}`}
                 onMouseEnter={() => setHoverDate(date)}
                 onMouseLeave={() => setHoverDate(null)}
                 disabled={disabled}

@@ -178,7 +178,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
     <div className={`relative ${className}`} ref={dropdownRef}>
       {/* Notification Bell */}
       <button
-        aria-label="Icon button" onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle notifications panel" onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
       >
         {unreadCount > 0 ? (
@@ -204,7 +204,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
                 <button
                   onClick={handleMarkAllAsRead}
                   className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-                 aria-label="Icon button">
+                 >
                   Mark all read
                 </button>
               )}
@@ -221,7 +221,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
               ].map((filterOption) => (
                 <button
                   key={filterOption.key}
-                  aria-label="Icon button" onClick={() => setFilter(filterOption.key as typeof filter)}
+                  onClick={() => setFilter(filterOption.key as typeof filter)}
                   className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${
                     filter === filterOption.key
                       ? 'bg-blue-100 text-blue-700'
@@ -285,7 +285,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
 
                             {!notification.is_read && (
                               <button
-                                aria-label="Icon button" onClick={() => handleMarkAsRead(notification.id)}
+                                aria-label="Mark as read" onClick={() => handleMarkAsRead(notification.id)}
                                 className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
                                 title="Mark as read"
                               >
@@ -297,10 +297,10 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
                           {/* Action buttons for specific notification types */}
                           {notification.type === 'booking_confirmed' && (
                             <div className="mt-3 flex gap-2">
-                              <button className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors" aria-label="Icon button">
+                              <button className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
                                 View Booking
                               </button>
-                              <button className="px-3 py-1 text-xs border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors" aria-label="Icon button">
+                              <button className="px-3 py-1 text-xs border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors">
                                 Contact Owner
                               </button>
                             </div>
@@ -308,7 +308,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
 
                           {notification.type === 'new_review' && (
                             <div className="mt-3">
-                              <button className="px-3 py-1 text-xs bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors" aria-label="Icon button">
+                              <button className="px-3 py-1 text-xs bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors">
                                 View Review
                               </button>
                             </div>
@@ -324,7 +324,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
 
           {/* Footer */}
           <div className="p-4 border-t border-gray-200">
-            <button className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors" aria-label="Icon button">
+            <button className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
               <Settings className="w-4 h-4" />
               Notification Settings
             </button>

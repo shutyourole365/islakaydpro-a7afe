@@ -108,6 +108,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={onBack}
+              aria-label="Go back"
               className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
             >
               <ArrowLeft className="w-6 h-6 text-gray-600" />
@@ -127,7 +128,8 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as typeof activeTab) aria-label="Icon button"
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              aria-label={`Switch to ${tab.label}`}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-gray-900 text-white'
@@ -165,7 +167,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
 
             {/* Quick Actions */}
             <div className="grid md:grid-cols-3 gap-4">
-              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left" aria-label="Icon button">
+              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left">
                 <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
                   <Users className="w-6 h-6 text-blue-600" />
                 </div>
@@ -175,7 +177,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                 </div>
               </button>
 
-              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left" aria-label="Icon button">
+              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left">
                 <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
                   <Package className="w-6 h-6 text-purple-600" />
                 </div>
@@ -185,7 +187,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                 </div>
               </button>
 
-              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left" aria-label="Icon button">
+              <button className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-200 transition-all text-left">
                 <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
                   <Flag className="w-6 h-6 text-red-600" />
                 </div>
@@ -240,7 +242,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
-              <button className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors" aria-label="Icon button">
+              <button className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                 <Filter className="w-4 h-4" />
                 Filter
               </button>
@@ -375,6 +377,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                     <input
                       type="number"
                       defaultValue={12}
+                      aria-label="Service fee percentage"
                       className="w-20 px-3 py-2 border border-gray-200 rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                     <span className="text-gray-600">%</span>
@@ -387,7 +390,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                     <p className="text-sm text-gray-500">Users must verify identity to list equipment</p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" defaultChecked className="sr-only peer" />
+                    <input type="checkbox" defaultChecked aria-label="Require verification" className="sr-only peer" />
                     <div className="w-11 h-6 bg-gray-200 peer-checked:bg-teal-500 rounded-full peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
                   </label>
                 </div>
@@ -398,7 +401,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                     <p className="text-sm text-gray-500">Verified users can list without review</p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" className="sr-only peer" />
+                    <input type="checkbox" aria-label="Auto-approve listings" className="sr-only peer" />
                     <div className="w-11 h-6 bg-gray-200 peer-checked:bg-teal-500 rounded-full peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
                   </label>
                 </div>
@@ -409,7 +412,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                     <p className="text-sm text-gray-500">Take the platform offline for maintenance</p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" className="sr-only peer" />
+                    <input type="checkbox" aria-label="Maintenance mode" className="sr-only peer" />
                     <div className="w-11 h-6 bg-gray-200 peer-checked:bg-red-500 rounded-full peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" />
                   </label>
                 </div>

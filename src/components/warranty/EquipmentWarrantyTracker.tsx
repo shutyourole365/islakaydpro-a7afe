@@ -278,7 +278,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             </div>
           </div>
           {onClose && (
-            <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+            <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors" aria-label="Close warranty tracker" title="Close warranty tracker">
               <X className="w-5 h-5" />
             </button>
           )}
@@ -319,7 +319,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             />
           </div>
           <button
-            aria-label="Icon button" onClick={() => setShowFilters(!showFilters)}
+            onClick={() => setShowFilters(!showFilters)}
             className={`px-4 py-2 border rounded-lg flex items-center gap-2 transition-colors ${
               showFilters ? 'bg-teal-50 border-teal-500 text-teal-700' : 'hover:bg-gray-50'
             }`}
@@ -328,7 +328,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             Filters
           </button>
           <button
-            aria-label="Icon button" onClick={() => setIsAddingNew(true)}
+            onClick={() => setIsAddingNew(true)}
             className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
@@ -345,6 +345,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
                 className="mt-1 block w-full px-3 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-teal-500"
+                aria-label="Filter by status"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active</option>
@@ -358,6 +359,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value as typeof filterType)}
                 className="mt-1 block w-full px-3 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-teal-500"
+                aria-label="Filter by type"
               >
                 <option value="all">All Types</option>
                 <option value="manufacturer">Manufacturer</option>
@@ -381,6 +383,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                   value={formData.warranty_type}
                   onChange={(e) => setFormData({ ...formData, warranty_type: e.target.value as WarrantyFormData['warranty_type'] })}
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500"
+                  aria-label="Warranty type"
                   required
                 >
                   <option value="manufacturer">Manufacturer Warranty</option>
@@ -419,6 +422,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                   value={formData.start_date}
                   onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500"
+                  title="Warranty start date"
                   required
                 />
               </div>
@@ -429,6 +433,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                   value={formData.end_date}
                   onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
                   className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500"
+                  title="Warranty end date"
                   required
                 />
               </div>
@@ -458,7 +463,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             <div className="flex justify-end gap-3">
               <button
                 type="button"
-                aria-label="Icon button" onClick={() => setIsAddingNew(false)}
+                onClick={() => setIsAddingNew(false)}
                 className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 Cancel
@@ -466,7 +471,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
               <button
                 type="submit"
                 className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
-               aria-label="Icon button">
+               >
                 Save Warranty
               </button>
             </div>
@@ -554,7 +559,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                             <button
                               key={idx}
                               className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
-                             aria-label="Icon button">
+                             >
                               <FileText className="w-4 h-4 text-gray-500" />
                               {doc}
                               <Download className="w-3 h-3 text-gray-400" />
@@ -566,17 +571,17 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
 
                     <div className="flex justify-end gap-2">
                       <button
-                        aria-label="Icon button" onClick={() => handleSetReminder(warranty)}
+                        onClick={() => handleSetReminder(warranty)}
                         className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors"
                       >
                         <Bell className="w-4 h-4" />
                         Set Reminder
                       </button>
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors" aria-label="Icon button">
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors">
                         <Edit2 className="w-4 h-4" />
                         Edit
                       </button>
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg text-sm transition-colors" aria-label="Icon button">
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg text-sm transition-colors">
                         <Trash2 className="w-4 h-4" />
                         Delete
                       </button>
@@ -593,7 +598,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
       <div className="p-4 border-t bg-gray-50 rounded-b-xl">
         <div className="flex items-center justify-between text-sm text-gray-500">
           <span>Showing {filteredWarranties.length} of {warranties.length} warranties</span>
-          <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700" aria-label="Icon button">
+          <button className="flex items-center gap-1 text-teal-600 hover:text-teal-700">
             <RefreshCw className="w-4 h-4" />
             Refresh
           </button>

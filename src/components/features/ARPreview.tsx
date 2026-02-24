@@ -120,7 +120,7 @@ export default function ARPreview({ onBack }: ARPreviewProps) {
                   {equipmentViews.map((view) => (
                     <button
                       key={view.id}
-                      aria-label="Icon button" onClick={() => setSelectedView(view.id)}
+                      onClick={() => setSelectedView(view.id)}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                         selectedView === view.id
                           ? 'bg-green-100 text-green-800 border border-green-300'
@@ -155,13 +155,15 @@ export default function ARPreview({ onBack }: ARPreviewProps) {
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <button
-                      aria-label="Icon button" onClick={() => setIsPlaying(!isPlaying)}
+                      onClick={() => setIsPlaying(!isPlaying)}
+                      aria-label={isPlaying ? 'Pause' : 'Play'}
                       className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                     >
                       {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
                     </button>
                     <button
-                      aria-label="Icon button" onClick={() => setVolumeOn(!volumeOn)}
+                      onClick={() => setVolumeOn(!volumeOn)}
+                      aria-label={volumeOn ? 'Mute' : 'Unmute'}
                       className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                     >
                       {volumeOn ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
@@ -170,14 +172,16 @@ export default function ARPreview({ onBack }: ARPreviewProps) {
 
                   <div className="flex items-center gap-2">
                     <button
-                      aria-label="Icon button"> setZoomLevel(Math.max(0.5, zoomLevel - 0.25))}
+                      aria-label="Zoom out"
+                      onClick={() => setZoomLevel(Math.max(0.5, zoomLevel - 0.25))}
                       className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                     >
                       <ZoomIn className="w-5 h-5 rotate-45" />
                     </button>
                     <span className="text-white text-sm px-2">{Math.round(zoomLevel * 100)}%</span>
                     <button
-                      aria-label="Icon button"> setZoomLevel(Math.min(3, zoomLevel + 0.25))}
+                      aria-label="Zoom in"
+                      onClick={() => setZoomLevel(Math.min(3, zoomLevel + 0.25))}
                       className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                     >
                       <ZoomIn className="w-5 h-5" />

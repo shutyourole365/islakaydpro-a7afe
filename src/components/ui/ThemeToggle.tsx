@@ -101,7 +101,7 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
             ${theme === value
               ? 'bg-white dark:bg-gray-700 text-teal-600 dark:text-teal-400 shadow-sm'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-            } aria-label={`Set ${label} theme`}
+            }`}
         >
           <Icon className="w-4 h-4" />
           <span className="hidden sm:inline">{label}</span>

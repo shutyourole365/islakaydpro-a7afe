@@ -236,7 +236,7 @@ export default function SubscriptionPlans({
         {/* Billing Toggle */}
         <div className="flex items-center justify-center gap-4 bg-white/10 rounded-xl p-2">
           <button
-            aria-label="Icon button" onClick={() => setBillingCycle('monthly')}
+            onClick={() => setBillingCycle('monthly')}
             className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
               billingCycle === 'monthly'
                 ? 'bg-white text-purple-600'
@@ -246,7 +246,7 @@ export default function SubscriptionPlans({
             Monthly
           </button>
           <button
-            aria-label="Icon button" onClick={() => setBillingCycle('yearly')}
+            onClick={() => setBillingCycle('yearly')}
             className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
               billingCycle === 'yearly'
                 ? 'bg-white text-purple-600'
@@ -348,7 +348,7 @@ export default function SubscriptionPlans({
                 </ul>
 
                 <button
-                  aria-label="Icon button" onClick={() => handleSelect(plan)}
+                  onClick={() => handleSelect(plan)}
                   disabled={isCurrent}
                   className={`w-full py-3 rounded-xl font-medium transition-all ${
                     isCurrent

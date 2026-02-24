@@ -170,7 +170,7 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
       {paymentMethods.map((method) => (
         <button
           key={method.id}
-          aria-label="Icon button" onClick={() => handleSelectMethod(method.id)}
+          onClick={() => handleSelectMethod(method.id)}
           disabled={!method.isAvailable}
           className={`w-full p-4 rounded-xl border-2 transition-all ${
             selectedMethod === method.id
@@ -217,7 +217,7 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
 
   const renderCryptoDetails = () => (
     <div className="space-y-4">
-      <button aria-label="Icon button" onClick={() => setStep('select')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
+      <button onClick={() => setStep('select')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
         <ChevronRight className="w-4 h-4 rotate-180" />
         Back
       </button>
@@ -274,7 +274,7 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
 
   const renderCardDetails = () => (
     <div className="space-y-4">
-      <button aria-label="Icon button" onClick={() => setStep('select')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
+      <button onClick={() => setStep('select')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
         <ChevronRight className="w-4 h-4 rotate-180" />
         Back
       </button>
@@ -332,7 +332,7 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
       </div>
 
       <button
-        aria-label="Icon button" onClick={() => setStep('confirm')}
+        onClick={() => setStep('confirm')}
         className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
       >
         Continue to Review
@@ -346,7 +346,7 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
 
     return (
       <div className="space-y-4">
-        <button aria-label="Icon button" onClick={() => setStep(selectedMethod === 'crypto' ? 'details' : 'select')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
+        <button onClick={() => setStep(selectedMethod === 'crypto' ? 'details' : 'select')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
           <ChevronRight className="w-4 h-4 rotate-180" />
           Back
         </button>
@@ -394,7 +394,7 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
           onClick={handlePayment}
           disabled={isProcessing}
           className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-         aria-label="Icon button">
+         >
           {isProcessing ? (
             <>
               <RefreshCw className="w-5 h-5 animate-spin" />
@@ -462,7 +462,7 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
             <button
               onClick={onCancel}
               className="w-full py-3 text-gray-600 font-medium hover:bg-gray-50 rounded-xl transition-colors"
-             aria-label="Icon button">
+             >
               Cancel
             </button>
           </div>

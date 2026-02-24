@@ -191,7 +191,8 @@ export default function AnalyticsDashboard({ className = '' }: AnalyticsDashboar
           {(['7d', '30d', '90d', '1y'] as const).map((range) => (
             <button
               key={range}
-              onClick={() => setTimeRange(range) aria-label={`Set time range ${range}`}
+              onClick={() => setTimeRange(range)}
+              aria-label={`Set time range ${range}`}
               className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
                 timeRange === range
                   ? 'bg-teal-100 text-teal-700'

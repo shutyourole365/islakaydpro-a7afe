@@ -222,7 +222,7 @@ export default function SplitPayment({
               {/* Split Type Toggle */}
               <div className="flex bg-gray-100 rounded-xl p-1 mb-6">
                 <button
-                  aria-label="Icon button" onClick={() => setSplitType('equal')}
+                  onClick={() => setSplitType('equal')}
                   className={`flex-1 py-2.5 rounded-lg font-medium transition-colors ${
                     splitType === 'equal'
                       ? 'bg-white text-gray-900 shadow'
@@ -232,7 +232,7 @@ export default function SplitPayment({
                   Split Equally
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => setSplitType('custom')}
+                  onClick={() => setSplitType('custom')}
                   className={`flex-1 py-2.5 rounded-lg font-medium transition-colors ${
                     splitType === 'custom'
                       ? 'bg-white text-gray-900 shadow'
@@ -290,7 +290,7 @@ export default function SplitPayment({
 
                     {participant.id !== '1' && (
                       <button
-                        aria-label="Icon button" onClick={() => removeParticipant(participant.id)}
+                        aria-label="Remove participant" onClick={() => removeParticipant(participant.id)}
                         className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -322,7 +322,7 @@ export default function SplitPayment({
                   <button
                     onClick={splitEvenly}
                     className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1"
-                   aria-label="Icon button">
+                   >
                     <RefreshCw className="w-4 h-4" />
                     Split evenly
                   </button>
@@ -357,7 +357,7 @@ export default function SplitPayment({
                     />
                     <div className="flex gap-2">
                       <button
-                        aria-label="Icon button" onClick={() => setShowAddForm(false)}
+                        onClick={() => setShowAddForm(false)}
                         className="flex-1 py-2.5 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-colors"
                       >
                         Cancel
@@ -365,7 +365,7 @@ export default function SplitPayment({
                       <button
                         onClick={addParticipant}
                         className="flex-1 py-2.5 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-colors"
-                       aria-label="Icon button">
+                       >
                         Add
                       </button>
                     </div>
@@ -373,7 +373,7 @@ export default function SplitPayment({
                 </div>
               ) : (
                 <button
-                  aria-label="Icon button" onClick={() => setShowAddForm(true)}
+                  onClick={() => setShowAddForm(true)}
                   className="w-full py-3 border-2 border-dashed border-gray-200 text-gray-500 rounded-xl hover:border-green-300 hover:text-green-600 hover:bg-green-50 transition-colors flex items-center justify-center gap-2 mb-6"
                 >
                   <UserPlus className="w-5 h-5" />
@@ -407,7 +407,7 @@ export default function SplitPayment({
                 onClick={sendInvites}
                 disabled={participants.length < 2 || !isValidSplit || sending}
                 className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-               aria-label="Icon button">
+               >
                 {sending ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -489,7 +489,7 @@ export default function SplitPayment({
                   <button
                     onClick={shareNative}
                     className="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                   aria-label="Icon button">
+                   >
                     <Share2 className="w-5 h-5 text-gray-600" />
                   </button>
                 </div>
@@ -498,7 +498,7 @@ export default function SplitPayment({
               <button
                 onClick={onClose}
                 className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
-               aria-label="Icon button">
+               >
                 Done
               </button>
             </div>

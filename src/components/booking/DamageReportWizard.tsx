@@ -143,7 +143,7 @@ export default function DamageReportWizard({
             <button
               onClick={onClose}
               className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
-             aria-label="Icon button">
+             >
               ✕
             </button>
           </div>
@@ -189,7 +189,7 @@ export default function DamageReportWizard({
                     
                     <div className="flex gap-2">
                       <button
-                        aria-label="Icon button" onClick={() => updateChecklistItem(item.id, 'ok')}
+                        onClick={() => updateChecklistItem(item.id, 'ok')}
                         className={`p-2 rounded-lg transition-all ${
                           item.status === 'ok'
                             ? 'bg-green-500 text-white'
@@ -199,7 +199,7 @@ export default function DamageReportWizard({
                         <CheckCircle className="w-5 h-5" />
                       </button>
                       <button
-                        aria-label="Icon button" onClick={() => updateChecklistItem(item.id, 'issue')}
+                        onClick={() => updateChecklistItem(item.id, 'issue')}
                         className={`p-2 rounded-lg transition-all ${
                           item.status === 'issue'
                             ? 'bg-red-500 text-white'
@@ -239,7 +239,7 @@ export default function DamageReportWizard({
                   onChange={handlePhotoUpload}
                   className="hidden"
                   id="photo-upload"
-                / aria-label="photo-upload">
+                />
                 <label
                   htmlFor="photo-upload"
                   className="cursor-pointer flex flex-col items-center"
@@ -262,7 +262,8 @@ export default function DamageReportWizard({
                       <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
                         <img src={safePhotoUrl} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
                         <button
-                          aria-label="Icon button"> setPhotos((prev) => prev.filter((_, i) => i !== index))}
+                          aria-label={`Remove photo ${index + 1}`}
+                          onClick={() => setPhotos(prev => prev.filter((_, i) => i !== index))}
                           className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs"
                         >
                           ✕
@@ -380,7 +381,7 @@ export default function DamageReportWizard({
         <div className="p-6 border-t border-gray-200 flex justify-between">
           {step > 1 ? (
             <button
-              aria-label="Icon button" onClick={() => setStep(step - 1)}
+              onClick={() => setStep(step - 1)}
               className="px-6 py-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               Back
@@ -391,7 +392,7 @@ export default function DamageReportWizard({
 
           {step < 3 ? (
             <button
-              aria-label="Icon button" onClick={() => setStep(step + 1)}
+              onClick={() => setStep(step + 1)}
               disabled={step === 1 && checkedCount < checklist.length}
               className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -402,7 +403,7 @@ export default function DamageReportWizard({
               onClick={handleSubmit}
               disabled={isSubmitting}
               className="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg font-medium hover:from-green-600 hover:to-emerald-700 transition-all disabled:opacity-50 flex items-center gap-2"
-             aria-label="Icon button">
+             >
               {isSubmitting ? (
                 <>
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

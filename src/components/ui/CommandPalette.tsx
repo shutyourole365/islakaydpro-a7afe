@@ -278,7 +278,7 @@ export default function CommandPalette({
           />
           {query && (
             <button
-              aria-label="Icon button" onClick={() => setQuery('')}
+              onClick={() => setQuery('')}
               className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
               aria-label="Clear search"
             >

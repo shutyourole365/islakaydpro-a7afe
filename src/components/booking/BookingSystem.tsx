@@ -352,7 +352,8 @@ export default function BookingSystem({
                   {/* Month Navigation */}
                   <div className="flex items-center justify-between px-4 py-3 bg-gray-50">
                     <button
-                      onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)) aria-label="Previous month"
+                      onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))}
+                      aria-label="Previous month"
                       className="p-1 hover:bg-gray-200 rounded-lg"
                     >
                       <ChevronLeft className="w-5 h-5" />
@@ -361,7 +362,8 @@ export default function BookingSystem({
                       {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                     </h4>
                     <button
-                      onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)) aria-label="Next month"
+                      onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))}
+                      aria-label="Next month"
                       className="p-1 hover:bg-gray-200 rounded-lg"
                     >
                       <ChevronRight className="w-5 h-5" />
@@ -392,7 +394,8 @@ export default function BookingSystem({
                       return (
                         <button
                           key={date.toISOString()}
-                          aria-label="Icon button" onClick={() => handleDateClick(date)}
+                          onClick={() => handleDateClick(date)}
+                          aria-label={`Select ${date.toDateString()}`}
                           disabled={disabled}
                           className={`
                             aspect-square flex items-center justify-center rounded-lg text-sm font-medium
@@ -489,7 +492,7 @@ export default function BookingSystem({
 
                   {/* Smart Scheduler */}
                   <button
-                    aria-label="Icon button" onClick={() => setShowSmartScheduler(true)}
+                    onClick={() => setShowSmartScheduler(true)}
                     className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
                   >
                     <Calendar className="w-5 h-5" />
@@ -513,7 +516,7 @@ export default function BookingSystem({
                   {insurancePlans.map((plan) => (
                     <button
                       key={plan.id}
-                      aria-label="Icon button" onClick={() => setSelectedInsurance(selectedInsurance?.id === plan.id ? null : plan)}
+                      onClick={() => setSelectedInsurance(selectedInsurance?.id === plan.id ? null : plan)}
                       className={`p-4 rounded-xl border-2 text-left transition-all ${
                         selectedInsurance?.id === plan.id
                           ? 'border-teal-500 bg-teal-50'
@@ -552,7 +555,7 @@ export default function BookingSystem({
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <button
-                    aria-label="Icon button" onClick={() => setDeliveryOption('pickup')}
+                    onClick={() => setDeliveryOption('pickup')}
                     className={`p-4 rounded-xl border-2 text-left transition-all ${
                       deliveryOption === 'pickup'
                         ? 'border-teal-500 bg-teal-50'
@@ -573,7 +576,7 @@ export default function BookingSystem({
                   </button>
 
                   <button
-                    aria-label="Icon button" onClick={() => setDeliveryOption('delivery')}
+                    onClick={() => setDeliveryOption('delivery')}
                     className={`p-4 rounded-xl border-2 text-left transition-all ${
                       deliveryOption === 'delivery'
                         ? 'border-teal-500 bg-teal-50'
@@ -627,7 +630,7 @@ export default function BookingSystem({
                     onClick={applyPromoCode}
                     disabled={promoApplied || !promoCode.trim()}
                     className="px-6 py-3 bg-teal-500 text-white font-medium rounded-xl hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                   aria-label="Icon button">
+                   >
                     {promoApplied ? 'Applied!' : 'Apply'}
                   </button>
                 </div>
@@ -744,7 +747,7 @@ export default function BookingSystem({
                       type="checkbox"
                       id="terms"
                       checked={agreeToTerms}
-                      onChange={(e) = "terms" onClick={() => setAgreeToTerms(e.target.checked)}
+                      onChange={(e) => setAgreeToTerms(e.target.checked)}
                       className="w-4 h-4 text-teal-500 rounded mt-1"
                     />
                     <label htmlFor="terms" className="text-sm text-gray-600">
@@ -806,7 +809,7 @@ export default function BookingSystem({
               <button
                 onClick={currentStep === 'dates' ? onClose : handleBack}
                 className="px-6 py-2.5 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
-               aria-label="Icon button">
+               >
                 {currentStep === 'dates' ? 'Cancel' : 'Back'}
               </button>
               
@@ -814,7 +817,7 @@ export default function BookingSystem({
                 onClick={currentStep === 'payment' ? handleComplete : handleNext}
                 disabled={!canProceed() || isProcessing}
                 className="px-8 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
-               aria-label="Icon button">
+               >
                 {isProcessing ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -840,11 +843,12 @@ export default function BookingSystem({
               <button
                 onClick={onClose}
                 className="flex-1 px-6 py-3 border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors"
-               aria-label="Icon button">
+               >
                 Close
               </button>
               <button
-                aria-label="Icon button"> {}}
+                onClick={() => setCurrentStep('dates')}
+                aria-label="View bookings"
                 className="flex-1 px-6 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
               >
                 View My Bookings

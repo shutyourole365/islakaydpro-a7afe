@@ -284,6 +284,7 @@ export default function SchedulingOptimizer({
           <div className="flex items-center gap-3">
             <select
               value={selectedTimeframe}
+              aria-label="Select timeframe"
               onChange={(e) => setSelectedTimeframe(e.target.value as typeof selectedTimeframe)}
               className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -353,7 +354,7 @@ export default function SchedulingOptimizer({
           {(['overview', 'detailed', 'calendar'] as const).map((mode) => (
             <button
               key={mode}
-              aria-label="Icon button" onClick={() => setViewMode(mode)}
+              onClick={() => setViewMode(mode)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 viewMode === mode
                   ? 'bg-blue-100 text-blue-700'
@@ -508,7 +509,7 @@ export default function SchedulingOptimizer({
                       </span>
                     </td>
                     <td className="py-3 px-4">
-                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium" aria-label="Icon button">
+                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
                         Optimize
                       </button>
                     </td>

@@ -164,6 +164,7 @@ export default function ReviewsSection({
                 <Filter className="w-4 h-4 text-gray-500" />
                 <select
                   value={filter}
+                  aria-label="Filter reviews"
                   onChange={(e) => setFilter(e.target.value as 'all' | 'positive' | 'critical')}
                   className="bg-transparent text-sm font-medium text-gray-700 outline-none cursor-pointer"
                 >
@@ -175,6 +176,7 @@ export default function ReviewsSection({
               <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full">
                 <select
                   value={sortBy}
+                  aria-label="Sort reviews"
                   onChange={(e) => setSortBy(e.target.value as 'recent' | 'helpful')}
                   className="bg-transparent text-sm font-medium text-gray-700 outline-none cursor-pointer"
                 >
@@ -243,7 +245,7 @@ export default function ReviewsSection({
 
                 <div className="flex items-center gap-4 mt-4">
                   <button
-                    aria-label="Icon button" onClick={() => markHelpful(review.id)}
+                    onClick={() => markHelpful(review.id)}
                     className={`flex items-center gap-1.5 text-sm transition-colors ${
                       helpfulReviews.has(review.id)
                         ? 'text-teal-600'
@@ -253,7 +255,7 @@ export default function ReviewsSection({
                     <ThumbsUp className={`w-4 h-4 ${helpfulReviews.has(review.id) ? 'fill-current' : ''}`} />
                     Helpful ({review.helpful + (helpfulReviews.has(review.id) ? 1 : 0)})
                   </button>
-                  <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors" aria-label="Icon button">
+                  <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors">
                     <MessageSquare className="w-4 h-4" />
                     Reply
                   </button>
@@ -275,7 +277,7 @@ export default function ReviewsSection({
       </div>
 
       <div className="p-4 border-t border-gray-100 bg-gray-50">
-        <button className="w-full py-3 text-center text-teal-600 hover:text-teal-700 font-medium transition-colors" aria-label="Icon button">
+        <button className="w-full py-3 text-center text-teal-600 hover:text-teal-700 font-medium transition-colors">
           View All {totalReviews} Reviews
         </button>
       </div>

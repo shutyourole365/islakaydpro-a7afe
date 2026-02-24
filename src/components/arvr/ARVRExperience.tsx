@@ -295,7 +295,8 @@ export default function ARVRExperience() {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={() => setActiveTab(id as 'preview' | 'tours' | 'sessions') aria-label={`Switch to ${label}`}
+            onClick={() => setActiveTab(id as 'preview' | 'tours' | 'sessions')}
+            aria-label={`Switch to ${label}`}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-teal-500 text-teal-600'
@@ -333,14 +334,16 @@ export default function ARVRExperience() {
                         onClick={(e) => {
                           e.stopPropagation();
                           startARSession(eq);
-                        } aria-label={`Start AR session for ${eq.brand} ${eq.model}`}
+                        }}
+                        aria-label={`Start AR session for ${eq.brand} ${eq.model}`}
                         disabled={!arSupported}
                         className="px-3 py-1 bg-purple-500 text-white rounded text-sm hover:bg-purple-600 disabled:opacity-50"
                       >
                         AR
                       </button>
                       <button
-                        onClick={(e) = aria-label="Icon button"> {
+                       
+                        onClick={(e) => {
                           e.stopPropagation();
                           startVRSession(eq);
                         }}
@@ -364,21 +367,21 @@ export default function ARVRExperience() {
               </h3>
               <div className="flex gap-2">
                 <button
-                  aria-label="Icon button" onClick={() => handleZoom('out')}
+                  onClick={() => handleZoom('out')}
                   className="p-2 border rounded hover:bg-gray-50"
                   title="Zoom Out"
                 >
                   <ZoomOut className="w-4 h-4" />
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => handleZoom('in')}
+                  onClick={() => handleZoom('in')}
                   className="p-2 border rounded hover:bg-gray-50"
                   title="Zoom In"
                 >
                   <ZoomIn className="w-4 h-4" />
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => setRotation({ x: 0, y: 0, z: 0 })}
+                  onClick={() => setRotation({ x: 0, y: 0, z: 0 })}
                   className="p-2 border rounded hover:bg-gray-50"
                   title="Reset View"
                 >
@@ -427,28 +430,28 @@ export default function ARVRExperience() {
               {/* Rotation Controls */}
               <div className="absolute bottom-4 left-4 flex gap-2">
                 <button
-                  aria-label="Icon button" onClick={() => handleRotate('y', -15)}
+                  onClick={() => handleRotate('y', -15)}
                   className="p-2 bg-white rounded shadow hover:bg-gray-50"
                   title="Rotate Left"
                 >
                   ←
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => handleRotate('y', 15)}
+                  onClick={() => handleRotate('y', 15)}
                   className="p-2 bg-white rounded shadow hover:bg-gray-50"
                   title="Rotate Right"
                 >
                   →
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => handleRotate('x', -15)}
+                  onClick={() => handleRotate('x', -15)}
                   className="p-2 bg-white rounded shadow hover:bg-gray-50"
                   title="Rotate Up"
                 >
                   ↑
                 </button>
                 <button
-                  aria-label="Icon button" onClick={() => handleRotate('x', 15)}
+                  onClick={() => handleRotate('x', 15)}
                   className="p-2 bg-white rounded shadow hover:bg-gray-50"
                   title="Rotate Down"
                 >
@@ -479,7 +482,7 @@ export default function ARVRExperience() {
                   </div>
 
                   <button
-                    aria-label="Icon button" onClick={() => startVirtualTour(tour)}
+                    onClick={() => startVirtualTour(tour)}
                     className="w-full px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
                   >
                     Start Tour
@@ -501,13 +504,17 @@ export default function ARVRExperience() {
                   <button
                     onClick={previousWaypoint}
                     className="px-3 py-1 border rounded hover:bg-gray-50"
-                    disabled={currentTour.waypoints[0].id === currentWaypoint.id aria-label="Icon button">
+                    aria-label="Previous waypoint"
+                    disabled={currentTour.waypoints[0].id === currentWaypoint.id}
+                  >
                     Previous
                   </button>
                   <button
                     onClick={nextWaypoint}
                     className="px-3 py-1 bg-teal-500 text-white rounded hover:bg-teal-600"
-                    disabled={currentTour.waypoints[currentTour.waypoints.length - 1].id === currentWaypoint.id aria-label="Icon button">
+                    aria-label="Next waypoint"
+                    disabled={currentTour.waypoints[currentTour.waypoints.length - 1].id === currentWaypoint.id}
+                  >
                     Next
                   </button>
                 </div>
@@ -594,7 +601,7 @@ export default function ARVRExperience() {
                       </p>
                     </div>
                   </div>
-                  <button className="px-3 py-1 border rounded hover:bg-gray-50 text-sm" aria-label="Icon button">
+                  <button className="px-3 py-1 border rounded hover:bg-gray-50 text-sm">
                     View Details
                   </button>
                 </div>

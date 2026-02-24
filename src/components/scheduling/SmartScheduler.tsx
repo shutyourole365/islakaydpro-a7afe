@@ -49,7 +49,6 @@ export default function SmartScheduler({
 
   useEffect(() => {
     loadSmartData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMonth]);
 
   const loadSmartData = async () => {
@@ -232,7 +231,7 @@ export default function SmartScheduler({
         {/* View Toggle */}
         <div className="flex bg-white/10 rounded-xl p-1">
           <button
-            aria-label="Icon button" onClick={() => setViewMode('calendar')}
+            onClick={() => setViewMode('calendar')}
             className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
               viewMode === 'calendar' ? 'bg-white text-indigo-600' : 'text-white/80'
             }`}
@@ -241,7 +240,7 @@ export default function SmartScheduler({
             Calendar
           </button>
           <button
-            aria-label="Icon button" onClick={() => setViewMode('recommendations')}
+            onClick={() => setViewMode('recommendations')}
             className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
               viewMode === 'recommendations' ? 'bg-white text-indigo-600' : 'text-white/80'
             }`}
@@ -258,6 +257,7 @@ export default function SmartScheduler({
           <div className="p-4 border-b border-gray-100 flex items-center justify-between">
             <button
               onClick={prevMonth}
+              aria-label="Previous month"
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />
@@ -267,6 +267,7 @@ export default function SmartScheduler({
             </h3>
             <button
               onClick={nextMonth}
+              aria-label="Next month"
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronRight className="w-5 h-5 text-gray-600" />
@@ -297,7 +298,7 @@ export default function SmartScheduler({
                 return (
                   <button
                     key={slot.date.toISOString()}
-                    aria-label="Icon button" onClick={() => handleDateClick(slot)}
+                    aria-label={`Select date ${slot.date.getDate()}`} onClick={() => handleDateClick(slot)}
                     disabled={!slot.available}
                     className={`
                       relative aspect-square flex flex-col items-center justify-center rounded-lg text-sm
@@ -377,7 +378,7 @@ export default function SmartScheduler({
                   </div>
                 </div>
                 <button
-                  aria-label="Icon button" onClick={() => applyRecommendation(rec)}
+                  onClick={() => applyRecommendation(rec)}
                   className="w-full mt-2 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
                 >
                   Select These Dates
@@ -408,7 +409,7 @@ export default function SmartScheduler({
             )}
           </div>
           <button
-            aria-label="Icon button" onClick={() => onSelectDates(selectedStart!, selectedEnd!, totals.avgDiscount)}
+            onClick={() => onSelectDates(selectedStart!, selectedEnd!, totals.avgDiscount)}
             className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
           >
             Confirm These Dates

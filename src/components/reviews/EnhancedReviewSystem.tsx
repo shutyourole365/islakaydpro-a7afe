@@ -142,7 +142,7 @@ export default function EnhancedReviewSystem({
           <button
             key={star}
             type="button"
-            aria-label="Icon button" onClick={() => onChange(star)}
+            aria-label={`Rate ${star} star${star !== 1 ? 's' : ''}`} onClick={() => onChange(star)}
             onMouseEnter={() => setHover(star)}
             onMouseLeave={() => setHover(0)}
             className="transition-transform hover:scale-110"
@@ -253,6 +253,7 @@ export default function EnhancedReviewSystem({
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g., Great excavator, worked perfectly!"
+                  aria-label="Review title"
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
                   maxLength={80}
                 />
@@ -316,7 +317,7 @@ export default function EnhancedReviewSystem({
                       className="w-full h-full object-cover rounded-xl"
                     />
                     <button
-                      aria-label="Icon button"
+                      aria-label={`Remove photo ${idx + 1}`}
                       onClick={() => {
                         setSelectedPhotos(prev => prev.filter((_, i) => i !== idx));
                         setPhotoUrls(prev => prev.filter((_, i) => i !== idx));
@@ -361,7 +362,6 @@ export default function EnhancedReviewSystem({
         {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between">
           <button
-            aria-label="Icon button"
             onClick={() => {
               const steps = ['rating', 'aspects', 'details', 'photos'] as const;
               const currentIndex = steps.indexOf(step);
@@ -377,7 +377,6 @@ export default function EnhancedReviewSystem({
           </button>
 
           <button
-            aria-label="Icon button"
             onClick={() => {
               const steps = ['rating', 'aspects', 'details', 'photos'] as const;
               const currentIndex = steps.indexOf(step);

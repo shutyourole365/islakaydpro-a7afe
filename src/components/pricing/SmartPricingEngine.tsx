@@ -159,7 +159,7 @@ export default function SmartPricingEngine({ equipment, onPriceChange }: SmartPr
           onClick={analyzePricing}
           disabled={isAnalyzing}
           className="px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg font-medium hover:from-purple-600 hover:to-indigo-700 transition-all disabled:opacity-50 flex items-center gap-2"
-         aria-label="Icon button">
+         >
           {isAnalyzing ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -233,7 +233,7 @@ export default function SmartPricingEngine({ equipment, onPriceChange }: SmartPr
 
           {/* Reasoning */}
           <button
-            aria-label="Icon button" onClick={() => setShowDetails(!showDetails)}
+            onClick={() => setShowDetails(!showDetails)}
             className="text-sm text-purple-600 hover:text-purple-700 font-medium"
           >
             {showDetails ? 'Hide' : 'Show'} analysis details

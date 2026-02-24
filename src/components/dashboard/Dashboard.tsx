@@ -327,7 +327,7 @@ export default function Dashboard({
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  aria-label="Icon button" onClick={() => setActiveTab(tab.id as TabType)}
+                  onClick={() => setActiveTab(tab.id as TabType)}
                   className={`w-full flex items-center justify-between px-6 py-4 text-left transition-colors ${
                     activeTab === tab.id
                       ? 'bg-teal-50 text-teal-700 border-l-4 border-teal-500'
@@ -437,7 +437,7 @@ export default function Dashboard({
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-lg font-semibold text-gray-900">Recent Bookings</h2>
                       <button
-                        aria-label="Icon button" onClick={() => setActiveTab('bookings')}
+                        onClick={() => setActiveTab('bookings')}
                         className="text-teal-600 text-sm font-medium hover:text-teal-700"
                       >
                         View All
@@ -484,7 +484,7 @@ export default function Dashboard({
                           You have {pendingOwnerBookings.length} booking request{pendingOwnerBookings.length > 1 ? 's' : ''} waiting for your approval.
                         </p>
                         <button
-                          aria-label="Icon button" onClick={() => setActiveTab('listings')}
+                          onClick={() => setActiveTab('listings')}
                           className="px-4 py-2 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition-colors"
                         >
                           Review Requests
@@ -502,7 +502,7 @@ export default function Dashboard({
                   <button
                     onClick={onListEquipment}
                     className="flex items-center gap-2 px-6 py-3 bg-white text-teal-600 font-semibold rounded-xl hover:bg-gray-100 transition-colors"
-                   aria-label="Icon button">
+                   >
                     <Plus className="w-5 h-5" aria-hidden="true" />
                     List Equipment
                   </button>
@@ -539,7 +539,7 @@ export default function Dashboard({
                     <button
                       onClick={onBack}
                       className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-                     aria-label="Icon button">
+                     >
                       Browse Equipment
                     </button>
                   </div>
@@ -577,7 +577,8 @@ export default function Dashboard({
                             <div className="flex items-center justify-between">
                               <p className="text-lg font-semibold text-gray-900">${booking.total_amount.toFixed(2)}</p>
                               <button
-                                aria-label="Icon button"> booking.equipment && onEquipmentClick(booking.equipment)}
+                               
+                                onClick={() => booking.equipment && onEquipmentClick(booking.equipment)}
                                 className="flex items-center gap-2 px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-xl transition-colors"
                               >
                                 View Details
@@ -600,7 +601,7 @@ export default function Dashboard({
                   <button
                     onClick={onListEquipment}
                     className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white font-medium rounded-xl hover:bg-teal-600 transition-colors"
-                   aria-label="Icon button">
+                   >
                     <Plus className="w-5 h-5" aria-hidden="true" />
                     Add New
                   </button>
@@ -629,14 +630,14 @@ export default function Dashboard({
                             </div>
                             <div className="flex items-center gap-2">
                               <button
-                                aria-label="Icon button" onClick={() => handleBookingAction(booking.id, 'confirm')}
+                                onClick={() => handleBookingAction(booking.id, 'confirm')}
                                 className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-colors"
                                 aria-label="Approve request"
                               >
                                 <Check className="w-5 h-5" aria-hidden="true" />
                               </button>
                               <button
-                                aria-label="Icon button" onClick={() => handleBookingAction(booking.id, 'cancel')}
+                                onClick={() => handleBookingAction(booking.id, 'cancel')}
                                 className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors"
                                 aria-label="Reject request"
                               >
@@ -660,7 +661,7 @@ export default function Dashboard({
                     <button
                       onClick={onListEquipment}
                       className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-                     aria-label="Icon button">
+                     >
                       <Plus className="w-5 h-5" />
                       Create Your First Listing
                     </button>
@@ -695,7 +696,7 @@ export default function Dashboard({
                           </div>
                           <div className="flex items-center gap-2">
                             <button
-                              aria-label="Icon button" onClick={() => onEquipmentClick(item)}
+                              onClick={() => onEquipmentClick(item)}
                               className="flex-1 px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors"
                             >
                               View
@@ -727,7 +728,7 @@ export default function Dashboard({
                     <button
                       onClick={onBack}
                       className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors"
-                     aria-label="Icon button">
+                     >
                       Browse Equipment
                     </button>
                   </div>
@@ -742,13 +743,13 @@ export default function Dashboard({
                           <p className="font-semibold text-gray-900 mb-3">${item.daily_rate}/day</p>
                           <div className="flex items-center gap-2">
                             <button
-                              aria-label="Icon button" onClick={() => onEquipmentClick(item)}
+                              onClick={() => onEquipmentClick(item)}
                               className="px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors"
                             >
                               View
                             </button>
                             <button
-                              aria-label="Icon button" onClick={() => handleRemoveFavorite(item.id)}
+                              onClick={() => handleRemoveFavorite(item.id)}
                               className="px-4 py-2 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
                             >
                               Remove
@@ -787,7 +788,7 @@ export default function Dashboard({
                         conversations.map((conv) => (
                           <button
                             key={conv.id}
-                            aria-label="Icon button" onClick={() => setSelectedConversation(conv.id)}
+                            onClick={() => setSelectedConversation(conv.id)}
                             className={`w-full p-4 text-left hover:bg-gray-50 transition-colors ${
                               selectedConversation === conv.id ? 'bg-teal-50' : ''
                             }`}
@@ -886,7 +887,7 @@ export default function Dashboard({
                   </h2>
                   <div className="flex items-center gap-3">
                     <button
-                      aria-label="Icon button" onClick={() => setShowNotificationSettings(!showNotificationSettings)}
+                      onClick={() => setShowNotificationSettings(!showNotificationSettings)}
                       className="text-teal-600 text-sm font-medium hover:text-teal-700 flex items-center gap-1"
                     >
                       <Settings className="w-4 h-4" />
@@ -896,7 +897,7 @@ export default function Dashboard({
                       <button
                         onClick={handleMarkAllRead}
                         className="text-teal-600 text-sm font-medium hover:text-teal-700"
-                       aria-label="Icon button">
+                       >
                         Mark all as read
                       </button>
                     )}
@@ -940,7 +941,7 @@ export default function Dashboard({
                             </div>
                             {!notification.is_read && (
                               <button
-                                aria-label="Icon button" onClick={() => handleMarkNotificationRead(notification.id)}
+                                onClick={() => handleMarkNotificationRead(notification.id)}
                                 className="p-1 text-teal-600 hover:bg-teal-100 rounded"
                                 aria-label="Mark notification as read"
                               >
@@ -1008,7 +1009,7 @@ export default function Dashboard({
                           <p className="text-sm text-gray-500">Last changed 30 days ago</p>
                         </div>
                       </div>
-                      <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors" aria-label="Icon button">
+                      <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors">
                         Change
                       </button>
                     </div>
@@ -1029,7 +1030,9 @@ export default function Dashboard({
                         profile?.two_factor_enabled
                           ? 'text-red-600 hover:bg-red-50'
                           : 'text-teal-600 hover:bg-teal-50'
-                      } aria-label="Icon button">
+                      }`}
+                     
+                      >
                         {profile?.two_factor_enabled ? 'Disable' : 'Enable'}
                       </button>
                     </div>
@@ -1072,7 +1075,7 @@ export default function Dashboard({
                         {settingsForm.full_name?.charAt(0) || 'U'}
                       </div>
                       <div>
-                        <button className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors" aria-label="Icon button">
+                        <button className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors">
                           Change Photo
                         </button>
                       </div>
@@ -1142,7 +1145,7 @@ export default function Dashboard({
                         onClick={handleSaveSettings}
                         disabled={saving}
                         className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                       aria-label="Icon button">
+                       >
                         {saving && <Loader2 className="w-4 h-4 animate-spin" />}
                         Save Changes
                       </button>
@@ -1183,7 +1186,7 @@ export default function Dashboard({
                   <p className="text-red-700 text-sm mb-4">
                     Once you delete your account, there is no going back. Please be certain.
                   </p>
-                  <button className="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors" aria-label="Icon button">
+                  <button className="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors">
                     Delete Account
                   </button>
                 </div>
@@ -1260,7 +1263,7 @@ function VerificationItem({ icon: Icon, title, description, verified }: {
           Verified
         </span>
       ) : (
-        <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors" aria-label="Icon button">
+        <button className="px-4 py-2 text-teal-600 font-medium hover:bg-teal-50 rounded-lg transition-colors">
           Verify
         </button>
       )}

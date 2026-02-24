@@ -91,7 +91,6 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
     if (user) {
       loadPreferences();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const loadPreferences = async () => {
@@ -246,7 +245,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
                     ? 'bg-teal-500'
                     : 'bg-gray-200'
                 } ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
-                aria-pressed={preferences?.[option.key]}
+                aria-pressed={preferences?.[option.key] ? "true" : "false"}
                 aria-label={`Toggle ${option.label}`}
               >
                 <span
@@ -278,7 +277,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
         <button
           onClick={loadPreferences}
           className="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-         aria-label="Icon button">
+         >
           Try Again
         </button>
       </div>
@@ -329,7 +328,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
           onClick={handleEnableAll}
           disabled={isSaving}
           className="flex items-center gap-2 px-4 py-2 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 transition-colors disabled:opacity-50"
-         aria-label="Icon button">
+         >
           <CheckCircle2 className="w-4 h-4" />
           Enable All
         </button>
@@ -337,7 +336,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
           onClick={handleDisableAll}
           disabled={isSaving}
           className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
-         aria-label="Icon button">
+         >
           <Bell className="w-4 h-4" />
           Disable All
         </button>

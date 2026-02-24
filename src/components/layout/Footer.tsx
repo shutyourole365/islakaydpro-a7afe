@@ -70,7 +70,8 @@ export default function Footer({ onNavigate }: FooterProps) {
                 {links.map((link) => (
                   <li key={link.label}>
                     <button
-                      aria-label="Icon button"> {
+                     
+                      onClick={() => {
                         if (link.page) {
                           onNavigate?.(link.page);
                         }
@@ -90,31 +91,36 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
               <button
-                aria-label="Icon button"> onNavigate?.('terms')}
+               
+                onClick={() => onNavigate?.('terms')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 Terms of Service
               </button>
               <button
-                aria-label="Icon button"> onNavigate?.('privacy')}
+               
+                onClick={() => onNavigate?.('privacy')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 Privacy Policy
               </button>
               <button
-                aria-label="Icon button"> onNavigate?.('cookies')}
+               
+                onClick={() => onNavigate?.('cookies')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 Cookie Policy
               </button>
               <button
-                aria-label="Icon button"> onNavigate?.('refund')}
+               
+                onClick={() => onNavigate?.('refund')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 Refund Policy
               </button>
               <button
-                aria-label="Icon button"> onNavigate?.('accessibility')}
+               
+                onClick={() => onNavigate?.('accessibility')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
               >
                 Accessibility

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
 import {
   Leaf,
@@ -193,6 +193,7 @@ export default function CarbonFootprintTracker({
           {onClose && (
             <button
               onClick={onClose}
+              aria-label="Close carbon tracker"
               className="p-2 hover:bg-white/20 rounded-full transition-colors"
             >
               <XCircle className="w-6 h-6" />
@@ -221,7 +222,7 @@ export default function CarbonFootprintTracker({
         {(['overview', 'history', 'achievements'] as const).map((tab) => (
           <button
             key={tab}
-            aria-label="Icon button" onClick={() => setActiveTab(tab)}
+            onClick={() => setActiveTab(tab)}
             className={`flex-1 py-4 text-sm font-medium transition-colors ${
               activeTab === tab
                 ? 'text-green-600 border-b-2 border-green-500'
@@ -292,7 +293,7 @@ export default function CarbonFootprintTracker({
             <button
               onClick={handleShare}
               className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
-             aria-label="Icon button">
+             >
               <Share2 className="w-5 h-5" />
               Share Your Impact
             </button>

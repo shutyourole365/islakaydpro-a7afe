@@ -261,7 +261,7 @@ export default function RealTimeChat({
             filteredConversations.map(conversation => (
               <button
                 key={conversation.id}
-                aria-label="Icon button" onClick={() => setSelectedConversation(conversation)}
+                onClick={() => setSelectedConversation(conversation)}
                 className={`w-full px-4 py-3 flex items-start gap-3 hover:bg-gray-50 transition-colors text-left ${
                   selectedConversation?.id === conversation.id ? 'bg-teal-50' : ''
                 }`}
@@ -338,7 +338,7 @@ export default function RealTimeChat({
           <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between bg-white">
             <div className="flex items-center gap-3">
               <button
-                aria-label="Icon button" onClick={() => setSelectedConversation(null)}
+                onClick={() => setSelectedConversation(null)}
                 className="md:hidden p-2 -ml-2 rounded-full hover:bg-gray-100"
               >
                 <ChevronLeft className="w-5 h-5 text-gray-600" />
@@ -388,7 +388,7 @@ export default function RealTimeChat({
               <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <Phone className="w-5 h-5 text-gray-600" />
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors" aria-label="Icon button">
+              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <Video className="w-5 h-5 text-gray-600" />
               </button>
               <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
@@ -472,7 +472,8 @@ export default function RealTimeChat({
                 {emojis.map(emoji => (
                   <button
                     key={emoji}
-                    aria-label="Icon button"> {
+                   
+                    onClick={() => {
                       setInputText(prev => prev + emoji);
                       setShowEmojiPicker(false);
                     }}
@@ -488,7 +489,7 @@ export default function RealTimeChat({
               <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors">
                 <Paperclip className="w-5 h-5 text-gray-500" />
               </button>
-              <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors" aria-label="Icon button">
+              <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors">
                 <Image className="w-5 h-5 text-gray-500" />
               </button>
               
@@ -506,7 +507,7 @@ export default function RealTimeChat({
               </div>
 
               <button
-                aria-label="Icon button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className="p-2.5 rounded-full hover:bg-gray-100 transition-colors"
               >
                 <Smile className="w-5 h-5 text-gray-500" />
@@ -521,7 +522,7 @@ export default function RealTimeChat({
                 </button>
               ) : (
                 <button
-                  aria-label="Icon button" onClick={() => setIsRecording(!isRecording)}
+                  onClick={() => setIsRecording(!isRecording)}
                   className={`p-2.5 rounded-full transition-all ${
                     isRecording
                       ? 'bg-red-500 text-white animate-pulse'

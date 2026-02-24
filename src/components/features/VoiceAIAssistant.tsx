@@ -362,7 +362,7 @@ export default function VoiceAIAssistant({ onBack }: VoiceAIAssistantProps) {
                   {messages[messages.length - 1].suggestions?.map((suggestion, index) => (
                     <button
                       key={index}
-                      aria-label="Icon button" onClick={() => handleSuggestionClick(suggestion)}
+                      onClick={() => handleSuggestionClick(suggestion)}
                       className="px-3 py-2 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition-colors"
                     >
                       {suggestion}

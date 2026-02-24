@@ -272,7 +272,7 @@ export default function EquipmentShowcase({
                   Compare
                 </Button>
               )}
-              <button className="p-3 border border-white/30 rounded-lg text-white hover:bg-white/10 transition-all transform hover:scale-105">
+              <button aria-label="Share equipment" className="p-3 border border-white/30 rounded-lg text-white hover:bg-white/10 transition-all transform hover:scale-105">
                 <Share2 className="w-5 h-5" />
               </button>
             </div>
@@ -284,14 +284,16 @@ export default function EquipmentShowcase({
           <>
             <button
               onClick={goToPrevious}
+              aria-label="Previous equipment"
               className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={goToNext}
+              aria-label="Next equipment"
               className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
-             aria-label="Icon button">
+             >
               <ChevronRight className="w-6 h-6" />
             </button>
           </>
@@ -303,7 +305,8 @@ export default function EquipmentShowcase({
             {equipment.map((_, index) => (
               <button
                 key={index}
-                aria-label="Icon button" onClick={() => goToSlide(index)}
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to slide ${index + 1}`}
                 className={`w-3 h-3 rounded-full transition-colors ${
                   index === currentIndex ? 'bg-white' : 'bg-white/50'
                 }`}
@@ -317,13 +320,15 @@ export default function EquipmentShowcase({
           <div className="absolute top-4 right-4 flex gap-2">
             <button
               onClick={toggleAnimation}
+              aria-label={`Animation style: ${animationType}`}
               className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors text-xs font-bold"
               title={`Animation: ${animationType}`}
             >
               {animationType === 'fade' ? 'F' : animationType === 'slide' ? 'S' : 'Z'}
             </button>
             <button
-              aria-label="Icon button" onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              aria-label={isAutoPlaying ? 'Pause auto-play' : 'Start auto-play'}
               className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
               title={isAutoPlaying ? 'Pause auto-play' : 'Start auto-play'}
             >

@@ -383,7 +383,7 @@ export default function SustainabilityTracker({ className = '' }: Sustainability
           </div>
         </div>
         <div className="mt-4 pt-4 border-t border-green-200">
-          <button className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium" aria-label="Icon button">
+          <button className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium">
             View Detailed Report
           </button>
         </div>

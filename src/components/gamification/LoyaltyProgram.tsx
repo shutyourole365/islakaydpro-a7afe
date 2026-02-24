@@ -218,7 +218,7 @@ export default function LoyaltyProgram({ userId, onClose: _onClose }: LoyaltyPro
         {(['overview', 'rewards', 'badges', 'history'] as const).map((tab) => (
           <button
             key={tab}
-            aria-label="Icon button" onClick={() => setActiveTab(tab)}
+            onClick={() => setActiveTab(tab)}
             className={`flex-1 py-4 text-sm font-medium transition-colors ${
               activeTab === tab
                 ? 'text-amber-600 border-b-2 border-amber-500'
@@ -327,7 +327,7 @@ export default function LoyaltyProgram({ userId, onClose: _onClose }: LoyaltyPro
                     <div className="text-right ml-4">
                       <div className="font-bold text-amber-600">{reward.pointsCost.toLocaleString()} pts</div>
                       <button
-                        aria-label="Icon button" onClick={() => handleRedeem(reward.id)}
+                        onClick={() => handleRedeem(reward.id)}
                         disabled={!canAfford || redeemingId === reward.id}
                         className={`mt-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                           canAfford

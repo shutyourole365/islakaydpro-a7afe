@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps, prefer-const */
+/* eslint-disable prefer-const */
 import { useState, useEffect } from 'react';
 import {
   Cloud,
@@ -214,7 +214,7 @@ export default function WeatherAdvisor({
             </div>
           </div>
           <button
-            aria-label="Icon button" onClick={() => setExpanded(!expanded)}
+            aria-label="Toggle weather details" onClick={() => setExpanded(!expanded)}
             className="p-2 hover:bg-white rounded-lg transition-colors"
           >
             <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform ${expanded ? 'rotate-90' : ''}`} />
