@@ -55,7 +55,8 @@ export function Button({
         ${sizes[size]}
         ${fullWidth ? 'w-full' : ''}
         ${className}
-      aria-label="Icon button">
+      `}
+     aria-label="Icon button">
       {loading ? (
         <Loader2 className="w-5 h-5 animate-spin" />
       ) : leftIcon ? (
@@ -107,7 +108,8 @@ export function IconButton({
     <button
       type="button"
       onClick={onClick}
-      disabled={disabled || loading aria-label={label}
+      disabled={disabled || loading}
+      aria-label={label}
       title={label}
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
     >

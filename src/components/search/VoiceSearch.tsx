@@ -116,7 +116,8 @@ export default function VoiceSearch({ onSearch, placeholder = "Search equipment.
                 isListening 
                   ? 'bg-red-500 text-white animate-pulse' 
                   : 'bg-gray-100 text-gray-600 hover:bg-teal-500 hover:text-white'
-              } aria-label="Icon button">
+              }`}
+             aria-label="Icon button">
               {isListening ? (
                 <div className="relative">
                   <MicOff className="w-5 h-5" />
@@ -153,7 +154,7 @@ export default function VoiceSearch({ onSearch, placeholder = "Search equipment.
           {['Excavator', 'Power Drill', 'Camera', 'DJ Equipment', 'Lawn Mower'].map((suggestion) => (
             <button
               key={suggestion}
-              aria-label="Icon button" onClick={() => onSearch(suggestion)}
+              onClick={() = aria-label="Icon button"> onSearch(suggestion)}
               className="px-3 py-1.5 bg-gray-100 text-gray-600 text-sm rounded-full hover:bg-teal-50 hover:text-teal-600 transition-colors"
             >
               {suggestion}

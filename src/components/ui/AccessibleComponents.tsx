@@ -59,8 +59,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ${sizes[size]}
           ${fullWidth ? 'w-full' : ''}
           ${className}
+        `}
         aria-busy={isLoading}
-        {...props aria-label="Icon button">
+        {...props}
+       aria-label="Icon button">
         {isLoading ? (
           <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
         ) : leftIcon ? (
@@ -135,7 +137,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               ${rightIcon ? 'pr-10' : ''}
               ${error ? 'border-red-500 focus:ring-red-500' : 'border-gray-200'}
               ${className}
-            aria-invalid={error ? 'true' : 'false'aria-describedby={[errorId, hintId].filter(Boolean).join(' ') || undefined}
+            `}
+            aria-invalid={error ? 'true' : 'false'}
+            aria-describedby={[errorId, hintId].filter(Boolean).join(' ') || undefined}
             {...props}
           />
           {rightIcon && (
@@ -285,7 +289,8 @@ export function LiveRegion({
   return (
     <div
       role="status"
-      aria-live={ariaLive} aria-atomic={ariaAtomic}
+      aria-live={ariaLive}
+      aria-atomic={ariaAtomic}
       className="sr-only"
     >
       {children}
@@ -340,6 +345,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           ${variants[variant]}
           ${sizes[size]}
           ${className}
+        `}
         aria-label={label}
         title={label}
         {...props}
@@ -483,7 +489,10 @@ export function ProgressBar({
       <div
         className={`w-full bg-gray-200 rounded-full overflow-hidden ${sizes[size]}`}
         role="progressbar"
-        aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} aria-label={label || `Progress: ${Math.round(percentage)}%`}
+        aria-valuenow={value}
+        aria-valuemin={0}
+        aria-valuemax={max}
+        aria-label={label || `Progress: ${Math.round(percentage)}%`}
       >
         <div
           className={`h-full rounded-full transition-all duration-300 ${variants[variant]}`}

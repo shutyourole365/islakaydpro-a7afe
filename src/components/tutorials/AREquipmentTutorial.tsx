@@ -321,7 +321,7 @@ export default function AREquipmentTutorial({
                         {q.options.map((option, oIndex) => (
                           <button
                             key={oIndex}
-                            aria-label="Icon button" onClick={() => setQuizAnswers({ ...quizAnswers, [q.id]: oIndex })}
+                            onClick={() = aria-label="Icon button"> setQuizAnswers({ ...quizAnswers, [q.id]: oIndex })}
                             className={`w-full p-3 text-left rounded-lg border-2 transition-colors ${
                               quizAnswers[q.id] === oIndex
                                 ? 'border-indigo-500 bg-indigo-50'
@@ -373,7 +373,7 @@ export default function AREquipmentTutorial({
                 <div className="flex gap-3">
                   {progress.quizScore < 70 && (
                     <button
-                      aria-label="Icon button"> {
+                      onClick={() = aria-label="Icon button"> {
                         setShowQuiz(false);
                         setProgress({ ...progress, currentStep: 0, quizScore: undefined });
                         setQuizAnswers({});
@@ -476,20 +476,20 @@ export default function AREquipmentTutorial({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <button
-                    aria-label="Icon button" onClick={() => setIsPlaying(!isPlaying)}
+                    onClick={() = aria-label="Icon button"> setIsPlaying(!isPlaying)}
                     className="p-2 bg-white/20 rounded-full hover:bg-white/30"
                   >
                     {isPlaying ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white" />}
                   </button>
                   <button
-                    aria-label="Icon button" onClick={() => setIsMuted(!isMuted)}
+                    onClick={() = aria-label="Icon button"> setIsMuted(!isMuted)}
                     className="p-2 bg-white/20 rounded-full hover:bg-white/30"
                   >
                     {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
                   </button>
                 </div>
                 <button
-                  aria-label="Icon button" onClick={() => setShowAR(!showAR)}
+                  onClick={() = aria-label="Icon button"> setShowAR(!showAR)}
                   className={`px-3 py-1.5 rounded-full text-sm font-medium ${
                     showAR ? 'bg-cyan-500 text-white' : 'bg-white/20 text-white'
                   }`}
@@ -551,7 +551,7 @@ export default function AREquipmentTutorial({
                 {currentStep.checkpoints.map((checkpoint, index) => (
                   <button
                     key={index}
-                    aria-label="Icon button" onClick={() => completeCheckpoint(checkpoint)}
+                    onClick={() = aria-label="Icon button"> completeCheckpoint(checkpoint)}
                     className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-colors ${
                       progress.completedSteps.includes(`${currentStep.id}-${checkpoint}`) || 
                       (stepComplete && index <= currentStep.checkpoints.indexOf(checkpoint))
@@ -613,7 +613,8 @@ export default function AREquipmentTutorial({
               stepComplete
                 ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
                 : 'bg-gray-100 text-gray-400'
-            } aria-label="Icon button">
+            }`}
+           aria-label="Icon button">
             {progress.currentStep === steps.length - 1 ? 'Complete' : 'Next'}
             <ChevronRight className="w-5 h-5" />
           </button>
