@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { 
-  Sparkles, 
-  DollarSign, 
-  Wrench, 
-  Gift, 
-  Calendar, 
+import {
+  Sparkles,
+  DollarSign,
+  Wrench,
+  Gift,
+  Calendar,
   Zap,
   X,
   ChevronRight,
@@ -29,7 +29,12 @@ import {
   Cpu,
   Brain,
   Plane,
-  Building
+  Building,
+  HeartPulse,
+  Calculator,
+  Tag,
+  Clock,
+  Globe
 } from 'lucide-react';
 
 interface FeatureShowcaseProps {
@@ -520,6 +525,52 @@ export default function FeatureShowcase({ onFeatureSelect, onClose }: FeatureSho
       icon: <Building className="w-6 h-6" />,
       color: 'from-blue-600 to-indigo-600',
       badge: '🔗 INTEGRATIONS',
+      demo: true,
+    },
+    // NEWEST Features - Health, Estimator, Deals, Timeline, i18n
+    {
+      id: 'equipment-health',
+      name: 'Equipment Health Score',
+      description: 'Real-time equipment condition monitoring with detailed health metrics and maintenance alerts',
+      icon: <HeartPulse className="w-6 h-6" />,
+      color: 'from-emerald-500 to-green-600',
+      badge: '🏥 HEALTH',
+      demo: true,
+    },
+    {
+      id: 'cost-estimator',
+      name: 'Rental Cost Estimator',
+      description: 'Interactive cost calculator with insurance, delivery, promo codes, and detailed breakdowns',
+      icon: <Calculator className="w-6 h-6" />,
+      color: 'from-teal-500 to-cyan-600',
+      badge: '💰 CALC',
+      demo: true,
+    },
+    {
+      id: 'seasonal-deals',
+      name: 'Seasonal Deals & Promotions',
+      description: 'Limited-time seasonal offers, flash sales, and promo codes with up to 40% off',
+      icon: <Tag className="w-6 h-6" />,
+      color: 'from-rose-500 to-pink-600',
+      badge: '🔥 DEALS',
+      demo: true,
+    },
+    {
+      id: 'rental-history',
+      name: 'Rental History Timeline',
+      description: 'Visual timeline of all your rentals with stats, ratings, and activity tracking',
+      icon: <Clock className="w-6 h-6" />,
+      color: 'from-violet-500 to-indigo-600',
+      badge: '📋 HISTORY',
+      demo: true,
+    },
+    {
+      id: 'multi-language',
+      name: 'Multi-Language Support',
+      description: '12+ languages with translation previews, auto-detection, and currency localization',
+      icon: <Globe className="w-6 h-6" />,
+      color: 'from-blue-500 to-purple-600',
+      badge: '🌐 i18n',
       demo: true,
     },
   ];
