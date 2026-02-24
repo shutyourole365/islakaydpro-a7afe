@@ -106,10 +106,7 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <ErrorBoundary>
         <ToastProvider>
-          <main id="main-content" role="main">
-            <h1 className="sr-only">Islakayd - Equipment Rental Marketplace</h1>
-            <App />
-          </main>
+          <App />
         </ToastProvider>
       </ErrorBoundary>
     </ThemeProvider>
