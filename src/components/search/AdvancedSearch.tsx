@@ -441,7 +441,8 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
                     key={rating}
-                    aria-label="Icon button"> setFilters(prev => ({ ...prev, rating: prev.rating === rating ? 0 : rating }))}
+                    aria-label="Icon button"
+                    onClick={() => setFilters(prev => ({ ...prev, rating: prev.rating === rating ? 0 : rating }))}
                     className={`flex items-center gap-1 px-2 py-1 rounded ${
                       filters.rating >= rating
                         ? 'bg-yellow-100 text-yellow-700'
@@ -464,7 +465,8 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
               {availableFeatures.slice(0, 12).map((feature) => (
                 <button
                   key={feature}
-                  aria-label="Icon button"> setFilters(prev => ({
+                  aria-label="Icon button"
+                  onClick={() => setFilters(prev => ({
                     ...prev,
                     features: prev.features.includes(feature)
                       ? prev.features.filter(f => f !== feature)
