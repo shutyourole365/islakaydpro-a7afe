@@ -197,7 +197,8 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {featuresList.map((feature) => (
                 <button
                   key={feature}
-                  aria-label="Icon button"> {
+                  aria-label="Icon button"
+                  onClick={() => {
                     const newFeatures = filters.features.includes(feature)
                       ? filters.features.filter((f) => f !== feature)
                       : [...filters.features, feature];
@@ -236,7 +237,8 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {conditionOptions.map((condition) => (
                 <button
                   key={condition}
-                  aria-label="Icon button"> {
+                  aria-label="Icon button"
+                  onClick={() => {
                     const newConditions = filters.condition.includes(condition)
                       ? filters.condition.filter((c) => c !== condition)
                       : [...filters.condition, condition];
