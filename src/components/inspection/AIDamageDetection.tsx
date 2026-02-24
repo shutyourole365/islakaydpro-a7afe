@@ -266,7 +266,8 @@ export default function AIDamageDetection({
                     />
                       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4">
                       <button
-                        onClick={stopCamera aria-label="Cancel camera"
+                        onClick={stopCamera}
+                        aria-label="Cancel camera"
                         title="Cancel camera"
                         className="px-6 py-2 bg-white/20 backdrop-blur text-white rounded-full"
                       >
@@ -291,7 +292,8 @@ export default function AIDamageDetection({
                       <span className="text-sm text-gray-500">Use camera</span>
                     </button>
                     <button
-                      aria-label="Icon button"> fileInputRef.current?.click()}
+                      aria-label="Icon button"
+                      onClick={() => fileInputRef.current?.click()}
                       className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-colors"
                     >
                       <Upload className="w-12 h-12 text-gray-400 mb-3" />
@@ -322,7 +324,8 @@ export default function AIDamageDetection({
                           className="w-full h-full object-cover"
                         />
                         <button
-                          aria-label="Icon button" onClick={() => removePhoto(index) aria-label={`Remove photo ${index + 1}`}
+                          aria-label={`Remove photo ${index + 1}`}
+                          onClick={() => removePhoto(index)}
                           title={`Remove photo ${index + 1}`}
                           className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                         >
@@ -331,9 +334,9 @@ export default function AIDamageDetection({
                       </div>
                     ))}
                     <button
-                      aria-label="Icon button"> fileInputRef.current?.click()}
-                      className="aspect-square rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-400 hover:border-orange-300 hover:text-orange-500 transition-colors"
                       aria-label="Add photos"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="aspect-square rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-400 hover:border-orange-300 hover:text-orange-500 transition-colors"
                       title="Add photos"
                     >
                       <ImageIcon className="w-8 h-8" aria-hidden="true" />
@@ -394,10 +397,11 @@ export default function AIDamageDetection({
                     {damages.map((damage) => (
                       <button
                         key={damage.id}
-                        aria-label="Icon button" onClick={() => setSelectedDamage(damage)}
+                        aria-label={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
+                        onClick={() => setSelectedDamage(damage)}
                         className={`absolute border-2 rounded ${
                           selectedDamage?.id === damage.id ? 'border-red-500' : 'border-orange-400'
-                        } animate-pulse cursor-pointer } aria-label={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
+                        } animate-pulse cursor-pointer`}
                         title={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
                         ref={(el) => {
                           if (el) {
