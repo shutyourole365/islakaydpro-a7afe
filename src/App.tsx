@@ -98,9 +98,22 @@ const EnhancedReviewSystem = lazy(() => import('./components/reviews/EnhancedRev
 const PWAEnhancedFeatures = lazy(() => import('./components/pwa/PWAEnhancedFeatures'));
 const MultiPaymentSystem = lazy(() => import('./components/payments/MultiPaymentSystem'));
 
+// NEW Features - Health Score, Cost Estimator, Seasonal Deals, History Timeline, Multi-Language
+const EquipmentHealthScore = lazy(() => import('./components/health/EquipmentHealthScore'));
+const RentalCostEstimator = lazy(() => import('./components/estimator/RentalCostEstimator'));
+const SeasonalDeals = lazy(() => import('./components/promotions/SeasonalDeals'));
+const RentalHistoryTimeline = lazy(() => import('./components/timeline/RentalHistoryTimeline'));
+const MultiLanguageSupport = lazy(() => import('./components/i18n/MultiLanguageSupport'));
+
 // New Feature Components - Trust, Alerts, Bundles, Warranties, Insights
 const RenterTrustScore = lazy(() => import('./components/trust/RenterTrustScore'));
 const SmartAlertsSystem = lazy(() => import('./components/alerts/SmartAlertsSystem'));
+// NEW Features - Availability Calendar, Revenue Dashboard, Certification, Agreements, Support
+const EquipmentAvailabilityCalendar = lazy(() => import('./components/availability/EquipmentAvailabilityCalendar'));
+const OwnerRevenueDashboard = lazy(() => import('./components/revenue/OwnerRevenueDashboard'));
+const EquipmentCertificationTracker = lazy(() => import('./components/certification/EquipmentCertificationTracker'));
+const RentalAgreementGenerator = lazy(() => import('./components/agreements/RentalAgreementGenerator'));
+const CustomerSupportTickets = lazy(() => import('./components/tickets/CustomerSupportTickets'));
 const EquipmentBundleDeals = lazy(() => import('./components/bundles/EquipmentBundleDeals'));
 const EquipmentWarrantyTracker = lazy(() => import('./components/warranty/EquipmentWarrantyTracker'));
 const BulkBookingSystem = lazy(() => import('./components/booking/BulkBookingSystem'));
@@ -576,7 +589,7 @@ const sampleEquipment: Equipment[] = [
 ];
 
 function AppContent() {
-type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler';
+type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language' | 'availability-calendar' | 'revenue-dashboard' | 'certification-tracker' | 'agreement-generator' | 'support-tickets';
   const { isAuthenticated, user, profile, signOut } = useAuth();
   const {
     showBanner,
@@ -1112,6 +1125,37 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
         break;
       case 'industry-integrations':
         setCurrentPage('industry-integrations');
+        break;
+      // NEW Features
+      case 'equipment-health':
+        setCurrentPage('equipment-health');
+        break;
+      case 'cost-estimator':
+        setCurrentPage('cost-estimator');
+        break;
+      case 'seasonal-deals':
+        setCurrentPage('seasonal-deals');
+        break;
+      case 'rental-history':
+        setCurrentPage('rental-history');
+        break;
+      case 'multi-language':
+        setCurrentPage('multi-language');
+        break;
+      case 'availability-calendar':
+        setCurrentPage('availability-calendar');
+        break;
+      case 'revenue-dashboard':
+        setCurrentPage('revenue-dashboard');
+        break;
+      case 'certification-tracker':
+        setCurrentPage('certification-tracker');
+        break;
+      case 'agreement-generator':
+        setCurrentPage('agreement-generator');
+        break;
+      case 'support-tickets':
+        setCurrentPage('support-tickets');
         break;
       default:
         alert(`${featureId} feature coming soon!`);
@@ -2377,7 +2421,78 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
         </Suspense>
       )}
 
-      {/* Legal Pages */}
+      {/* NEW Feature Pages - Health Score, Cost Estimator, Seasonal Deals, Rental History, Multi-Language */}
+      {currentPage === 'equipment-health' && (
+        <Suspense fallback={<PageLoader />}>
+          <EquipmentHealthScore onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'cost-estimator' && (
+        <Suspense fallback={<PageLoader />}>
+          <RentalCostEstimator onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'seasonal-deals' && (
+        <Suspense fallback={<PageLoader />}>
+          <SeasonalDeals onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'rental-history' && (
+        <Suspense fallback={<PageLoader />}>
+          <RentalHistoryTimeline onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'multi-language' && (
+        <Suspense fallback={<PageLoader />}>
+          <MultiLanguageSupport onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+            {currentPage === 'availability-calendar' && (
+        <Suspense fallback={<PageLoader />}>
+          <EquipmentAvailabilityCalendar onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'revenue-dashboard' && (
+        <Suspense fallback={<PageLoader />}>
+          <OwnerRevenueDashboard onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'certification-tracker' && (
+        <Suspense fallback={<PageLoader />}>
+          <EquipmentCertificationTracker onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'agreement-generator' && (
+        <Suspense fallback={<PageLoader />}>
+          <RentalAgreementGenerator onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'support-tickets' && (
+        <Suspense fallback={<PageLoader />}>
+          <CustomerSupportTickets onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+{/* Legal Pages */}
       {currentPage === 'terms' && (
         <Suspense fallback={<PageLoader />}>
           <TermsOfService onBack={() => setCurrentPage('home')} />
