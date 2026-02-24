@@ -316,7 +316,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
             {(['all', 'available', 'rented', 'maintenance'] as const).map((f) => (
               <button
                 key={f}
-                onClick={() = aria-label="Icon button"> setFilter(f)}
+                aria-label="Icon button" onClick={() => setFilter(f)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   filter === f
                     ? 'bg-white text-indigo-600 shadow-sm'
@@ -390,7 +390,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
 
               <div className="relative">
                 <button
-                  onClick={() = aria-label="Icon button"> setShowActions(showActions === item.id ? null : item.id)}
+                  aria-label="Icon button" onClick={() => setShowActions(showActions === item.id ? null : item.id)}
                   className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   <MoreVertical className="w-5 h-5 text-gray-500" />
@@ -416,7 +416,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
                     </button>
                     <hr className="my-2" />
                     <button
-                      onClick={() = aria-label="Icon button"> toggleEquipmentStatus(item.id)}
+                      aria-label="Icon button" onClick={() => toggleEquipmentStatus(item.id)}
                       className="w-full flex items-center gap-2 px-4 py-2 text-sm text-amber-600 hover:bg-amber-50"
                     >
                       {item.status === 'inactive' ? (

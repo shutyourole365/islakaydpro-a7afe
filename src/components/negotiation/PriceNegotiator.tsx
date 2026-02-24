@@ -251,7 +251,7 @@ export default function PriceNegotiator({
             {suggestions.map((suggestion, index) => (
               <button
                 key={index}
-                onClick={() = aria-label="Icon button"> sendOffer(Math.round(originalTotal * (1 - suggestion.discount / 100)))}
+                aria-label="Icon button"> sendOffer(Math.round(originalTotal * (1 - suggestion.discount / 100)))}
                 className={`flex-shrink-0 px-3 py-2 rounded-lg text-sm transition-colors ${getLikelihoodColor(suggestion.likelihood)} hover:opacity-80`}
               >
                 <div className="flex items-center gap-2">
@@ -320,7 +320,7 @@ export default function PriceNegotiator({
                 />
               </div>
               <button
-                onClick={() = aria-label="Icon button"> sendOffer(Number(customOffer))}
+                aria-label="Icon button"> sendOffer(Number(customOffer))}
                 disabled={!customOffer || Number(customOffer) <= 0}
                 className="px-6 py-3 bg-violet-600 text-white rounded-xl font-medium hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >

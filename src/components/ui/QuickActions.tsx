@@ -116,7 +116,7 @@ export default function QuickActions({
 
                   {/* Button */}
                   <button
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       action.action();
                       setIsOpen(false);
                     }}
@@ -131,7 +131,7 @@ export default function QuickActions({
 
           {/* Main FAB */}
           <button
-            onClick={() = aria-label="Icon button"> setIsOpen(!isOpen)}
+            aria-label="Icon button" onClick={() => setIsOpen(!isOpen)}
             className={`w-14 h-14 rounded-full bg-teal-600 hover:bg-teal-700 text-white shadow-lg hover:shadow-xl transform transition-all duration-200 flex items-center justify-center ${
               isOpen ? 'rotate-45' : ''
             }`}

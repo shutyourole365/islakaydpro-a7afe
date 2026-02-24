@@ -225,7 +225,7 @@ export default function SocialCommunities({ onBack }: SocialCommunitiesProps) {
               ].map((tab) => (
                 <button
                   key={tab.key}
-                  onClick={() = aria-label="Icon button"> setActiveTab(tab.key as 'feed' | 'groups' | 'messages')}
+                  aria-label="Icon button" onClick={() => setActiveTab(tab.key as 'feed' | 'groups' | 'messages')}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     activeTab === tab.key
                       ? 'bg-white text-purple-600'

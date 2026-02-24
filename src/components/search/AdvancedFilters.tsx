@@ -170,12 +170,10 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {[4.5, 4.0, 3.5, 3.0].map((rating) => (
                 <button
                   key={rating}
-                  onClick={() = aria-label="Icon button">
-                    setFilters({
+                  aria-label="Icon button" onClick={() => setFilters({
                       ...filters,
                       rating: filters.rating === rating ? null : rating,
-                    })
-                  }
+                    })}
                   className={`flex-1 px-4 py-2.5 rounded-xl border transition-all ${
                     filters.rating === rating
                       ? 'border-teal-500 bg-teal-50 text-teal-700'
@@ -199,7 +197,7 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {featuresList.map((feature) => (
                 <button
                   key={feature}
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     const newFeatures = filters.features.includes(feature)
                       ? filters.features.filter((f) => f !== feature)
                       : [...filters.features, feature];
@@ -238,7 +236,7 @@ export default function AdvancedFilters({ onApply, onClose }: AdvancedFiltersPro
               {conditionOptions.map((condition) => (
                 <button
                   key={condition}
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     const newConditions = filters.condition.includes(condition)
                       ? filters.condition.filter((c) => c !== condition)
                       : [...filters.condition, condition];

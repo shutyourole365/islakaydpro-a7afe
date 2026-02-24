@@ -648,7 +648,7 @@ export default function MarketplaceInsights({ categoryId, equipmentId, onClose }
           ].map(({ id, label, icon: Icon }) => (
             <button
               key={id}
-              onClick={() = aria-label="Icon button"> setActiveTab(id as typeof activeTab)}
+              aria-label="Icon button" onClick={() => setActiveTab(id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === id
                   ? 'bg-white text-teal-700'

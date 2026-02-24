@@ -290,21 +290,21 @@ export default function RentalContractViewer({
         {/* Action Buttons */}
         <div className="flex gap-2">
           <button
-            onClick={() = aria-label="Icon button"> onDownload?.()}
+            aria-label="Icon button"> onDownload?.()}
             className="flex-1 py-2 flex items-center justify-center gap-2 border dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
           >
             <Download className="w-4 h-4" />
             Download PDF
           </button>
           <button
-            onClick={() = aria-label="Icon button"> window.print()}
+            aria-label="Icon button" onClick={() => window.print()}
             className="flex-1 py-2 flex items-center justify-center gap-2 border dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
           >
             <Printer className="w-4 h-4" />
             Print
           </button>
           <button
-            onClick={() = aria-label="Icon button"> setShowShareModal(true)}
+            aria-label="Icon button" onClick={() => setShowShareModal(true)}
             className="flex-1 py-2 flex items-center justify-center gap-2 border dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
           >
             <Share2 className="w-4 h-4" />
@@ -635,7 +635,7 @@ export default function RentalContractViewer({
               </p>
               {!renterSignature?.signed && (
                 <button
-                  onClick={() = aria-label="Icon button"> setShowSignModal(true)}
+                  aria-label="Icon button" onClick={() => setShowSignModal(true)}
                   className="mt-3 w-full py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 flex items-center justify-center gap-2"
                 >
                   <PenTool className="w-4 h-4" />
@@ -682,13 +682,13 @@ export default function RentalContractViewer({
 
             <div className="flex gap-3">
               <button
-                onClick={() = aria-label="Icon button"> setShowSignModal(false)}
+                aria-label="Icon button" onClick={() => setShowSignModal(false)}
                 className="flex-1 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium"
               >
                 Cancel
               </button>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   setShowSignModal(false);
                   onSign?.();
                 }}
@@ -721,13 +721,13 @@ export default function RentalContractViewer({
             />
             <div className="flex gap-3">
               <button
-                onClick={() = aria-label="Icon button"> setShowShareModal(false)}
+                aria-label="Icon button" onClick={() => setShowShareModal(false)}
                 className="flex-1 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl"
               >
                 Cancel
               </button>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   onShare?.(shareEmail);
                   setShowShareModal(false);
                   setShareEmail('');

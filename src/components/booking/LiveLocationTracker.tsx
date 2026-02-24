@@ -139,7 +139,7 @@ export default function LiveLocationTracker({ equipmentLocation, pickupTime }: L
           </div>
           
           <button
-            onClick={() = aria-label="Icon button"> setIsTracking(!isTracking)}
+            aria-label="Icon button" onClick={() => setIsTracking(!isTracking)}
             className={`px-4 py-2 rounded-lg font-medium transition-all ${
               isTracking
                 ? 'bg-white/20 hover:bg-white/30'

@@ -194,7 +194,7 @@ export default function MaintenancePredictor({
             </div>
           </div>
           <button
-            onClick={() = aria-label="Icon button"> setAlertsEnabled(!alertsEnabled)}
+            aria-label="Icon button" onClick={() => setAlertsEnabled(!alertsEnabled)}
             className={`p-2 rounded-lg transition-colors ${alertsEnabled ? 'bg-white/20' : 'bg-white/10'}`}
           >
             <Bell className={`w-5 h-5 ${alertsEnabled ? 'text-white' : 'text-white/50'}`} />

@@ -130,8 +130,7 @@ export function ConfirmModal({
           <button
             onClick={onConfirm}
             disabled={loading}
-            className={`px-5 py-2.5 rounded-xl text-white font-medium transition-colors focus:outline-none focus:ring-4 disabled:opacity-50 ${confirmStyles[variant]}`}
-           aria-label="Icon button">
+            className={`px-5 py-2.5 rounded-xl text-white font-medium transition-colors focus:outline-none focus:ring-4 disabled:opacity-50 ${confirmStyles[variant]} aria-label="Icon button">
             {loading ? 'Processing...' : confirmText}
           </button>
         </div>

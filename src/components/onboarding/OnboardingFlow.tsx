@@ -191,7 +191,7 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               ].map((option) => (
                 <button
                   key={option.id}
-                  onClick={() = aria-label="Icon button"> setPreferences(prev => ({ ...prev, rentalType: option.id as 'renter' | 'owner' | 'both' }))}
+                  aria-label="Icon button"> setPreferences(prev => ({ ...prev, rentalType: option.id as 'renter' | 'owner' | 'both' }))}
                   className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
                     preferences.rentalType === option.id
                       ? 'border-teal-500 bg-teal-50 shadow-lg scale-105'
@@ -224,7 +224,7 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() = aria-label="Icon button"> toggleInterest(category.id)}
+                  aria-label="Icon button" onClick={() => toggleInterest(category.id)}
                   className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
                     preferences.interests.includes(category.id)
                       ? 'border-teal-500 bg-teal-50 shadow-lg scale-105'
@@ -265,7 +265,7 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               </div>
 
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                       () => {
@@ -341,7 +341,7 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
             </div>
 
             <button
-              onClick={() = aria-label="Icon button"> onComplete(preferences)}
+              aria-label="Icon button" onClick={() => onComplete(preferences)}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
             >
               Start Exploring
@@ -413,8 +413,7 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               currentStep === 0
                 ? 'text-gray-300 cursor-not-allowed'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
-           aria-label="Icon button">
+            } aria-label="Icon button">
             <ChevronLeft className="w-5 h-5" />
             Back
           </button>

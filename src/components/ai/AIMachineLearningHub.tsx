@@ -139,8 +139,7 @@ export default function AIMachineLearningHub() {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={() => setActiveTab(id as 'predictions' | 'insights' | 'training')}
-            aria-label={`Switch to ${label}`}
+            onClick={() => setActiveTab(id as 'predictions' | 'insights' | 'training') aria-label={`Switch to ${label}`}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-teal-500 text-teal-600'

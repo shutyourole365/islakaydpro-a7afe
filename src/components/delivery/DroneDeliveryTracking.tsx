@@ -281,7 +281,7 @@ export default function DroneDeliveryTracking({
 
         {/* Live View Button */}
         <button
-          onClick={() = aria-label="Icon button"> setShowLiveView(!showLiveView)}
+          aria-label="Icon button" onClick={() => setShowLiveView(!showLiveView)}
           className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-lg text-sm font-medium text-gray-700"
         >
           <Eye className="w-4 h-4" />

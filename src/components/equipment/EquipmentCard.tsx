@@ -72,8 +72,7 @@ const EquipmentCard = memo(function EquipmentCard({
                   isFavorite
                     ? 'bg-red-50 text-red-500'
                     : 'text-gray-400 hover:text-red-500'
-                }`}
-               aria-label="Icon button">
+                } aria-label="Icon button">
                 <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500' : ''}`} />
               </button>
             </div>
@@ -125,8 +124,7 @@ const EquipmentCard = memo(function EquipmentCard({
               isFavorite
                 ? 'bg-red-500 text-white'
                 : 'bg-white/90 text-gray-600 hover:text-red-500'
-            }`}
-           aria-label="Icon button">
+            } aria-label="Icon button">
             <Heart className={`w-4 h-4 ${isFavorite ? 'fill-white' : ''}`} />
           </button>
         </div>
@@ -171,8 +169,7 @@ const EquipmentCard = memo(function EquipmentCard({
               isFavorite
                 ? 'bg-red-500 text-white scale-110'
                 : 'bg-white/90 text-gray-600 hover:bg-white hover:text-red-500'
-            }`}
-           aria-label="Icon button">
+            } aria-label="Icon button">
             <Heart className={`w-5 h-5 ${isFavorite ? 'fill-white' : ''}`} />
           </button>
           {showCompareButton && onAddToComparison && (

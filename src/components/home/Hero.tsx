@@ -102,7 +102,7 @@ export default function Hero({ onSearch }: HeroProps) {
             (item) => (
               <button
                 key={item}
-                onClick={() = aria-label="Icon button"> setSearchQuery(item)}
+                aria-label="Icon button" onClick={() => setSearchQuery(item)}
                 className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm text-white/90 hover:bg-white/20 transition-colors border border-white/10"
               >
                 {item}

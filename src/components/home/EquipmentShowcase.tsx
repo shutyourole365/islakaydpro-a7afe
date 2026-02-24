@@ -303,7 +303,7 @@ export default function EquipmentShowcase({
             {equipment.map((_, index) => (
               <button
                 key={index}
-                onClick={() = aria-label="Icon button"> goToSlide(index)}
+                aria-label="Icon button" onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
                   index === currentIndex ? 'bg-white' : 'bg-white/50'
                 }`}
@@ -323,7 +323,7 @@ export default function EquipmentShowcase({
               {animationType === 'fade' ? 'F' : animationType === 'slide' ? 'S' : 'Z'}
             </button>
             <button
-              onClick={() = aria-label="Icon button"> setIsAutoPlaying(!isAutoPlaying)}
+              aria-label="Icon button" onClick={() => setIsAutoPlaying(!isAutoPlaying)}
               className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
               title={isAutoPlaying ? 'Pause auto-play' : 'Start auto-play'}
             >

@@ -243,7 +243,7 @@ export default function ReviewsSection({
 
                 <div className="flex items-center gap-4 mt-4">
                   <button
-                    onClick={() = aria-label="Icon button"> markHelpful(review.id)}
+                    aria-label="Icon button" onClick={() => markHelpful(review.id)}
                     className={`flex items-center gap-1.5 text-sm transition-colors ${
                       helpfulReviews.has(review.id)
                         ? 'text-teal-600'

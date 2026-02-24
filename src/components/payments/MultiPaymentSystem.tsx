@@ -197,7 +197,7 @@ export default function MultiPaymentSystem({
               {paymentMethods.map((method) => (
                 <button
                   key={method.id}
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     if (method.available) {
                       setSelectedMethod(method.id);
                       setUseInstallments(method.id === 'installments');
@@ -254,7 +254,7 @@ export default function MultiPaymentSystem({
                   {(['weekly', 'biweekly', 'monthly'] as const).map((freq) => (
                     <button
                       key={freq}
-                      onClick={() = aria-label="Icon button"> setInstallmentFrequency(freq)}
+                      aria-label="Icon button" onClick={() => setInstallmentFrequency(freq)}
                       className={`py-2 px-3 rounded-lg font-medium capitalize transition-colors ${
                         installmentFrequency === freq
                           ? 'bg-violet-600 text-white'
@@ -305,7 +305,7 @@ export default function MultiPaymentSystem({
                 {savedCards.map((card) => (
                   <button
                     key={card.id}
-                    onClick={() = aria-label="Icon button"> setSelectedCard(card.id)}
+                    aria-label="Icon button" onClick={() => setSelectedCard(card.id)}
                     className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
                       selectedCard === card.id
                         ? 'border-teal-500 bg-teal-50'

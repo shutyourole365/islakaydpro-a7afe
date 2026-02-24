@@ -331,7 +331,7 @@ export default function LoyaltyRewardsTracker({
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
+            aria-label="Icon button" onClick={() => setActiveTab(tab.id as typeof activeTab)}
             className={`flex-1 py-4 flex items-center justify-center gap-2 border-b-2 transition-colors ${
               activeTab === tab.id
                 ? 'border-blue-600 text-blue-600'
@@ -395,7 +395,7 @@ export default function LoyaltyRewardsTracker({
                       <p className="text-xs text-gray-500 dark:text-gray-400">points</p>
                     </div>
                     <button
-                      onClick={() = aria-label="Icon button"> handleRedeem(reward)}
+                      aria-label="Icon button" onClick={() => handleRedeem(reward)}
                       disabled={!canAfford || isRedeemed}
                       className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                         isRedeemed
@@ -546,7 +546,7 @@ export default function LoyaltyRewardsTracker({
             </div>
             <div className="flex gap-3">
               <button
-                onClick={() = aria-label="Icon button"> setSelectedReward(null)}
+                aria-label="Icon button" onClick={() => setSelectedReward(null)}
                 className="flex-1 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium"
               >
                 Cancel

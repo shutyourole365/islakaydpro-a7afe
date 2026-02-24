@@ -246,7 +246,7 @@ export default function BlockchainIntegration() {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={() = aria-label="Icon button"> setActiveTab(id as 'contracts' | 'certificates' | 'transactions')}
+            aria-label="Icon button" onClick={() => setActiveTab(id as 'contracts' | 'certificates' | 'transactions')}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-teal-500 text-teal-600'
@@ -280,7 +280,7 @@ export default function BlockchainIntegration() {
                   </span>
                   {!contract.signatures.owner && (
                     <button
-                      onClick={() = aria-label="Icon button"> signContract(contract.id)}
+                      aria-label="Icon button" onClick={() => signContract(contract.id)}
                       className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm"
                     >
                       Sign Contract

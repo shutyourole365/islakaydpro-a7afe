@@ -189,7 +189,7 @@ export default function DamageReportWizard({
                     
                     <div className="flex gap-2">
                       <button
-                        onClick={() = aria-label="Icon button"> updateChecklistItem(item.id, 'ok')}
+                        aria-label="Icon button" onClick={() => updateChecklistItem(item.id, 'ok')}
                         className={`p-2 rounded-lg transition-all ${
                           item.status === 'ok'
                             ? 'bg-green-500 text-white'
@@ -199,7 +199,7 @@ export default function DamageReportWizard({
                         <CheckCircle className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() = aria-label="Icon button"> updateChecklistItem(item.id, 'issue')}
+                        aria-label="Icon button" onClick={() => updateChecklistItem(item.id, 'issue')}
                         className={`p-2 rounded-lg transition-all ${
                           item.status === 'issue'
                             ? 'bg-red-500 text-white'
@@ -262,7 +262,7 @@ export default function DamageReportWizard({
                       <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
                         <img src={safePhotoUrl} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
                         <button
-                          onClick={() = aria-label="Icon button"> setPhotos((prev) => prev.filter((_, i) => i !== index))}
+                          aria-label="Icon button"> setPhotos((prev) => prev.filter((_, i) => i !== index))}
                           className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs"
                         >
                           ✕
@@ -380,7 +380,7 @@ export default function DamageReportWizard({
         <div className="p-6 border-t border-gray-200 flex justify-between">
           {step > 1 ? (
             <button
-              onClick={() = aria-label="Icon button"> setStep(step - 1)}
+              aria-label="Icon button" onClick={() => setStep(step - 1)}
               className="px-6 py-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               Back
@@ -391,7 +391,7 @@ export default function DamageReportWizard({
 
           {step < 3 ? (
             <button
-              onClick={() = aria-label="Icon button"> setStep(step + 1)}
+              aria-label="Icon button" onClick={() => setStep(step + 1)}
               disabled={step === 1 && checkedCount < checklist.length}
               className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >

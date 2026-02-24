@@ -222,7 +222,7 @@ export default function SplitPayment({
               {/* Split Type Toggle */}
               <div className="flex bg-gray-100 rounded-xl p-1 mb-6">
                 <button
-                  onClick={() = aria-label="Icon button"> setSplitType('equal')}
+                  aria-label="Icon button" onClick={() => setSplitType('equal')}
                   className={`flex-1 py-2.5 rounded-lg font-medium transition-colors ${
                     splitType === 'equal'
                       ? 'bg-white text-gray-900 shadow'
@@ -232,7 +232,7 @@ export default function SplitPayment({
                   Split Equally
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> setSplitType('custom')}
+                  aria-label="Icon button" onClick={() => setSplitType('custom')}
                   className={`flex-1 py-2.5 rounded-lg font-medium transition-colors ${
                     splitType === 'custom'
                       ? 'bg-white text-gray-900 shadow'
@@ -290,7 +290,7 @@ export default function SplitPayment({
 
                     {participant.id !== '1' && (
                       <button
-                        onClick={() = aria-label="Icon button"> removeParticipant(participant.id)}
+                        aria-label="Icon button" onClick={() => removeParticipant(participant.id)}
                         className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -357,7 +357,7 @@ export default function SplitPayment({
                     />
                     <div className="flex gap-2">
                       <button
-                        onClick={() = aria-label="Icon button"> setShowAddForm(false)}
+                        aria-label="Icon button" onClick={() => setShowAddForm(false)}
                         className="flex-1 py-2.5 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-colors"
                       >
                         Cancel
@@ -373,7 +373,7 @@ export default function SplitPayment({
                 </div>
               ) : (
                 <button
-                  onClick={() = aria-label="Icon button"> setShowAddForm(true)}
+                  aria-label="Icon button" onClick={() => setShowAddForm(true)}
                   className="w-full py-3 border-2 border-dashed border-gray-200 text-gray-500 rounded-xl hover:border-green-300 hover:text-green-600 hover:bg-green-50 transition-colors flex items-center justify-center gap-2 mb-6"
                 >
                   <UserPlus className="w-5 h-5" />

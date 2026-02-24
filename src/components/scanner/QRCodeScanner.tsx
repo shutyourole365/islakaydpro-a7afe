@@ -322,7 +322,7 @@ export default function QRCodeScanner({
             )}
 
             <button
-              onClick={() = aria-label="Icon button"> setShowHistory(!showHistory)}
+              aria-label="Icon button" onClick={() => setShowHistory(!showHistory)}
               className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white"
             >
               <History className="w-5 h-5" />
@@ -349,7 +349,7 @@ export default function QRCodeScanner({
             <div className="bg-red-500/90 backdrop-blur rounded-xl p-4 flex items-center gap-3 text-white">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               <p className="flex-1">{error}</p>
-              <button onClick={() = aria-label="Icon button"> setError(null)}>
+              <button aria-label="Icon button" onClick={() => setError(null)}>
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -366,7 +366,7 @@ export default function QRCodeScanner({
               {recentScans.map((scan, i) => (
                 <button
                   key={i}
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     setScanResult(scan);
                     setShowHistory(false);
                   }}

@@ -267,8 +267,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                     />
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      onClick={() => setShowPassword(!showPassword) aria-label={showPassword ? 'Hide password' : 'Show password'}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                     >
                       {showPassword ? (
@@ -292,8 +291,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   </label>
                   <button
                     type="button"
-                    onClick={() => setMode('forgot')}
-                    aria-label="Forgot password"
+                    onClick={() => setMode('forgot') aria-label="Forgot password"
                     className="text-sm text-teal-600 hover:text-teal-700 font-medium"
                   >
                     Forgot password?
@@ -354,7 +352,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 <p className="text-gray-600">
                   Don't have an account?{' '}
                   <button
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       setMode('signup');
                       setError('');
                     }}
@@ -368,7 +366,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 <p className="text-gray-600">
                   Already have an account?{' '}
                   <button
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       setMode('signin');
                       setError('');
                       setSuccess('');

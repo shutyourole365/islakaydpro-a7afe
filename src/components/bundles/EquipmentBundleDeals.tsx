@@ -304,7 +304,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
 
           {/* Expand/Collapse */}
           <button
-            onClick={() = aria-label="Icon button"> setExpandedBundle(isExpanded ? null : bundle.id)}
+            aria-label="Icon button" onClick={() => setExpandedBundle(isExpanded ? null : bundle.id)}
             className="w-full mt-4 py-2 text-sm text-teal-600 hover:text-teal-700 flex items-center justify-center gap-1 border-t pt-3"
           >
             {isExpanded ? (
@@ -347,7 +347,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
             {mode === 'browse' ? (
               <>
                 <button
-                  onClick={() = aria-label="Icon button"> onBookBundle?.(bundle)}
+                  aria-label="Icon button"> onBookBundle?.(bundle)}
                   className="flex-1 py-2.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center gap-2 font-medium"
                 >
                   <ShoppingCart className="w-4 h-4" />
@@ -364,7 +364,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
                   Edit
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> handleDeleteBundle(bundle.id)}
+                  aria-label="Icon button" onClick={() => handleDeleteBundle(bundle.id)}
                   className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -500,7 +500,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
 
           <div className="flex justify-end gap-3">
             <button
-              onClick={() = aria-label="Icon button"> setIsCreating(false)}
+              aria-label="Icon button" onClick={() => setIsCreating(false)}
               className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
@@ -538,7 +538,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
           <div className="flex items-center gap-3">
             {mode === 'manage' && !isCreating && (
               <button
-                onClick={() = aria-label="Icon button"> setIsCreating(true)}
+                aria-label="Icon button" onClick={() => setIsCreating(true)}
                 className="flex items-center gap-2 px-4 py-2 bg-white text-purple-600 rounded-lg hover:bg-purple-50 transition-colors font-medium"
               >
                 <Plus className="w-4 h-4" />
@@ -597,7 +597,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
                 <p className="text-gray-500 mb-4">No bundles found</p>
                 {mode === 'manage' && (
                   <button
-                    onClick={() = aria-label="Icon button"> setIsCreating(true)}
+                    aria-label="Icon button" onClick={() => setIsCreating(true)}
                     className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
                   >
                     Create Your First Bundle

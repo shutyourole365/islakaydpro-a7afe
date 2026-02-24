@@ -119,7 +119,7 @@ export default function DetailedComparison({ items, onClose, onRemove, onBook }:
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() = aria-label="Icon button"> {
+              aria-label="Icon button"> {
                 // Share comparison logic
                 alert('Share comparison link copied!');
               }}
@@ -142,7 +142,7 @@ export default function DetailedComparison({ items, onClose, onRemove, onBook }:
           {['overview', 'pricing', 'specifications'].map((mode) => (
             <button
               key={mode}
-              onClick={() = aria-label="Icon button"> setViewMode(mode as typeof viewMode)}
+              aria-label="Icon button" onClick={() => setViewMode(mode as typeof viewMode)}
               className={`px-6 py-3 font-medium transition-colors relative ${
                 viewMode === mode
                   ? 'text-purple-600'
@@ -175,7 +175,7 @@ export default function DetailedComparison({ items, onClose, onRemove, onBook }:
                           className="w-full h-full object-cover"
                         />
                         <button
-                          onClick={() = aria-label="Icon button"> onRemove(item.id)}
+                          aria-label="Icon button" onClick={() => onRemove(item.id)}
                           className="absolute top-2 right-2 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-lg transition-colors"
                         >
                           <X className="w-4 h-4 text-gray-600" />
@@ -196,7 +196,7 @@ export default function DetailedComparison({ items, onClose, onRemove, onBook }:
                         </div>
                       </div>
                       <button
-                        onClick={() = aria-label="Icon button"> onBook(item)}
+                        aria-label="Icon button" onClick={() => onBook(item)}
                         className="w-full py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-medium rounded-xl hover:shadow-lg transition-all"
                       >
                         Book Now

@@ -251,7 +251,7 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 {suggestions.map((suggestion, idx) => (
                   <button
                     key={idx}
-                    onClick={() = aria-label="Icon button"> handleSuggestionClick(suggestion)}
+                    aria-label="Icon button" onClick={() => handleSuggestionClick(suggestion)}
                     className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-left group"
                   >
                     <div className="flex-1">
@@ -291,7 +291,7 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 {trendingSearches.map((trend, idx) => (
                   <button
                     key={idx}
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       setQuery(trend.query);
                       analyzeQuery(trend.query);
                     }}
@@ -320,7 +320,7 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 ].map((example, idx) => (
                   <button
                     key={idx}
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       setQuery(example.text);
                       analyzeQuery(example.text);
                     }}

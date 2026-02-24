@@ -144,7 +144,7 @@ const Testimonials = memo(function Testimonials() {
               {testimonials.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() = aria-label="Icon button"> setCurrentIndex(index)}
+                  aria-label="Icon button" onClick={() => setCurrentIndex(index)}
                   className={`w-2 h-2 rounded-full transition-all ${
                     index === currentIndex
                       ? 'bg-teal-500 w-8'

@@ -233,7 +233,7 @@ export default function SmartPricingEngine({ equipment, onPriceChange }: SmartPr
 
           {/* Reasoning */}
           <button
-            onClick={() = aria-label="Icon button"> setShowDetails(!showDetails)}
+            aria-label="Icon button" onClick={() => setShowDetails(!showDetails)}
             className="text-sm text-purple-600 hover:text-purple-700 font-medium"
           >
             {showDetails ? 'Hide' : 'Show'} analysis details

@@ -1312,8 +1312,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
             <div className="max-w-3xl mx-auto px-4">
               <button
-                onClick={() => setCurrentPage('dashboard')}
-                aria-label="Icon button"
+                onClick={() => setCurrentPage('dashboard') aria-label="Icon button"
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -1330,8 +1329,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-indigo-50 to-violet-100">
             <div className="max-w-6xl mx-auto px-4">
               <button
-                onClick={() => setCurrentPage('dashboard')}
-                aria-label="Back to dashboard"
+                onClick={() => setCurrentPage('dashboard') aria-label="Back to dashboard"
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -1450,7 +1448,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100">
             <div className="max-w-6xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -1467,7 +1465,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-purple-50 to-pink-100">
             <div className="max-w-6xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -1484,7 +1482,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100">
             <div className="max-w-4xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -1574,7 +1572,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
       {/* Comparison Floating Button */}
       {comparisonItems.length > 0 && !isComparisonOpen && (
         <button
-          onClick={() = aria-label="Icon button"> setIsComparisonOpen(true)}
+          aria-label="Icon button" onClick={() => setIsComparisonOpen(true)}
           className="fixed bottom-24 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
         >
           <span className="text-lg">⚖️</span>
@@ -1828,7 +1826,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsSmartPricingOpen(false)} />
             <div className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
               <button
-                onClick={() = aria-label="Icon button"> setIsSmartPricingOpen(false)}
+                aria-label="Icon button" onClick={() => setIsSmartPricingOpen(false)}
                 className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100"
               >
                 ✕
@@ -1849,7 +1847,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsLiveTrackerOpen(false)} />
             <div className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto">
               <button
-                onClick={() = aria-label="Icon button"> setIsLiveTrackerOpen(false)}
+                aria-label="Icon button" onClick={() => setIsLiveTrackerOpen(false)}
                 className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100"
               >
                 ✕
@@ -1896,7 +1894,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100">
             <div className="max-w-4xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -1987,7 +1985,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
       {/* Feature Showcase Floating Button */}
       {currentPage !== 'list-equipment' && isAuthenticated && (
         <button
-          onClick={() = aria-label="Icon button"> setIsFeatureShowcaseOpen(true)}
+          aria-label="Icon button" onClick={() => setIsFeatureShowcaseOpen(true)}
           className="fixed bottom-6 left-6 z-40 group"
         >
           <div className="relative">
@@ -2257,7 +2255,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100">
             <div className="max-w-4xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -2275,7 +2273,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-teal-50 to-cyan-100">
             <div className="max-w-4xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -2293,7 +2291,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
             <div className="max-w-4xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -2311,7 +2309,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-purple-50 to-pink-100">
             <div className="max-w-6xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('browse')}
+                aria-label="Icon button" onClick={() => setCurrentPage('browse')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Browse
@@ -2329,7 +2327,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
             <div className="max-w-4xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard
@@ -2347,7 +2345,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
             <div className="max-w-6xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('browse')}
+                aria-label="Icon button" onClick={() => setCurrentPage('browse')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Browse
@@ -2365,7 +2363,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
             <div className="max-w-6xl mx-auto px-4">
               <button
-                onClick={() = aria-label="Icon button"> setCurrentPage('dashboard')}
+                aria-label="Icon button" onClick={() => setCurrentPage('dashboard')}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 ← Back to Dashboard

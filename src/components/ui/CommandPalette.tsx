@@ -278,7 +278,7 @@ export default function CommandPalette({
           />
           {query && (
             <button
-              onClick={() = aria-label="Icon button"> setQuery('')}
+              aria-label="Icon button" onClick={() => setQuery('')}
               className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
               aria-label="Clear search"
             >
@@ -313,7 +313,7 @@ export default function CommandPalette({
                     return (
                       <button
                         key={cmd.id}
-                        onClick={() = aria-label="Icon button"> {
+                        aria-label="Icon button"> {
                           cmd.onSelect();
                           onClose();
                         }}

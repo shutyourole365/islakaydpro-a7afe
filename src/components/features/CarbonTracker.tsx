@@ -160,7 +160,7 @@ export default function CarbonTracker({ onBack }: CarbonTrackerProps) {
                   {['week', 'month', 'quarter', 'year'].map((period) => (
                     <button
                       key={period}
-                      onClick={() = aria-label="Icon button"> setSelectedPeriod(period)}
+                      aria-label="Icon button" onClick={() => setSelectedPeriod(period)}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedPeriod === period
                           ? 'bg-white text-gray-900 shadow-sm'

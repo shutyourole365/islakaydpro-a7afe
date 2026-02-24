@@ -238,7 +238,7 @@ export default function IoTMaintenance({ onBack }: IoTMaintenanceProps) {
                   {Object.entries(equipmentData).map(([key, data]) => (
                     <button
                       key={key}
-                      onClick={() = aria-label="Icon button"> setSelectedEquipment(key)}
+                      aria-label="Icon button" onClick={() => setSelectedEquipment(key)}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedEquipment === key
                           ? 'bg-white text-gray-900 shadow-sm'

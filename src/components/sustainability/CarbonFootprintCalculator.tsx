@@ -289,7 +289,7 @@ export default function CarbonFootprintCalculator({
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() = aria-label="Icon button"> setActiveView(tab.id as typeof activeView)}
+            aria-label="Icon button" onClick={() => setActiveView(tab.id as typeof activeView)}
             className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 transition-colors ${
               activeView === tab.id
                 ? 'border-green-600 text-green-600'
@@ -380,7 +380,7 @@ export default function CarbonFootprintCalculator({
             {/* Quick Calculator */}
             <div>
               <button
-                onClick={() = aria-label="Icon button"> setShowCalculator(!showCalculator)}
+                aria-label="Icon button" onClick={() => setShowCalculator(!showCalculator)}
                 className="w-full flex items-center justify-between py-3 text-gray-600 dark:text-gray-400"
               >
                 <span className="font-medium">Estimate New Rental</span>
@@ -441,7 +441,7 @@ export default function CarbonFootprintCalculator({
                   </div>
 
                   <button
-                    onClick={() = aria-label="Icon button"> onCalculate?.(estimate)}
+                    aria-label="Icon button"> onCalculate?.(estimate)}
                     className="w-full py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
                   >
                     Use This Estimate

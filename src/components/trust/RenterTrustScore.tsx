@@ -306,7 +306,7 @@ export default function RenterTrustScore({ userId, viewMode = 'full', onClose }:
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
+              aria-label="Icon button" onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'text-teal-600 border-b-2 border-teal-600'

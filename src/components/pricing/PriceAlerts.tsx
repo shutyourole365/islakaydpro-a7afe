@@ -185,7 +185,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
           ].map(tab => (
             <button
               key={tab.id}
-              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as 'active' | 'triggered' | 'settings')}
+              aria-label="Icon button" onClick={() => setActiveTab(tab.id as 'active' | 'triggered' | 'settings')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'bg-white text-orange-600'
@@ -204,7 +204,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
         {/* Create Alert Button */}
         {(activeTab === 'active' || activeTab === 'triggered') && !isCreating && (
           <button
-            onClick={() = aria-label="Icon button"> setIsCreating(true)}
+            aria-label="Icon button" onClick={() => setIsCreating(true)}
             className="w-full mb-4 p-4 border-2 border-dashed border-orange-200 rounded-xl text-orange-600 hover:border-orange-400 hover:bg-orange-50 transition-colors flex items-center justify-center gap-2"
           >
             <Plus className="w-5 h-5" />
@@ -266,7 +266,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                   Create Alert
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> setIsCreating(false)}
+                  aria-label="Icon button" onClick={() => setIsCreating(false)}
                   className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                 >
                   Cancel
@@ -306,13 +306,13 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                       </div>
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() = aria-label="Icon button"> toggleAlert(alert.id)}
+                          aria-label="Icon button" onClick={() => toggleAlert(alert.id)}
                           className="p-2 hover:bg-gray-100 rounded-lg"
                         >
                           <Edit2 className="w-4 h-4 text-gray-400" />
                         </button>
                         <button
-                          onClick={() = aria-label="Icon button"> deleteAlert(alert.id)}
+                          aria-label="Icon button" onClick={() => deleteAlert(alert.id)}
                           className="p-2 hover:bg-red-50 rounded-lg"
                         >
                           <Trash2 className="w-4 h-4 text-red-400" />

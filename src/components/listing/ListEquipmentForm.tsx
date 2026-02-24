@@ -286,7 +286,7 @@ export default function ListEquipmentForm({
                       <button
                         key={c}
                         type="button"
-                        onClick={() = aria-label="Icon button"> setFormData({ ...formData, condition: c })}
+                        aria-label="Icon button" onClick={() => setFormData({ ...formData, condition: c })}
                         className={`px-4 py-3 rounded-xl border text-sm font-medium capitalize transition-colors ${
                           formData.condition === c
                             ? 'border-teal-500 bg-teal-50 text-teal-700'
@@ -329,7 +329,7 @@ export default function ListEquipmentForm({
                         {feature}
                         <button
                           type="button"
-                          onClick={() = aria-label="Icon button"> removeFeature(index)}
+                          aria-label="Icon button" onClick={() => removeFeature(index)}
                           className="text-gray-400 hover:text-gray-600"
                         >
                           <X className="w-4 h-4" />
@@ -375,7 +375,7 @@ export default function ListEquipmentForm({
                       {sampleImages.map((url, index) => (
                         <button
                           key={index}
-                          onClick={() = aria-label="Icon button"> addSampleImage(url)}
+                          aria-label="Icon button" onClick={() => addSampleImage(url)}
                           className="w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-teal-500 transition-colors"
                         >
                           <img
@@ -403,7 +403,7 @@ export default function ListEquipmentForm({
                             className="w-full h-full object-cover"
                           />
                           <button
-                            onClick={() = aria-label="Icon button"> removeImage(index)}
+                            aria-label="Icon button" onClick={() => removeImage(index)}
                             className="absolute top-2 right-2 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
                           >
                             <X className="w-4 h-4" />
@@ -679,8 +679,7 @@ export default function ListEquipmentForm({
                 step === 1
                   ? 'text-gray-300 cursor-not-allowed'
                   : 'text-gray-600 hover:bg-gray-100'
-              }`}
-             aria-label="Icon button">
+              } aria-label="Icon button">
               <ArrowLeft className="w-5 h-5" />
               Back
             </button>
@@ -691,8 +690,7 @@ export default function ListEquipmentForm({
                 isStepValid()
                   ? 'bg-teal-500 text-white hover:bg-teal-600'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              }`}
-             aria-label="Icon button">
+              } aria-label="Icon button">
               {step === totalSteps ? 'Publish Listing' : 'Continue'}
               {step < totalSteps && <ArrowRight className="w-5 h-5" />}
             </button>

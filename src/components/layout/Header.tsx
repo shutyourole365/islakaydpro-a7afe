@@ -89,7 +89,7 @@ export default function Header({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-12">
-            <button onClick={() = aria-label="Icon button"> onNavigate('home')} className="flex items-center">
+            <button aria-label="Icon button" onClick={() => onNavigate('home')} className="flex items-center">
               <LogoPro 
                 variant={showTransparent ? 'light' : 'default'} 
                 size="md" 
@@ -99,7 +99,7 @@ export default function Header({
 
             <nav className="hidden lg:flex items-center gap-8">
               <button
-                onClick={() = aria-label="Icon button"> onNavigate('browse')}
+                aria-label="Icon button" onClick={() => onNavigate('browse')}
                 className={`text-sm font-medium transition-colors hover:text-teal-500 ${
                   showTransparent ? 'text-white/90' : 'text-gray-700'
                 }`}
@@ -107,7 +107,7 @@ export default function Header({
                 Browse Equipment
               </button>
               <button
-                onClick={() = aria-label="Icon button"> onNavigate('help')}
+                aria-label="Icon button" onClick={() => onNavigate('help')}
                 className={`text-sm font-medium transition-colors hover:text-teal-500 ${
                   showTransparent ? 'text-white/90' : 'text-gray-700'
                 }`}
@@ -115,7 +115,7 @@ export default function Header({
                 Help
               </button>
               <button
-                onClick={() = aria-label="Icon button"> onNavigate('about')}
+                aria-label="Icon button" onClick={() => onNavigate('about')}
                 className={`text-sm font-medium transition-colors hover:text-teal-500 ${
                   showTransparent ? 'text-white/90' : 'text-gray-700'
                 }`}
@@ -123,7 +123,7 @@ export default function Header({
                 About
               </button>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   onNavigate('home');
                   setTimeout(() => {
                     document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
@@ -139,7 +139,7 @@ export default function Header({
               {/* Company Dropdown */}
               <div className="relative company-menu">
                 <button
-                  onClick={() = aria-label="Icon button"> setIsCompanyMenuOpen(!isCompanyMenuOpen)}
+                  aria-label="Icon button" onClick={() => setIsCompanyMenuOpen(!isCompanyMenuOpen)}
                   className={`company-button flex items-center gap-1 text-sm font-medium transition-colors hover:text-teal-500 ${
                     showTransparent ? 'text-white/90' : 'text-gray-700'
                   }`}
@@ -150,7 +150,7 @@ export default function Header({
                 {isCompanyMenuOpen && (
                   <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('about');
                         setIsCompanyMenuOpen(false);
                       }}
@@ -159,7 +159,7 @@ export default function Header({
                       About Us
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('careers');
                         setIsCompanyMenuOpen(false);
                       }}
@@ -168,7 +168,7 @@ export default function Header({
                       Careers
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('press');
                         setIsCompanyMenuOpen(false);
                       }}
@@ -177,7 +177,7 @@ export default function Header({
                       Press
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('blog');
                         setIsCompanyMenuOpen(false);
                       }}
@@ -186,7 +186,7 @@ export default function Header({
                       Blog
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('partnerships');
                         setIsCompanyMenuOpen(false);
                       }}
@@ -195,7 +195,7 @@ export default function Header({
                       Partnerships
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('investors');
                         setIsCompanyMenuOpen(false);
                       }}
@@ -210,7 +210,7 @@ export default function Header({
               {/* Support Dropdown */}
               <div className="relative support-menu">
                 <button
-                  onClick={() = aria-label="Icon button"> setIsSupportMenuOpen(!isSupportMenuOpen)}
+                  aria-label="Icon button" onClick={() => setIsSupportMenuOpen(!isSupportMenuOpen)}
                   className={`support-button flex items-center gap-1 text-sm font-medium transition-colors hover:text-teal-500 ${
                     showTransparent ? 'text-white/90' : 'text-gray-700'
                   }`}
@@ -221,7 +221,7 @@ export default function Header({
                 {isSupportMenuOpen && (
                   <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('help');
                         setIsSupportMenuOpen(false);
                       }}
@@ -230,7 +230,7 @@ export default function Header({
                       Help Center
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('safety');
                         setIsSupportMenuOpen(false);
                       }}
@@ -239,7 +239,7 @@ export default function Header({
                       Safety
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('trust');
                         setIsSupportMenuOpen(false);
                       }}
@@ -248,7 +248,7 @@ export default function Header({
                       Trust & Verification
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> {
+                      aria-label="Icon button"> {
                         onNavigate('contact');
                         setIsSupportMenuOpen(false);
                       }}
@@ -269,8 +269,7 @@ export default function Header({
                 showTransparent
                   ? 'border-white/30 bg-white/10 text-white hover:bg-white/20'
                   : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300 hover:bg-gray-100'
-              }`}
-             aria-label="Icon button">
+              } aria-label="Icon button">
               <Search className="w-4 h-4" />
               <span className="text-sm">Search equipment...</span>
               <kbd
@@ -290,15 +289,14 @@ export default function Header({
                     showTransparent
                       ? 'bg-white text-gray-900 hover:bg-gray-100'
                       : 'bg-teal-500 text-white hover:bg-teal-600'
-                  }`}
-                 aria-label="Icon button">
+                  } aria-label="Icon button">
                   <Plus className="w-4 h-4" />
                   <span className="text-sm">List Equipment</span>
                 </button>
 
                 <div className="hidden sm:flex items-center gap-2">
                   <button
-                    onClick={() = aria-label="Icon button"> onNavigate('dashboard')}
+                    aria-label="Icon button" onClick={() => onNavigate('dashboard')}
                     className={`p-2.5 rounded-full transition-colors ${
                       showTransparent
                         ? 'text-white hover:bg-white/10'
@@ -308,7 +306,7 @@ export default function Header({
                     <Heart className="w-5 h-5" />
                   </button>
                   <button
-                    onClick={() = aria-label="Icon button"> onNavigate('dashboard')}
+                    aria-label="Icon button" onClick={() => onNavigate('dashboard')}
                     className={`p-2.5 rounded-full transition-colors relative ${
                       showTransparent
                         ? 'text-white hover:bg-white/10'
@@ -320,7 +318,7 @@ export default function Header({
                   </button>
                   <div className="relative notifications-menu">
                     <button
-                      onClick={() = aria-label="Icon button"> setIsNotificationsOpen(!isNotificationsOpen)}
+                      aria-label="Icon button" onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
                       className={`notifications-button p-2.5 rounded-full transition-colors relative ${
                         showTransparent
                           ? 'text-white hover:bg-white/10'
@@ -340,7 +338,7 @@ export default function Header({
 
                 <div className="relative profile-menu">
                   <button
-                    onClick={() = aria-label="Icon button"> setIsProfileMenuOpen(!isProfileMenuOpen)}
+                    aria-label="Icon button" onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                     className={`profile-button flex items-center gap-2 p-1.5 rounded-full transition-colors ${
                       showTransparent ? 'hover:bg-white/10' : 'hover:bg-gray-100'
                     }`}
@@ -363,7 +361,7 @@ export default function Header({
                       </div>
                       <div className="py-2">
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onNavigate('dashboard');
                             setIsProfileMenuOpen(false);
                           }}
@@ -373,7 +371,7 @@ export default function Header({
                           Dashboard
                         </button>
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onNavigate('dashboard');
                             setIsProfileMenuOpen(false);
                           }}
@@ -383,7 +381,7 @@ export default function Header({
                           My Listings
                         </button>
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onNavigate('dashboard');
                             setIsProfileMenuOpen(false);
                           }}
@@ -393,7 +391,7 @@ export default function Header({
                           Favorites
                         </button>
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onNavigate('dashboard');
                             setIsProfileMenuOpen(false);
                           }}
@@ -404,7 +402,7 @@ export default function Header({
                         </button>
                         <div className="border-t border-gray-100 my-2"></div>
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onNavigate('maintenance');
                             setIsProfileMenuOpen(false);
                           }}
@@ -414,7 +412,7 @@ export default function Header({
                           Maintenance
                         </button>
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onNavigate('scheduler');
                             setIsProfileMenuOpen(false);
                           }}
@@ -424,7 +422,7 @@ export default function Header({
                           Smart Scheduler
                         </button>
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onNavigate('referrals');
                             setIsProfileMenuOpen(false);
                           }}
@@ -436,7 +434,7 @@ export default function Header({
                       </div>
                       <div className="border-t border-gray-100 dark:border-gray-700 pt-2">
                         <button
-                          onClick={() = aria-label="Icon button"> {
+                          aria-label="Icon button"> {
                             onSignOut();
                             setIsProfileMenuOpen(false);
                           }}
@@ -458,8 +456,7 @@ export default function Header({
                     showTransparent
                       ? 'text-white hover:bg-white/10'
                       : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                 aria-label="Icon button">
+                  } aria-label="Icon button">
                   Sign In
                 </button>
                 <button
@@ -468,15 +465,14 @@ export default function Header({
                     showTransparent
                       ? 'bg-white text-gray-900 hover:bg-gray-100'
                       : 'bg-teal-500 text-white hover:bg-teal-600'
-                  }`}
-                 aria-label="Icon button">
+                  } aria-label="Icon button">
                   Get Started
                 </button>
               </div>
             )}
 
             <button
-              onClick={() = aria-label="Icon button"> setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Icon button" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`lg:hidden p-2.5 rounded-full transition-colors ${
                 showTransparent ? 'text-white hover:bg-white/10' : 'text-gray-700 hover:bg-gray-100'
               }`}
@@ -491,7 +487,7 @@ export default function Header({
         <div className="lg:hidden bg-white border-t border-gray-100 shadow-xl">
           <div className="px-4 py-6 space-y-4">
             <button
-              onClick={() = aria-label="Icon button"> {
+              aria-label="Icon button"> {
                 onSearchClick();
                 setIsMobileMenuOpen(false);
               }}
@@ -503,7 +499,7 @@ export default function Header({
 
             <nav className="space-y-1">
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   onNavigate('browse');
                   setIsMobileMenuOpen(false);
                 }}
@@ -512,7 +508,7 @@ export default function Header({
                 Browse Equipment
               </button>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   onNavigate('home');
                   setIsMobileMenuOpen(false);
                 }}
@@ -521,7 +517,7 @@ export default function Header({
                 How It Works
               </button>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   onNavigate('home');
                   setIsMobileMenuOpen(false);
                 }}
@@ -530,7 +526,7 @@ export default function Header({
                 For Business
               </button>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   onNavigate('home');
                   setIsMobileMenuOpen(false);
                 }}
@@ -543,7 +539,7 @@ export default function Header({
             {isAuthenticated ? (
               <div className="pt-4 border-t border-gray-100 space-y-3">
                 <button
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     onListEquipment();
                     setIsMobileMenuOpen(false);
                   }}
@@ -552,7 +548,7 @@ export default function Header({
                   List Equipment
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     onNavigate('dashboard');
                     setIsMobileMenuOpen(false);
                   }}
@@ -562,7 +558,7 @@ export default function Header({
                 </button>
                 <div className="pt-2 space-y-2">
                   <button
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       onNavigate('maintenance');
                       setIsMobileMenuOpen(false);
                     }}
@@ -572,7 +568,7 @@ export default function Header({
                     Maintenance
                   </button>
                   <button
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       onNavigate('scheduler');
                       setIsMobileMenuOpen(false);
                     }}
@@ -582,7 +578,7 @@ export default function Header({
                     Smart Scheduler
                   </button>
                   <button
-                    onClick={() = aria-label="Icon button"> {
+                    aria-label="Icon button"> {
                       onNavigate('referrals');
                       setIsMobileMenuOpen(false);
                     }}

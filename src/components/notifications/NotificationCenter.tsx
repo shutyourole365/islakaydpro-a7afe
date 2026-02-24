@@ -207,7 +207,7 @@ export default function NotificationCenter({ onBack }: NotificationCenterProps) 
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
+              aria-label="Icon button" onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-teal-500 text-white'
@@ -261,7 +261,7 @@ export default function NotificationCenter({ onBack }: NotificationCenterProps) 
                       <div className="flex items-center gap-1">
                         {!notification.read && (
                           <button
-                            onClick={() = aria-label="Icon button"> markAsRead(notification.id)}
+                            aria-label="Icon button" onClick={() => markAsRead(notification.id)}
                             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                             title="Mark as read"
                           >
@@ -269,7 +269,7 @@ export default function NotificationCenter({ onBack }: NotificationCenterProps) 
                           </button>
                         )}
                         <button
-                          onClick={() = aria-label="Icon button"> deleteNotification(notification.id)}
+                          aria-label="Icon button" onClick={() => deleteNotification(notification.id)}
                           className="p-2 hover:bg-red-50 rounded-lg transition-colors"
                           title="Delete"
                         >

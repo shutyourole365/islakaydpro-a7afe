@@ -229,7 +229,7 @@ export default function EquipmentTimeline({
           
           <div className="flex items-center gap-2">
             <button
-              onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
+              aria-label="Icon button" onClick={() => setShowFilters(!showFilters)}
               className={`p-2 rounded-lg transition-colors ${
                 showFilters ? 'bg-emerald-100 text-emerald-600' : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400'
               }`}
@@ -281,7 +281,7 @@ export default function EquipmentTimeline({
         {showFilters && (
           <div className="mt-4 flex flex-wrap gap-2">
             <button
-              onClick={() = aria-label="Icon button"> setSelectedFilter('all')}
+              aria-label="Icon button" onClick={() => setSelectedFilter('all')}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 selectedFilter === 'all'
                   ? 'bg-emerald-600 text-white'
@@ -293,7 +293,7 @@ export default function EquipmentTimeline({
             {Object.entries(eventTypeConfig).map(([type, config]) => (
               <button
                 key={type}
-                onClick={() = aria-label="Icon button"> setSelectedFilter(type as TimelineEvent['type'])}
+                aria-label="Icon button" onClick={() => setSelectedFilter(type as TimelineEvent['type'])}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   selectedFilter === type
                     ? 'bg-emerald-600 text-white'

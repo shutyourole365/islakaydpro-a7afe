@@ -201,8 +201,7 @@ export default function DeliveryTracker({
             <button
               onClick={refreshStatus}
               className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
-              disabled={isRefreshing}
-             aria-label="Icon button">
+              disabled={isRefreshing aria-label="Icon button">
               <RefreshCw className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
             </button>
             <button
@@ -316,7 +315,7 @@ export default function DeliveryTracker({
           </div>
           <div className="flex gap-2">
             <button
-              onClick={() = aria-label="Icon button"> window.open(`tel:${delivery.driver.phone}`)}
+              aria-label="Icon button" onClick={() => window.open(`tel:${delivery.driver.phone}`)}
               className="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-xl hover:bg-green-200 dark:hover:bg-green-900/50"
             >
               <Phone className="w-5 h-5" />
@@ -384,7 +383,7 @@ export default function DeliveryTracker({
       {/* Status History */}
       <div className="p-4">
         <button
-          onClick={() = aria-label="Icon button"> setShowDetails(!showDetails)}
+          aria-label="Icon button" onClick={() => setShowDetails(!showDetails)}
           className="w-full flex items-center justify-between py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
         >
           <span className="font-medium">Delivery History</span>
@@ -425,7 +424,7 @@ export default function DeliveryTracker({
       <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-t dark:border-gray-700">
         <div className="flex gap-3">
           <button
-            onClick={() = aria-label="Icon button"> setNotifications(!notifications)}
+            aria-label="Icon button" onClick={() => setNotifications(!notifications)}
             className={`flex-1 py-3 rounded-xl flex items-center justify-center gap-2 ${
               notifications
                 ? 'bg-blue-600 text-white'

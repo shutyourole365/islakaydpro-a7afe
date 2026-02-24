@@ -387,8 +387,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setActiveView(activeView === 'alerts' ? 'settings' : 'alerts')}
-              aria-label="Toggle alerts view"
+              onClick={() => setActiveView(activeView === 'alerts' ? 'settings' : 'alerts') aria-label="Toggle alerts view"
               className="p-2 hover:bg-white/10 rounded-lg transition-colors"
             >
               {activeView === 'alerts' ? (
@@ -422,8 +421,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 />
               </div>
               <button
-                onClick={() => setShowFilters(!showFilters)}
-                aria-label={showFilters ? 'Hide filters' : 'Show filters'}
+                onClick={() => setShowFilters(!showFilters) aria-label={showFilters ? 'Hide filters' : 'Show filters'}
                 className={`p-2 border rounded-lg hover:bg-gray-50 transition-colors ${
                   showFilters ? 'bg-teal-50 border-teal-200' : ''
                 }`}
@@ -575,7 +573,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                     <div className="flex items-center gap-2">
                       <h4 className="font-medium text-gray-900">{pref.label}</h4>
                       <button
-                        onClick={() = aria-label="Icon button"> togglePreference(pref.type)}
+                        aria-label="Icon button" onClick={() => togglePreference(pref.type)}
                         className={`relative w-10 h-5 rounded-full transition-colors ${
                           pref.enabled ? 'bg-teal-600' : 'bg-gray-300'
                         }`}
@@ -594,7 +592,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                 {pref.enabled && (
                   <div className="mt-3 flex gap-3">
                     <button
-                      onClick={() = aria-label="Icon button"> toggleChannel(pref.type, 'push')}
+                      aria-label="Icon button" onClick={() => toggleChannel(pref.type, 'push')}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
                         pref.channels.push
                           ? 'bg-teal-100 text-teal-700'
@@ -605,7 +603,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                       Push
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> toggleChannel(pref.type, 'email')}
+                      aria-label="Icon button" onClick={() => toggleChannel(pref.type, 'email')}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
                         pref.channels.email
                           ? 'bg-teal-100 text-teal-700'
@@ -616,7 +614,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
                       Email
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> toggleChannel(pref.type, 'sms')}
+                      aria-label="Icon button" onClick={() => toggleChannel(pref.type, 'sms')}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
                         pref.channels.sms
                           ? 'bg-teal-100 text-teal-700'

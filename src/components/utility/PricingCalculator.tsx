@@ -153,7 +153,7 @@ export default function PricingCalculator({ onBack }: PricingCalculatorProps) {
                           type="checkbox"
                           id="insurance"
                           checked={insurance}
-                          onChange={(e) = aria-label="insurance"> setInsurance(e.target.checked)}
+                          onChange={(e) = "insurance" onClick={() => setInsurance(e.target.checked)}
                           className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                         />
                         <label htmlFor="insurance" className="ml-2 text-sm text-gray-700">
@@ -165,7 +165,7 @@ export default function PricingCalculator({ onBack }: PricingCalculatorProps) {
                           type="checkbox"
                           id="delivery"
                           checked={delivery}
-                          onChange={(e) = aria-label="delivery"> setDelivery(e.target.checked)}
+                          onChange={(e) = "delivery" onClick={() => setDelivery(e.target.checked)}
                           className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                         />
                         <label htmlFor="delivery" className="ml-2 text-sm text-gray-700">

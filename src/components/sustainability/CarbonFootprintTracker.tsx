@@ -221,7 +221,7 @@ export default function CarbonFootprintTracker({
         {(['overview', 'history', 'achievements'] as const).map((tab) => (
           <button
             key={tab}
-            onClick={() = aria-label="Icon button"> setActiveTab(tab)}
+            aria-label="Icon button" onClick={() => setActiveTab(tab)}
             className={`flex-1 py-4 text-sm font-medium transition-colors ${
               activeTab === tab
                 ? 'text-green-600 border-b-2 border-green-500'

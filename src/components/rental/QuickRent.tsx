@@ -274,7 +274,7 @@ export default function QuickRent({
                 {quickRentDurations.map((duration) => (
                   <button
                     key={duration.days}
-                    onClick={() = aria-label="Icon button"> setSelectedDuration(duration)}
+                    aria-label="Icon button" onClick={() => setSelectedDuration(duration)}
                     className={`p-3 rounded-xl border-2 text-center transition-all ${
                       selectedDuration.days === duration.days
                         ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -306,7 +306,7 @@ export default function QuickRent({
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 <button
-                  onClick={() = aria-label="Icon button"> setDeliveryOption('pickup')}
+                  aria-label="Icon button" onClick={() => setDeliveryOption('pickup')}
                   className={`p-3 rounded-xl border-2 flex items-center gap-3 ${
                     deliveryOption === 'pickup'
                       ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -320,7 +320,7 @@ export default function QuickRent({
                   </div>
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> setDeliveryOption('delivery')}
+                  aria-label="Icon button" onClick={() => setDeliveryOption('delivery')}
                   className={`p-3 rounded-xl border-2 flex items-center gap-3 ${
                     deliveryOption === 'delivery'
                       ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -345,7 +345,7 @@ export default function QuickRent({
                 {savedPaymentMethods.map((method) => (
                   <button
                     key={method.id}
-                    onClick={() = aria-label="Icon button"> setSelectedPayment(method.id)}
+                    aria-label="Icon button" onClick={() => setSelectedPayment(method.id)}
                     className={`w-full p-3 rounded-xl border-2 flex items-center gap-3 ${
                       selectedPayment === method.id
                         ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'

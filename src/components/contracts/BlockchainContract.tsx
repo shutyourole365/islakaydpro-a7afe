@@ -193,7 +193,7 @@ export default function BlockchainContract({
               <span className="text-sm text-gray-500">Contract Address</span>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() = aria-label="Icon button"> copyToClipboard(contractAddress)}
+                  aria-label="Icon button" onClick={() => copyToClipboard(contractAddress)}
                   className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   <Copy className="w-4 h-4 text-gray-400" />
@@ -251,7 +251,7 @@ export default function BlockchainContract({
           {/* Contract Terms Accordion */}
           <div className="space-y-3 mb-6">
             <button
-              onClick={() = aria-label="Icon button"> setExpandedSection(expandedSection === 'terms' ? null : 'terms')}
+              aria-label="Icon button" onClick={() => setExpandedSection(expandedSection === 'terms' ? null : 'terms')}
               className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             >
               <div className="flex items-center gap-3">
@@ -292,7 +292,7 @@ export default function BlockchainContract({
             )}
 
             <button
-              onClick={() = aria-label="Icon button"> setExpandedSection(expandedSection === 'security' ? null : 'security')}
+              aria-label="Icon button" onClick={() => setExpandedSection(expandedSection === 'security' ? null : 'security')}
               className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             >
               <div className="flex items-center gap-3">
@@ -387,7 +387,7 @@ export default function BlockchainContract({
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-gray-500">Transaction Hash</span>
                   <button
-                    onClick={() = aria-label="Icon button"> copyToClipboard(transactionHash)}
+                    aria-label="Icon button" onClick={() => copyToClipboard(transactionHash)}
                     className="p-1 hover:bg-gray-100 rounded"
                   >
                     <Copy className="w-4 h-4 text-gray-400" />

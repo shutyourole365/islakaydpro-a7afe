@@ -281,7 +281,7 @@ export default function SecurityCenter({
         ].map((tab) => (
           <button
             key={tab.id}
-            onClick={() = aria-label="Icon button"> setActiveSection(tab.id as typeof activeSection)}
+            aria-label="Icon button" onClick={() => setActiveSection(tab.id as typeof activeSection)}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
               activeSection === tab.id
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -311,8 +311,7 @@ export default function SecurityCenter({
                   twoFactorEnabled
                     ? 'bg-red-50 text-red-600 hover:bg-red-100'
                     : 'bg-teal-500 text-white hover:bg-teal-600'
-                }`}
-               aria-label="Icon button">
+                } aria-label="Icon button">
                 {loading ? 'Processing...' : twoFactorEnabled ? 'Disable' : 'Enable'}
               </button>
             }
@@ -430,7 +429,7 @@ export default function SecurityCenter({
                 </div>
                 {!session.isCurrent && (
                   <button
-                    onClick={() = aria-label="Icon button"> onRevokeSession(session.id)}
+                    aria-label="Icon button" onClick={() => onRevokeSession(session.id)}
                     className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
@@ -540,8 +539,7 @@ function SecurityQuickAction({
         status
           ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
           : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
-      }`}
-     aria-label="Icon button">
+      } aria-label="Icon button">
       {icon}
       <span className="text-xs font-medium">{label}</span>
       <div className={`w-2 h-2 rounded-full ${status ? 'bg-green-400' : 'bg-slate-500'}`} />

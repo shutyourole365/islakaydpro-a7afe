@@ -292,7 +292,7 @@ export default function GroupBooking({
                         )}
                         {member.role !== 'organizer' && (
                           <button
-                            onClick={() = aria-label="Icon button"> removeMember(member.id)}
+                            aria-label="Icon button" onClick={() => removeMember(member.id)}
                             className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -331,7 +331,7 @@ export default function GroupBooking({
                     />
                     <div className="flex gap-2">
                       <button
-                        onClick={() = aria-label="Icon button"> setShowAddMember(false)}
+                        aria-label="Icon button" onClick={() => setShowAddMember(false)}
                         className="flex-1 py-2.5 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100"
                       >
                         Cancel
@@ -347,7 +347,7 @@ export default function GroupBooking({
                 ) : (
                   <div className="flex gap-3">
                     <button
-                      onClick={() = aria-label="Icon button"> setShowAddMember(true)}
+                      aria-label="Icon button" onClick={() => setShowAddMember(true)}
                       className="flex-1 py-3 border-2 border-dashed border-gray-200 text-gray-500 rounded-xl hover:border-orange-300 hover:text-orange-500 flex items-center justify-center gap-2"
                     >
                       <UserPlus className="w-5 h-5" />
@@ -381,7 +381,7 @@ export default function GroupBooking({
               </div>
 
               <button
-                onClick={() = aria-label="Icon button"> setStep('schedule')}
+                aria-label="Icon button" onClick={() => setStep('schedule')}
                 disabled={!canProceedToSchedule}
                 className="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-xl disabled:opacity-50 flex items-center justify-center gap-2"
               >
@@ -445,7 +445,7 @@ export default function GroupBooking({
                 </label>
                 <div className="flex items-center gap-4">
                   <button
-                    onClick={() = aria-label="Icon button"> setQuantity(Math.max(1, quantity - 1))}
+                    aria-label="Icon button"> setQuantity(Math.max(1, quantity - 1))}
                     className="w-12 h-12 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50"
                   >
                     -
@@ -454,7 +454,7 @@ export default function GroupBooking({
                     {quantity}
                   </span>
                   <button
-                    onClick={() = aria-label="Icon button"> setQuantity(Math.min(maxQuantity, quantity + 1))}
+                    aria-label="Icon button"> setQuantity(Math.min(maxQuantity, quantity + 1))}
                     className="w-12 h-12 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50"
                   >
                     +
@@ -507,13 +507,13 @@ export default function GroupBooking({
 
               <div className="flex gap-3">
                 <button
-                  onClick={() = aria-label="Icon button"> setStep('team')}
+                  aria-label="Icon button" onClick={() => setStep('team')}
                   className="flex-1 py-4 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50"
                 >
                   Back
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> setStep('review')}
+                  aria-label="Icon button" onClick={() => setStep('review')}
                   disabled={!canProceedToReview}
                   className="flex-1 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-xl disabled:opacity-50 flex items-center justify-center gap-2"
                 >
@@ -590,7 +590,7 @@ export default function GroupBooking({
 
               <div className="flex gap-3">
                 <button
-                  onClick={() = aria-label="Icon button"> setStep('schedule')}
+                  aria-label="Icon button" onClick={() => setStep('schedule')}
                   className="flex-1 py-4 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50"
                 >
                   Back

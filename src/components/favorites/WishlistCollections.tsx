@@ -181,7 +181,7 @@ export default function WishlistCollections({
           <div className="flex items-center gap-2">
             {selectedCollection ? (
               <button
-                onClick={() = aria-label="Icon button"> setSelectedCollection(null)}
+                aria-label="Icon button" onClick={() => setSelectedCollection(null)}
                 className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
               >
                 Back to Collections
@@ -189,7 +189,7 @@ export default function WishlistCollections({
             ) : (
               <>
                 <button
-                  onClick={() = aria-label="Icon button"> setShowCreateModal(true)}
+                  aria-label="Icon button" onClick={() => setShowCreateModal(true)}
                   className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
                 >
                   <FolderPlus className="w-5 h-5" />
@@ -214,7 +214,7 @@ export default function WishlistCollections({
           </div>
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
             <button
-              onClick={() = aria-label="Icon button"> setViewMode('grid')}
+              aria-label="Icon button" onClick={() => setViewMode('grid')}
               className={`p-2 rounded ${
                 viewMode === 'grid'
                   ? 'bg-white dark:bg-gray-600 shadow'
@@ -224,7 +224,7 @@ export default function WishlistCollections({
               <Grid3X3 className="w-5 h-5 text-gray-600 dark:text-gray-300" />
             </button>
             <button
-              onClick={() = aria-label="Icon button"> setViewMode('list')}
+              aria-label="Icon button" onClick={() => setViewMode('list')}
               className={`p-2 rounded ${
                 viewMode === 'list'
                   ? 'bg-white dark:bg-gray-600 shadow'
@@ -254,7 +254,7 @@ export default function WishlistCollections({
               </p>
               {!searchQuery && (
                 <button
-                  onClick={() = aria-label="Icon button"> setShowCreateModal(true)}
+                  aria-label="Icon button" onClick={() => setShowCreateModal(true)}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
                 >
                   <Plus className="w-5 h-5" />
@@ -330,7 +330,7 @@ export default function WishlistCollections({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <button
-                          onClick={() = aria-label="Icon button"> openEditModal(collection)}
+                          aria-label="Icon button" onClick={() => openEditModal(collection)}
                           className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
                         >
                           <Edit2 className="w-4 h-4" />
@@ -338,7 +338,7 @@ export default function WishlistCollections({
                         </button>
                         {!collection.isPrivate && (
                           <button
-                            onClick={() = aria-label="Icon button"> shareCollection(collection)}
+                            aria-label="Icon button" onClick={() => shareCollection(collection)}
                             className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
                           >
                             <Share2 className="w-4 h-4" />
@@ -346,7 +346,7 @@ export default function WishlistCollections({
                           </button>
                         )}
                         <button
-                          onClick={() = aria-label="Icon button"> handleDeleteCollection(collection.id)}
+                          aria-label="Icon button" onClick={() => handleDeleteCollection(collection.id)}
                           className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 text-red-600"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -512,7 +512,7 @@ export default function WishlistCollections({
                 {showCreateModal ? 'Create Collection' : 'Edit Collection'}
               </h3>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   setShowCreateModal(false);
                   setShowEditModal(false);
                   setEditingCollection(null);
@@ -567,7 +567,7 @@ export default function WishlistCollections({
                   </div>
                 </div>
                 <button
-                  onClick={() = aria-label="Icon button"> setNewIsPrivate(!newIsPrivate)}
+                  aria-label="Icon button" onClick={() => setNewIsPrivate(!newIsPrivate)}
                   className={`w-12 h-6 rounded-full transition-colors ${
                     newIsPrivate ? 'bg-emerald-600' : 'bg-gray-300 dark:bg-gray-600'
                   }`}
@@ -583,7 +583,7 @@ export default function WishlistCollections({
 
             <div className="flex gap-3 mt-6">
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   setShowCreateModal(false);
                   setShowEditModal(false);
                 }}

@@ -232,7 +232,7 @@ export default function SmartScheduler({
         {/* View Toggle */}
         <div className="flex bg-white/10 rounded-xl p-1">
           <button
-            onClick={() = aria-label="Icon button"> setViewMode('calendar')}
+            aria-label="Icon button" onClick={() => setViewMode('calendar')}
             className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
               viewMode === 'calendar' ? 'bg-white text-indigo-600' : 'text-white/80'
             }`}
@@ -241,7 +241,7 @@ export default function SmartScheduler({
             Calendar
           </button>
           <button
-            onClick={() = aria-label="Icon button"> setViewMode('recommendations')}
+            aria-label="Icon button" onClick={() => setViewMode('recommendations')}
             className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
               viewMode === 'recommendations' ? 'bg-white text-indigo-600' : 'text-white/80'
             }`}
@@ -297,7 +297,7 @@ export default function SmartScheduler({
                 return (
                   <button
                     key={slot.date.toISOString()}
-                    onClick={() = aria-label="Icon button"> handleDateClick(slot)}
+                    aria-label="Icon button" onClick={() => handleDateClick(slot)}
                     disabled={!slot.available}
                     className={`
                       relative aspect-square flex flex-col items-center justify-center rounded-lg text-sm
@@ -377,7 +377,7 @@ export default function SmartScheduler({
                   </div>
                 </div>
                 <button
-                  onClick={() = aria-label="Icon button"> applyRecommendation(rec)}
+                  aria-label="Icon button" onClick={() => applyRecommendation(rec)}
                   className="w-full mt-2 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
                 >
                   Select These Dates
@@ -408,7 +408,7 @@ export default function SmartScheduler({
             )}
           </div>
           <button
-            onClick={() = aria-label="Icon button"> onSelectDates(selectedStart!, selectedEnd!, totals.avgDiscount)}
+            aria-label="Icon button" onClick={() => onSelectDates(selectedStart!, selectedEnd!, totals.avgDiscount)}
             className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
           >
             Confirm These Dates

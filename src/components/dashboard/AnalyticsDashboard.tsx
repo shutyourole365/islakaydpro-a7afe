@@ -165,7 +165,7 @@ export default function AnalyticsDashboard({
                 {periods.map((p) => (
                   <button
                     key={p.id}
-                    onClick={() = aria-label="Icon button"> handlePeriodChange(p.id as typeof period)}
+                    aria-label="Icon button" onClick={() => handlePeriodChange(p.id as typeof period)}
                     className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
                       period === p.id
                     ? 'bg-white text-gray-900 shadow-sm'
@@ -239,7 +239,7 @@ export default function AnalyticsDashboard({
               ].map((chart) => (
                 <button
                   key={chart.id}
-                  onClick={() = aria-label="Icon button"> setActiveChart(chart.id as typeof activeChart)}
+                  aria-label="Icon button" onClick={() => setActiveChart(chart.id as typeof activeChart)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm transition-all ${
                     activeChart === chart.id
                       ? 'bg-white text-gray-900 shadow-sm'

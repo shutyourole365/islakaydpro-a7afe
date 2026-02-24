@@ -352,7 +352,7 @@ export default function AchievementsSystem({
             {badges.map(badge => (
               <button
                 key={badge.id}
-                onClick={() = aria-label="Icon button"> handleBadgeEquip(badge.id)}
+                aria-label="Icon button" onClick={() => handleBadgeEquip(badge.id)}
                 className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl border-2 transition-all ${
                   badge.isEquipped
                     ? 'border-violet-500 bg-violet-50'
@@ -380,7 +380,7 @@ export default function AchievementsSystem({
             {['all', 'unlocked', 'in-progress'].map(tab => (
               <button
                 key={tab}
-                onClick={() = aria-label="Icon button"> setActiveTab(tab as typeof activeTab)}
+                aria-label="Icon button" onClick={() => setActiveTab(tab as typeof activeTab)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   activeTab === tab
                     ? 'bg-violet-500 text-white'
@@ -397,7 +397,7 @@ export default function AchievementsSystem({
             {categories.map(cat => (
               <button
                 key={cat.id}
-                onClick={() = aria-label="Icon button"> setSelectedCategory(cat.id as typeof selectedCategory)}
+                aria-label="Icon button" onClick={() => setSelectedCategory(cat.id as typeof selectedCategory)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
                   selectedCategory === cat.id
                     ? 'bg-violet-100 text-violet-700'
@@ -418,7 +418,7 @@ export default function AchievementsSystem({
           {filteredAchievements.map((achievement, index) => (
             <button
               key={achievement.id}
-              onClick={() = aria-label="Icon button"> setSelectedAchievement(achievement)}
+              aria-label="Icon button" onClick={() => setSelectedAchievement(achievement)}
               className={`relative bg-white rounded-2xl p-5 text-left transition-all hover:shadow-lg ${
                 achievement.isUnlocked ? '' : 'opacity-90'
               }`}
@@ -535,7 +535,7 @@ export default function AchievementsSystem({
                 <span className="font-semibold">+{selectedAchievement.xpReward} XP Reward</span>
               </div>
               <button
-                onClick={() = aria-label="Icon button"> setSelectedAchievement(null)}
+                aria-label="Icon button" onClick={() => setSelectedAchievement(null)}
                 className="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
               >
                 Close

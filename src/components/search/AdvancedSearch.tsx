@@ -306,7 +306,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
             />
           </div>
           <button
-            onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
+            aria-label="Icon button" onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center gap-2 px-4 py-3 rounded-lg border transition-colors ${
               showFilters
                 ? 'bg-blue-100 text-blue-700 border-blue-300'
@@ -329,7 +329,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
               {aiSuggestions.map((suggestion, index) => (
                 <button
                   key={index}
-                  onClick={() = aria-label="Icon button"> handleSuggestionClick(suggestion)}
+                  aria-label="Icon button" onClick={() => handleSuggestionClick(suggestion)}
                   className="flex-shrink-0 bg-purple-50 hover:bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-purple-200"
                 >
                   {suggestion.title}
@@ -441,7 +441,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
                     key={rating}
-                    onClick={() = aria-label="Icon button"> setFilters(prev => ({ ...prev, rating: prev.rating === rating ? 0 : rating }))}
+                    aria-label="Icon button"> setFilters(prev => ({ ...prev, rating: prev.rating === rating ? 0 : rating }))}
                     className={`flex items-center gap-1 px-2 py-1 rounded ${
                       filters.rating >= rating
                         ? 'bg-yellow-100 text-yellow-700'
@@ -464,7 +464,7 @@ export default function AdvancedSearch({ onEquipmentSelect, className = '' }: Ad
               {availableFeatures.slice(0, 12).map((feature) => (
                 <button
                   key={feature}
-                  onClick={() = aria-label="Icon button"> setFilters(prev => ({
+                  aria-label="Icon button"> setFilters(prev => ({
                     ...prev,
                     features: prev.features.includes(feature)
                       ? prev.features.filter(f => f !== feature)

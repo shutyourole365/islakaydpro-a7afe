@@ -266,8 +266,7 @@ export default function AIDamageDetection({
                     />
                       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4">
                       <button
-                        onClick={stopCamera}
-                        aria-label="Cancel camera"
+                        onClick={stopCamera aria-label="Cancel camera"
                         title="Cancel camera"
                         className="px-6 py-2 bg-white/20 backdrop-blur text-white rounded-full"
                       >
@@ -292,7 +291,7 @@ export default function AIDamageDetection({
                       <span className="text-sm text-gray-500">Use camera</span>
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> fileInputRef.current?.click()}
+                      aria-label="Icon button"> fileInputRef.current?.click()}
                       className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-colors"
                     >
                       <Upload className="w-12 h-12 text-gray-400 mb-3" />
@@ -323,8 +322,7 @@ export default function AIDamageDetection({
                           className="w-full h-full object-cover"
                         />
                         <button
-                          onClick={() = aria-label="Icon button"> removePhoto(index)}
-                          aria-label={`Remove photo ${index + 1}`}
+                          aria-label="Icon button" onClick={() => removePhoto(index) aria-label={`Remove photo ${index + 1}`}
                           title={`Remove photo ${index + 1}`}
                           className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                         >
@@ -333,7 +331,7 @@ export default function AIDamageDetection({
                       </div>
                     ))}
                     <button
-                      onClick={() = aria-label="Icon button"> fileInputRef.current?.click()}
+                      aria-label="Icon button"> fileInputRef.current?.click()}
                       className="aspect-square rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-400 hover:border-orange-300 hover:text-orange-500 transition-colors"
                       aria-label="Add photos"
                       title="Add photos"
@@ -396,11 +394,10 @@ export default function AIDamageDetection({
                     {damages.map((damage) => (
                       <button
                         key={damage.id}
-                        onClick={() = aria-label="Icon button"> setSelectedDamage(damage)}
+                        aria-label="Icon button" onClick={() => setSelectedDamage(damage)}
                         className={`absolute border-2 rounded ${
                           selectedDamage?.id === damage.id ? 'border-red-500' : 'border-orange-400'
-                        } animate-pulse cursor-pointer`}
-                        aria-label={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
+                        } animate-pulse cursor-pointer } aria-label={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
                         title={`${damage.type} - ${Math.round(damage.confidence * 100)}% confidence`}
                         ref={(el) => {
                           if (el) {
@@ -429,7 +426,7 @@ export default function AIDamageDetection({
                     {/* Comparison Toggle */}
                     {previousPhotos.length > 0 && (
                       <button
-                        onClick={() = aria-label="Icon button"> setShowComparison(!showComparison)}
+                        aria-label="Icon button" onClick={() => setShowComparison(!showComparison)}
                         className="absolute top-4 right-4 px-3 py-1.5 bg-white/90 rounded-full text-sm font-medium text-gray-700 shadow"
                         aria-label={showComparison ? 'Hide comparison' : 'Show comparison'}
                         title={showComparison ? 'Hide comparison' : 'Show comparison'}
@@ -445,11 +442,10 @@ export default function AIDamageDetection({
                       {photos.map((photo, index) => (
                       <button
                         key={index}
-                        onClick={() = aria-label="Icon button"> setActivePhoto(index)}
+                        aria-label="Icon button" onClick={() => setActivePhoto(index)}
                         className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
                           activePhoto === index ? 'border-orange-500' : 'border-transparent'
-                        }`}
-                        aria-label={`View photo ${index + 1}`}
+                        } aria-label={`View photo ${index + 1}`}
                         title={`View photo ${index + 1}`}
                       >
                         <img src={photo} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
@@ -485,7 +481,7 @@ export default function AIDamageDetection({
                       {damages.map((damage) => (
                         <button
                           key={damage.id}
-                          onClick={() = aria-label="Icon button"> setSelectedDamage(damage)}
+                          aria-label="Icon button" onClick={() => setSelectedDamage(damage)}
                           className={`w-full text-left p-4 rounded-xl border-2 transition-colors ${
                             selectedDamage?.id === damage.id
                               ? 'border-orange-500 bg-orange-50'
@@ -549,7 +545,7 @@ export default function AIDamageDetection({
               {/* Actions */}
               <div className="flex gap-3 mt-6">
                 <button
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     setAnalyzed(false);
                     setDamages([]);
                   }}

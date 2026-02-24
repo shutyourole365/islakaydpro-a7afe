@@ -108,7 +108,7 @@ export default function InstallPrompt() {
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() = aria-label="Icon button"> setShowPrompt(true)}
+                aria-label="Icon button" onClick={() => setShowPrompt(true)}
                 className="px-4 py-2 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
               >
                 Install

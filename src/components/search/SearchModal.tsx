@@ -108,7 +108,7 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
               />
               {query && (
                 <button
-                  onClick={() = aria-label="Icon button"> setQuery('')}
+                  aria-label="Icon button" onClick={() => setQuery('')}
                   className="p-1 rounded-full hover:bg-gray-200 transition-colors"
                 >
                   <X className="w-4 h-4 text-gray-400" />
@@ -125,7 +125,7 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
 
           <div className="flex items-center gap-3 mt-4">
             <button
-              onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
+              aria-label="Icon button" onClick={() => setShowFilters(!showFilters)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                 showFilters
                   ? 'border-teal-500 bg-teal-50 text-teal-700'
@@ -237,7 +237,7 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
                   {recentSearches.map((search, index) => (
                     <button
                       key={index}
-                      onClick={() = aria-label="Icon button"> setQuery(search)}
+                      aria-label="Icon button" onClick={() => setQuery(search)}
                       className="flex items-center justify-between w-full px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-left"
                     >
                       <span className="text-gray-700">{search}</span>
@@ -256,7 +256,7 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
                   {trendingSearches.map((item, index) => (
                     <button
                       key={index}
-                      onClick={() = aria-label="Icon button"> setQuery(item.query)}
+                      aria-label="Icon button" onClick={() => setQuery(item.query)}
                       className="flex items-center justify-between px-4 py-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors text-left"
                     >
                       <div>
@@ -277,7 +277,7 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
                 Press Enter to search for "{query}"
               </p>
               <button
-                onClick={() = aria-label="Icon button"> onSearch(query, filters)}
+                aria-label="Icon button" onClick={() => onSearch(query, filters)}
                 className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
                 <Search className="w-5 h-5" />

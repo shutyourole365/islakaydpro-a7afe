@@ -147,7 +147,7 @@ export default function BrowsePage({
                 className="flex-1 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none"
               />
               {searchQuery && (
-                <button onClick={() = aria-label="Icon button"> setSearchQuery('')}>
+                <button aria-label="Icon button" onClick={() => setSearchQuery('')}>
                   <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                 </button>
               )}
@@ -168,7 +168,7 @@ export default function BrowsePage({
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2 overflow-x-auto pb-2 -mb-2">
               <button
-                onClick={() = aria-label="Icon button"> setSelectedCategory('')}
+                aria-label="Icon button" onClick={() => setSelectedCategory('')}
                 className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                   !selectedCategory
                     ? 'bg-teal-500 text-white'
@@ -180,7 +180,7 @@ export default function BrowsePage({
               {categories.slice(0, 6).map((category) => (
                 <button
                   key={category.id}
-                  onClick={() = aria-label="Icon button"> setSelectedCategory(category.slug)}
+                  aria-label="Icon button" onClick={() => setSelectedCategory(category.slug)}
                   className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                     selectedCategory === category.slug
                       ? 'bg-teal-500 text-white'
@@ -194,7 +194,7 @@ export default function BrowsePage({
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
+                aria-label="Icon button" onClick={() => setShowFilters(!showFilters)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-colors ${
                   showFilters || activeFiltersCount > 0
                     ? 'border-teal-500 bg-teal-50 text-teal-700'
@@ -212,7 +212,7 @@ export default function BrowsePage({
 
               <div className="hidden sm:flex items-center gap-1 border border-gray-200 rounded-xl p-1">
                 <button
-                  onClick={() = aria-label="Icon button"> setViewMode('grid')}
+                  aria-label="Icon button" onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-lg transition-colors ${
                     viewMode === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'
                   }`}
@@ -221,7 +221,7 @@ export default function BrowsePage({
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> setViewMode('list')}
+                  aria-label="Icon button" onClick={() => setViewMode('list')}
                   className={`p-2 rounded-lg transition-colors ${
                     viewMode === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'
                   }`}
@@ -230,7 +230,7 @@ export default function BrowsePage({
                   <List className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() = aria-label="Icon button"> setViewMode('map')}
+                  aria-label="Icon button" onClick={() => setViewMode('map')}
                   className={`p-2 rounded-lg transition-colors ${
                     viewMode === 'map' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'
                   }`}
@@ -382,7 +382,7 @@ export default function BrowsePage({
               {filteredEquipment.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() = aria-label="Icon button"> {
+                  aria-label="Icon button"> {
                     setSelectedMapEquipment(item.id);
                     onEquipmentClick(item);
                   }}
@@ -477,7 +477,7 @@ export default function BrowsePage({
                 </div>
 
                 <button
-                  onClick={() = aria-label="Icon button"> onEquipmentClick(item)}
+                  aria-label="Icon button" onClick={() => onEquipmentClick(item)}
                   className="w-full p-5 text-left"
                 >
                   <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-teal-600 transition-colors mb-2">
@@ -523,7 +523,7 @@ export default function BrowsePage({
             {filteredEquipment.map((item) => (
               <button
                 key={item.id}
-                onClick={() = aria-label="Icon button"> onEquipmentClick(item)}
+                aria-label="Icon button" onClick={() => onEquipmentClick(item)}
                 className="w-full bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 flex"
               >
                 <div className="w-64 h-48 flex-shrink-0 relative overflow-hidden">

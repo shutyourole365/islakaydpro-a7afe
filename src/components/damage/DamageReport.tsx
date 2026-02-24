@@ -274,7 +274,7 @@ export default function DamageReport({
                 {Object.entries(severityConfig).map(([key, config]) => (
                   <button
                     key={key}
-                    onClick={() = aria-label="Icon button"> setSeverity(key as DamageReportData['severity'])}
+                    aria-label="Icon button" onClick={() => setSeverity(key as DamageReportData['severity'])}
                     className={`p-4 rounded-xl border-2 text-left transition-all ${
                       severity === key
                         ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -336,14 +336,14 @@ export default function DamageReport({
                 {photos.length < 9 && (
                   <>
                     <button
-                      onClick={() = aria-label="Icon button"> cameraInputRef.current?.click()}
+                      aria-label="Icon button"> cameraInputRef.current?.click()}
                       className="aspect-square rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 flex flex-col items-center justify-center gap-2 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
                     >
                       <Camera className="w-6 h-6 text-gray-400" />
                       <span className="text-xs text-gray-500">Camera</span>
                     </button>
                     <button
-                      onClick={() = aria-label="Icon button"> fileInputRef.current?.click()}
+                      aria-label="Icon button"> fileInputRef.current?.click()}
                       className="aspect-square rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 flex flex-col items-center justify-center gap-2 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
                     >
                       <Upload className="w-6 h-6 text-gray-400" />
@@ -403,7 +403,7 @@ export default function DamageReport({
                   return (
                     <button
                       key={area}
-                      onClick={() = aria-label="Icon button"> isSelected ? removeDamageLocation(area) : addDamageLocation(area)}
+                      aria-label="Icon button"> isSelected ? removeDamageLocation(area) : addDamageLocation(area)}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                         isSelected
                           ? 'bg-emerald-600 text-white'
@@ -428,7 +428,7 @@ export default function DamageReport({
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium text-gray-900 dark:text-white">{location.area}</span>
                         <button
-                          onClick={() = aria-label="Icon button"> removeDamageLocation(location.area)}
+                          aria-label="Icon button" onClick={() => removeDamageLocation(location.area)}
                           className="text-gray-400 hover:text-red-500"
                         >
                           <X className="w-4 h-4" />
@@ -596,7 +596,7 @@ export default function DamageReport({
         {/* Footer */}
         <div className="p-4 border-t dark:border-gray-700 flex items-center justify-between">
           <button
-            onClick={() = aria-label="Icon button"> step > 1 ? setStep(step - 1) : onClose()}
+            aria-label="Icon button"> step > 1 ? setStep(step - 1) : onClose()}
             className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -605,7 +605,7 @@ export default function DamageReport({
 
           {step < 5 ? (
             <button
-              onClick={() = aria-label="Icon button"> setStep(step + 1)}
+              aria-label="Icon button" onClick={() => setStep(step + 1)}
               disabled={!canProceed()}
               className="flex items-center gap-2 px-6 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -646,7 +646,7 @@ export default function DamageReport({
             className="max-w-full max-h-full object-contain rounded-lg"
           />
           <button
-            onClick={() = aria-label="Icon button"> setSelectedPhoto(null)}
+            aria-label="Icon button" onClick={() => setSelectedPhoto(null)}
             className="absolute top-4 right-4 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20"
           >
             <X className="w-6 h-6" />

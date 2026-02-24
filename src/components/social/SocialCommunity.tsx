@@ -254,7 +254,7 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
           return (
             <button
               key={tab.id}
-              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
+              aria-label="Icon button" onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-3 border-b-2 font-medium text-sm transition-colors ${
                 activeTab === tab.id
                   ? 'border-blue-600 text-blue-600'
@@ -338,7 +338,7 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <button
-                          onClick={() = aria-label="Icon button"> handleLikePost(post.id)}
+                          aria-label="Icon button" onClick={() => handleLikePost(post.id)}
                           className={`flex items-center gap-1 px-3 py-1 rounded-lg transition-colors ${
                             post.isLiked
                               ? 'bg-red-100 text-red-600'
@@ -361,7 +361,7 @@ export default function SocialCommunity({ equipment, className = '' }: SocialCom
                       </div>
 
                       <button
-                        onClick={() = aria-label="Icon button"> handleBookmarkPost(post.id)}
+                        aria-label="Icon button" onClick={() => handleBookmarkPost(post.id)}
                         className={`p-1 rounded-lg transition-colors ${
                           post.isBookmarked
                             ? 'text-blue-600 bg-blue-100'

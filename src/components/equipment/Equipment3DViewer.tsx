@@ -180,7 +180,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
           {images.map((img, index) => (
             <button
               key={index}
-              onClick={() = aria-label="Icon button"> {
+              aria-label="Icon button"> {
                 setCurrentIndex(index);
                 setRotation((index / images.length) * 360);
               }}
@@ -198,7 +198,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
       <div className="p-4 border-t border-gray-800">
         <div className="flex items-center justify-center gap-3">
           <button
-            onClick={() = aria-label="Icon button"> setIsRotating(!isRotating)}
+            aria-label="Icon button" onClick={() => setIsRotating(!isRotating)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
               isRotating
                 ? 'bg-teal-500 text-white'
@@ -226,7 +226,7 @@ export default function Equipment3DViewer({ images, title, onClose }: Equipment3
           </div>
 
           <button
-            onClick={() = aria-label="Icon button"> setShowMeasurements(!showMeasurements)}
+            aria-label="Icon button" onClick={() => setShowMeasurements(!showMeasurements)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
               showMeasurements
                 ? 'bg-purple-500 text-white'

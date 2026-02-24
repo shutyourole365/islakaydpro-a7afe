@@ -485,7 +485,7 @@ export default function HolographicInterface() {
             <label className="text-sm font-medium">Mode:</label>
             <select
               value={projectionMode}
-              onChange={(e) = aria-label="projection-mode"> setProjectionMode(e.target.value as '3d' | '2d' | 'mixed')}
+              onChange={(e) = "projection-mode" onClick={() => setProjectionMode(e.target.value as '3d' | '2d' | 'mixed')}
               className="px-3 py-1 border rounded"
             >
               <option value="3d">3D</option>
@@ -499,7 +499,7 @@ export default function HolographicInterface() {
             <label className="text-sm font-medium">Quality:</label>
             <select
               value={renderQuality}
-              onChange={(e) = aria-label="render-quality"> setRenderQuality(e.target.value as 'low' | 'medium' | 'high' | 'ultra')}
+              onChange={(e) = "render-quality" onClick={() => setRenderQuality(e.target.value as 'low' | 'medium' | 'high' | 'ultra')}
               className="px-3 py-1 border rounded"
             >
               <option value="low">Low</option>
@@ -512,7 +512,7 @@ export default function HolographicInterface() {
           {/* Toggles */}
           <div className="flex items-center gap-4">
             <button
-              onClick={() = aria-label="Icon button"> setAmbientLighting(!ambientLighting)}
+              aria-label="Icon button" onClick={() => setAmbientLighting(!ambientLighting)}
               className={`flex items-center gap-2 px-3 py-1 rounded ${
                 ambientLighting ? 'bg-cyan-100 text-cyan-800' : 'bg-gray-100 text-gray-600'
               }`}
@@ -522,7 +522,7 @@ export default function HolographicInterface() {
             </button>
 
             <button
-              onClick={() = aria-label="Icon button"> setParticleEffects(!particleEffects)}
+              aria-label="Icon button" onClick={() => setParticleEffects(!particleEffects)}
               className={`flex items-center gap-2 px-3 py-1 rounded ${
                 particleEffects ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-600'
               }`}
@@ -532,7 +532,7 @@ export default function HolographicInterface() {
             </button>
 
             <button
-              onClick={() = aria-label="Icon button"> setAudioEnabled(!audioEnabled)}
+              aria-label="Icon button" onClick={() => setAudioEnabled(!audioEnabled)}
               className={`flex items-center gap-2 px-3 py-1 rounded ${
                 audioEnabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
               }`}
@@ -542,7 +542,7 @@ export default function HolographicInterface() {
             </button>
 
             <button
-              onClick={() = aria-label="Icon button"> setGestureControls(!gestureControls)}
+              aria-label="Icon button" onClick={() => setGestureControls(!gestureControls)}
               className={`flex items-center gap-2 px-3 py-1 rounded ${
                 gestureControls ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600'
               }`}

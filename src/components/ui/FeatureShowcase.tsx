@@ -572,7 +572,7 @@ export default function FeatureShowcase({ onFeatureSelect, onClose }: FeatureSho
             ].map((cat) => (
               <button
                 key={cat.id}
-                onClick={() = aria-label="Icon button"> setSelectedCategory(cat.id as 'all' | 'booking' | 'pricing' | 'management' | 'ai' | 'security')}
+                aria-label="Icon button" onClick={() => setSelectedCategory(cat.id as 'all' | 'booking' | 'pricing' | 'management' | 'ai' | 'security')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   selectedCategory === cat.id
                     ? 'bg-white text-teal-600'
@@ -590,7 +590,7 @@ export default function FeatureShowcase({ onFeatureSelect, onClose }: FeatureSho
             {filteredFeatures.map((feature) => (
               <button
                 key={feature.id}
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   onFeatureSelect(feature.id);
                   onClose();
                 }}

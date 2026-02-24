@@ -319,8 +319,7 @@ export default function PriceOptimization({ equipment, className = '' }: PriceOp
           applied
             ? 'bg-green-100 text-green-700 cursor-not-allowed'
             : 'bg-purple-600 text-white hover:bg-purple-700'
-        }`}
-       aria-label="Icon button">
+        } aria-label="Icon button">
         {applied ? (
           <div className="flex items-center justify-center gap-2">
             <CheckCircle className="w-4 h-4" />

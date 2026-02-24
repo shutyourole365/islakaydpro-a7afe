@@ -115,7 +115,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() = aria-label="Icon button"> setActiveTab(tab.id as typeof activeTab)}
+              aria-label="Icon button" onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-teal-500 text-white'
@@ -184,7 +184,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-gray-900">Recent Transactions</h2>
                 <button
-                  onClick={() = aria-label="Icon button"> setActiveTab('transactions')}
+                  aria-label="Icon button" onClick={() => setActiveTab('transactions')}
                   className="text-sm text-teal-600 hover:text-teal-700 font-medium"
                 >
                   View all
@@ -223,7 +223,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900">Your Payment Methods</h2>
               <button
-                onClick={() = aria-label="Icon button"> setShowAddMethod(true)}
+                aria-label="Icon button" onClick={() => setShowAddMethod(true)}
                 className="flex items-center gap-2 px-4 py-2.5 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-colors"
               >
                 <Plus className="w-4 h-4" />
@@ -456,7 +456,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
                 </div>
                 <div className="flex gap-3 pt-4">
                   <button
-                    onClick={() = aria-label="Icon button"> setShowAddMethod(false)}
+                    aria-label="Icon button" onClick={() => setShowAddMethod(false)}
                     className="flex-1 py-3 border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
                   >
                     Cancel

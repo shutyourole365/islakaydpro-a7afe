@@ -346,8 +346,7 @@ export default function EquipmentConditionReport({
                 min="0"
                 max="100"
                 value={fuelLevel}
-                onChange={(e) => setFuelLevel(parseInt(e.target.value))}
-                aria-label="Fuel level"
+                onChange={(e) => setFuelLevel(parseInt(e.target.value)) aria-label="Fuel level"
                 className="flex-1"
               />
               <span className="text-sm font-medium text-gray-900 dark:text-white w-12">
@@ -404,7 +403,7 @@ export default function EquipmentConditionReport({
                 className="border dark:border-gray-700 rounded-xl overflow-hidden"
               >
                 <button
-                  onClick={() = aria-label="Icon button"> toggleCategory(category)}
+                  aria-label="Icon button" onClick={() => toggleCategory(category)}
                   className="w-full p-4 flex items-center justify-between bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <div className="flex items-center gap-3">
@@ -476,7 +475,7 @@ export default function EquipmentConditionReport({
                                 {conditionOptions.map(option => (
                                   <button
                                     key={option.value}
-                                    onClick={() = aria-label="Icon button"> updateItemCondition(item.id, option.value)}
+                                    aria-label="Icon button" onClick={() => updateItemCondition(item.id, option.value)}
                                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                                       item.condition === option.value
                                         ? option.color
@@ -507,8 +506,7 @@ export default function EquipmentConditionReport({
                                       className="w-16 h-16 object-cover rounded-lg"
                                     />
                                     <button
-                                      onClick={() = aria-label="Icon button"> removePhoto(item.id, index)}
-                                      aria-label={`Remove photo ${index + 1}`}
+                                      aria-label="Icon button" onClick={() => removePhoto(item.id, index) aria-label={`Remove photo ${index + 1}`}
                                       title={`Remove photo ${index + 1}`}
                                       className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                                     >
@@ -517,14 +515,13 @@ export default function EquipmentConditionReport({
                                   </div>
                                 ))}
                                 <button
-                                  onClick={() = aria-label="Icon button"> {
+                                  aria-label="Icon button"> {
                                     // Simulate photo capture
                                     addPhoto(
                                       item.id,
                                       `https://images.unsplash.com/photo-1580901368919-7738efb0f87e?w=100&t=${Date.now()}`
                                     );
-                                  }}
-                                  aria-label="Add photo"
+                                  } aria-label="Add photo"
                                   title="Add photo"
                                   className="w-16 h-16 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center text-gray-400 hover:border-blue-500 hover:text-blue-500"
                                 >
@@ -571,7 +568,7 @@ export default function EquipmentConditionReport({
             </button>
           )}
           <button
-            onClick={() = aria-label="Icon button"> setShowSignature(true)}
+            aria-label="Icon button" onClick={() => setShowSignature(true)}
             disabled={stats.completed < stats.total}
             className="flex-1 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
@@ -598,13 +595,13 @@ export default function EquipmentConditionReport({
             </div>
             <div className="flex gap-3">
               <button
-                onClick={() = aria-label="Icon button"> setShowSignature(false)}
+                aria-label="Icon button" onClick={() => setShowSignature(false)}
                 className="flex-1 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg"
               >
                 Cancel
               </button>
               <button
-                onClick={() = aria-label="Icon button"> {
+                aria-label="Icon button"> {
                   setShowSignature(false);
                   handleSubmit();
                 }}

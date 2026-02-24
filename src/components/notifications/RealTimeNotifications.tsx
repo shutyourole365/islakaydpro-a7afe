@@ -178,7 +178,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
     <div className={`relative ${className}`} ref={dropdownRef}>
       {/* Notification Bell */}
       <button
-        onClick={() = aria-label="Icon button"> setIsOpen(!isOpen)}
+        aria-label="Icon button" onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
       >
         {unreadCount > 0 ? (
@@ -221,7 +221,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
               ].map((filterOption) => (
                 <button
                   key={filterOption.key}
-                  onClick={() = aria-label="Icon button"> setFilter(filterOption.key as typeof filter)}
+                  aria-label="Icon button" onClick={() => setFilter(filterOption.key as typeof filter)}
                   className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${
                     filter === filterOption.key
                       ? 'bg-blue-100 text-blue-700'
@@ -285,7 +285,7 @@ export default function RealTimeNotifications({ className = '' }: RealTimeNotifi
 
                             {!notification.is_read && (
                               <button
-                                onClick={() = aria-label="Icon button"> handleMarkAsRead(notification.id)}
+                                aria-label="Icon button" onClick={() => handleMarkAsRead(notification.id)}
                                 className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
                                 title="Mark as read"
                               >

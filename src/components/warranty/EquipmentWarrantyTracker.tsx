@@ -319,7 +319,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             />
           </div>
           <button
-            onClick={() = aria-label="Icon button"> setShowFilters(!showFilters)}
+            aria-label="Icon button" onClick={() => setShowFilters(!showFilters)}
             className={`px-4 py-2 border rounded-lg flex items-center gap-2 transition-colors ${
               showFilters ? 'bg-teal-50 border-teal-500 text-teal-700' : 'hover:bg-gray-50'
             }`}
@@ -328,7 +328,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             Filters
           </button>
           <button
-            onClick={() = aria-label="Icon button"> setIsAddingNew(true)}
+            aria-label="Icon button" onClick={() => setIsAddingNew(true)}
             className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
@@ -458,7 +458,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
             <div className="flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() = aria-label="Icon button"> setIsAddingNew(false)}
+                aria-label="Icon button" onClick={() => setIsAddingNew(false)}
                 className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 Cancel
@@ -566,7 +566,7 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
 
                     <div className="flex justify-end gap-2">
                       <button
-                        onClick={() = aria-label="Icon button"> handleSetReminder(warranty)}
+                        aria-label="Icon button" onClick={() => handleSetReminder(warranty)}
                         className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors"
                       >
                         <Bell className="w-4 h-4" />

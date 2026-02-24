@@ -146,8 +146,7 @@ export default function QuickActionsMenu({
           isOpen
             ? 'bg-gray-900 rotate-45 scale-90'
             : 'bg-gradient-to-r from-teal-500 to-emerald-500 hover:shadow-xl hover:scale-110'
-        } ${className}`}
-       aria-label="Icon button">
+        } ${className} aria-label="Icon button">
         {isOpen ? (
           <X className="w-6 h-6 text-white" />
         ) : (
@@ -196,7 +195,7 @@ export default function QuickActionsMenu({
                 {recentActionItems.map(action => (
                   <button
                     key={action.id}
-                    onClick={() = aria-label="Icon button"> handleActionClick(action)}
+                    aria-label="Icon button" onClick={() => handleActionClick(action)}
                     className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-r ${action.color} flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-105 transition-all relative`}
                     title={action.label}
                   >
@@ -220,7 +219,7 @@ export default function QuickActionsMenu({
               {filteredActions.map((action, index) => (
                 <button
                   key={action.id}
-                  onClick={() = aria-label="Icon button"> handleActionClick(action)}
+                  aria-label="Icon button" onClick={() => handleActionClick(action)}
                   className="group relative flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 transition-all"
                   style={{
                     animation: 'fadeInUp 0.3s ease-out forwards',
