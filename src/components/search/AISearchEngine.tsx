@@ -291,10 +291,8 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 {trendingSearches.map((trend, idx) => (
                   <button
                     key={idx}
-                    aria-label="Icon button"> {
-                      setQuery(trend.query);
-                      analyzeQuery(trend.query);
-                    }}
+                    aria-label="Icon button"
+                    onClick={() => { setQuery(trend.query); analyzeQuery(trend.query); }}
                     className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors text-left"
                   >
                     <span className="text-2xl">{trend.icon}</span>
@@ -320,10 +318,8 @@ export default function AISearchEngine({ onSearch, onClose }: AISearchEngineProp
                 ].map((example, idx) => (
                   <button
                     key={idx}
-                    aria-label="Icon button"> {
-                      setQuery(example.text);
-                      analyzeQuery(example.text);
-                    }}
+                    aria-label="Icon button"
+                    onClick={() => { setQuery(example.text); analyzeQuery(example.text); }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-gray-50 transition-colors text-left text-sm text-gray-600"
                   >
                     <div className="text-teal-500">{example.icon}</div>
