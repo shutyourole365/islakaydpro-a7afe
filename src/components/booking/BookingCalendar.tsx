@@ -190,7 +190,8 @@ export default function BookingCalendar({
             return (
               <button
                 key={date.toISOString()}
-                onClick={() = aria-label="Icon button"> handleDateClick(date)}
+                onClick={() => handleDateClick(date)}
+                aria-label={`Select date ${date.toDateString()}`}
                 onMouseEnter={() => setHoverDate(date)}
                 onMouseLeave={() => setHoverDate(null)}
                 disabled={disabled}

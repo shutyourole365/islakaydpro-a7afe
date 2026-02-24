@@ -358,7 +358,8 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           <ShoppingCart className="w-12 h-12 mx-auto text-gray-300 mb-3" />
           <p className="text-gray-500 mb-4">Your cart is empty</p>
           <button
-            onClick={() = aria-label="Icon button"> setShowEquipmentPicker(true)}
+            onClick={() => setShowEquipmentPicker(true)}
+            aria-label="Add equipment"
             className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
           >
             <Plus className="w-4 h-4 inline mr-1" />

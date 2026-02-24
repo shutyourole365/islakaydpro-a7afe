@@ -387,7 +387,8 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() = aria-label="Icon button"> setActiveView(activeView === 'alerts' ? 'settings' : 'alerts')}
+              onClick={() => setActiveView(activeView === 'alerts' ? 'settings' : 'alerts')}
+              aria-label="Toggle alerts view"
               className="p-2 hover:bg-white/10 rounded-lg transition-colors"
             >
               {activeView === 'alerts' ? (

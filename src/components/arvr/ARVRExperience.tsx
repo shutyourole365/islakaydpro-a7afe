@@ -295,7 +295,8 @@ export default function ARVRExperience() {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={() = aria-label="Icon button"> setActiveTab(id as 'preview' | 'tours' | 'sessions')}
+            onClick={() => setActiveTab(id as 'preview' | 'tours' | 'sessions')}
+            aria-label={`Switch to ${label}`}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 font-medium text-sm ${
               activeTab === id
                 ? 'border-teal-500 text-teal-600'

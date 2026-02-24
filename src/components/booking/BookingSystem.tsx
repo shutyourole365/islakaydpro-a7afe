@@ -352,7 +352,8 @@ export default function BookingSystem({
                   {/* Month Navigation */}
                   <div className="flex items-center justify-between px-4 py-3 bg-gray-50">
                     <button
-                      onClick={() = aria-label="Icon button"> setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))}
+                      onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))}
+                      aria-label="Previous month"
                       className="p-1 hover:bg-gray-200 rounded-lg"
                     >
                       <ChevronLeft className="w-5 h-5" />
@@ -361,7 +362,8 @@ export default function BookingSystem({
                       {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                     </h4>
                     <button
-                      onClick={() = aria-label="Icon button"> setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))}
+                      onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))}
+                      aria-label="Next month"
                       className="p-1 hover:bg-gray-200 rounded-lg"
                     >
                       <ChevronRight className="w-5 h-5" />

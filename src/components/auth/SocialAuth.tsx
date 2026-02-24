@@ -77,7 +77,8 @@ export default function SocialAuth({ onError, onLoading, mode }: SocialAuthProps
             {providers.map((provider) => (
               <button
                 key={provider.id}
-                onClick={() = aria-label="Icon button"> handleSocialLogin(provider.id)}
+                onClick={() => handleSocialLogin(provider.id)}
+                aria-label={`Sign in with ${provider.name}`}
                 disabled={loadingProvider !== null}
                 className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border font-medium transition-all ${provider.color} ${provider.hoverColor} disabled:opacity-50 disabled:cursor-not-allowed`}
               >

@@ -158,7 +158,8 @@ export default function PriceAlerts({
           
           {!isCreating && (
             <button
-              onClick={() = aria-label="Icon button"> setIsCreating(true)}
+              onClick={() => setIsCreating(true)}
+              aria-label="Create price alert"
               className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl transition-colors"
             >
               <Plus className="w-5 h-5" />

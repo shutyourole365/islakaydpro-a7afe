@@ -349,7 +349,8 @@ export default function ARPreview({ equipment, onClose, className = '' }: ARPrev
               
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3">
                 <button
-                  onClick={() = aria-label="Icon button"> setCapturedImage(null)}
+                  onClick={() => setCapturedImage(null)}
+                  aria-label="Close captured image"
                   className="p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
                 >
                   <X className="w-6 h-6" />

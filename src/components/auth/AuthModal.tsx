@@ -267,7 +267,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                     />
                     <button
                       type="button"
-                      onClick={() = aria-label="Icon button"> setShowPassword(!showPassword)}
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                     >
                       {showPassword ? (
