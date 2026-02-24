@@ -147,7 +147,7 @@ export default function BrowsePage({
                 className="flex-1 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')}>
+                <button aria-label="Clear search" onClick={() => setSearchQuery('')}>
                   <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                 </button>
               )}

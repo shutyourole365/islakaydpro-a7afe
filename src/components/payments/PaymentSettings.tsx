@@ -272,7 +272,7 @@ export default function PaymentSettings({ onBack }: PaymentSettingsProps) {
                           Set as default
                         </button>
                       )}
-                      <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                      <button aria-label="Edit payment method" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                         <Edit className="w-4 h-4 text-gray-600" />
                       </button>
                       <button className="p-2 hover:bg-red-50 rounded-lg transition-colors" aria-label="Delete payment method">

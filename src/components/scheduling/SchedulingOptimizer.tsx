@@ -306,7 +306,7 @@ export default function SchedulingOptimizer({
               {autoOptimize ? 'Auto-Optimizing' : 'Auto Optimize'}
             </button>
 
-            <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+            <button aria-label="Settings" className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
               <Settings className="w-5 h-5" />
             </button>
           </div>

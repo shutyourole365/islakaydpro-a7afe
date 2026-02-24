@@ -354,7 +354,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
                   <ShoppingCart className="w-4 h-4" />
                   Book Bundle
                 </button>
-                <button className="p-2.5 border rounded-lg hover:bg-gray-50 transition-colors">
+                <button aria-label="Share bundle" className="p-2.5 border rounded-lg hover:bg-gray-50 transition-colors">
                   <Share2 className="w-4 h-4 text-gray-500" />
                 </button>
               </>

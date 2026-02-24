@@ -89,7 +89,7 @@ export default function Header({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-12">
-            <button onClick={() => onNavigate('home')} className="flex items-center">
+            <button onClick={() => onNavigate('home')} aria-label="Go to home page" className="flex items-center">
               <LogoPro 
                 variant={showTransparent ? 'light' : 'default'} 
                 size="md" 

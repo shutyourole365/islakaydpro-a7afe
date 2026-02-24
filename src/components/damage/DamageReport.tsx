@@ -316,7 +316,7 @@ export default function DamageReport({
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                      <button className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center">
+                      <button aria-label="Zoom in" className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center">
                         <ZoomIn className="w-4 h-4 text-gray-700" />
                       </button>
                       <button
@@ -325,6 +325,7 @@ export default function DamageReport({
                           e.stopPropagation();
                           removePhoto(photo.id);
                         }}
+                        aria-label="Remove photo"
                         className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
                       >
                         <Trash2 className="w-4 h-4 text-white" />

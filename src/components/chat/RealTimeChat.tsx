@@ -385,13 +385,13 @@ export default function RealTimeChat({
             </div>
 
             <div className="flex items-center gap-2">
-              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <button aria-label="Start phone call" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <Phone className="w-5 h-5 text-gray-600" />
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <button aria-label="Start video call" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <Video className="w-5 h-5 text-gray-600" />
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <button aria-label="More options" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <MoreVertical className="w-5 h-5 text-gray-600" />
               </button>
             </div>
@@ -486,10 +486,10 @@ export default function RealTimeChat({
             )}
 
             <div className="flex items-end gap-2">
-              <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors">
+              <button aria-label="Attach file" className="p-2.5 rounded-full hover:bg-gray-100 transition-colors">
                 <Paperclip className="w-5 h-5 text-gray-500" />
               </button>
-              <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors">
+              <button aria-label="Attach image" className="p-2.5 rounded-full hover:bg-gray-100 transition-colors">
                 <Image className="w-5 h-5 text-gray-500" />
               </button>
               

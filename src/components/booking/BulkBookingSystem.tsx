@@ -439,7 +439,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           <div className="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
             <div className="p-4 border-b flex items-center justify-between">
               <h3 className="font-semibold">Add Equipment to Cart</h3>
-              <button onClick={() => setShowEquipmentPicker(false)} className="p-2 hover:bg-gray-100 rounded-lg">
+              <button onClick={() => setShowEquipmentPicker(false)} aria-label="Close" className="p-2 hover:bg-gray-100 rounded-lg">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -733,7 +733,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
             </div>
           </div>
           {onClose && (
-            <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+            <button onClick={onClose} aria-label="Close" className="p-2 hover:bg-white/20 rounded-lg transition-colors">
               <X className="w-5 h-5" />
             </button>
           )}

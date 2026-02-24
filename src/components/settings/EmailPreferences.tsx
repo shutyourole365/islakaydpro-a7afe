@@ -245,7 +245,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
                     ? 'bg-teal-500'
                     : 'bg-gray-200'
                 } ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
-                aria-pressed={preferences?.[option.key] ? "true" : "false"}
+                aria-pressed={!!preferences?.[option.key]}
                 aria-label={`Toggle ${option.label}`}
               >
                 <span

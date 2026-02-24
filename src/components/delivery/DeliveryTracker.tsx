@@ -285,10 +285,10 @@ export default function DeliveryTracker({
         </div>
         {/* Map controls */}
         <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-          <button className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center">
+          <button aria-label="Zoom in" className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center">
             <span className="text-lg font-bold text-gray-600 dark:text-gray-400">+</span>
           </button>
-          <button className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center">
+          <button aria-label="Zoom out" className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow flex items-center justify-center">
             <span className="text-lg font-bold text-gray-600 dark:text-gray-400">−</span>
           </button>
         </div>

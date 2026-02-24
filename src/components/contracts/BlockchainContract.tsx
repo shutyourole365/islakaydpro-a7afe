@@ -194,11 +194,12 @@ export default function BlockchainContract({
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => copyToClipboard(contractAddress)}
+                  aria-label="Copy contract address"
                   className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   <Copy className="w-4 h-4 text-gray-400" />
                 </button>
-                <button className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors">
+                <button aria-label="Open in explorer" className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors">
                   <ExternalLink className="w-4 h-4 text-gray-400" />
                 </button>
               </div>

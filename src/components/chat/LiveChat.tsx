@@ -129,17 +129,18 @@ export default function LiveChat({ recipientId, recipientName, equipmentId, onCl
           </div>
           
           <div className="flex items-center gap-2">
-            <button className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
+            <button aria-label="Start phone call" className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
               <Phone className="w-5 h-5" />
             </button>
-            <button className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
+            <button aria-label="Start video call" className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
               <Video className="w-5 h-5" />
             </button>
-            <button className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
+            <button aria-label="More options" className="p-2 rounded-full hover:bg-white/10 text-white transition-colors">
               <MoreVertical className="w-5 h-5" />
             </button>
             <button
               onClick={onClose}
+              aria-label="Close chat"
               className="p-2 rounded-full hover:bg-white/10 text-white transition-colors"
              >
               <X className="w-5 h-5" />
@@ -221,7 +222,7 @@ export default function LiveChat({ recipientId, recipientName, equipmentId, onCl
         {/* Input */}
         <div className="p-4 border-t border-gray-100 bg-gray-50">
           <div className="flex items-end gap-2">
-            <button className="p-2.5 rounded-full hover:bg-gray-200 text-gray-600 transition-colors">
+            <button aria-label="Attach file" className="p-2.5 rounded-full hover:bg-gray-200 text-gray-600 transition-colors">
               <Paperclip className="w-5 h-5" />
             </button>
             
@@ -242,7 +243,7 @@ export default function LiveChat({ recipientId, recipientName, equipmentId, onCl
               />
             </div>
 
-            <button className="p-2.5 rounded-full hover:bg-gray-200 text-gray-600 transition-colors">
+            <button aria-label="Insert emoji" className="p-2.5 rounded-full hover:bg-gray-200 text-gray-600 transition-colors">
               <Smile className="w-5 h-5" />
             </button>
 
