@@ -11,13 +11,13 @@ function ThemeConsumer() {
     <div>
       <span data-testid="theme">{theme}</span>
       <span data-testid="resolved">{resolvedTheme}</span>
-      <button onClick={() = aria-label="Icon button"> setTheme('dark')} data-testid="set-dark">
+      <button onClick={() => setTheme('dark')} data-testid="set-dark" aria-label="Icon button">
         Set Dark
       </button>
-      <button onClick={() = aria-label="Icon button"> setTheme('light')} data-testid="set-light">
+      <button onClick={() => setTheme('light')} data-testid="set-light" aria-label="Icon button">
         Set Light
       </button>
-      <button onClick={() = aria-label="Icon button"> setTheme('system')} data-testid="set-system">
+      <button onClick={() => setTheme('system')} data-testid="set-system" aria-label="Icon button">
         Set System
       </button>
       <button onClick={toggleTheme} data-testid="toggle" aria-label="Icon button">
