@@ -366,7 +366,8 @@ export default function QRCodeScanner({
               {recentScans.map((scan, i) => (
                 <button
                   key={i}
-                  aria-label="Icon button"> {
+                  aria-label="Icon button"
+                  onClick={() => {
                     setScanResult(scan);
                     setShowHistory(false);
                   }}
