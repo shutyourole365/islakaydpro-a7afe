@@ -441,7 +441,8 @@ export default function CarbonFootprintCalculator({
                   </div>
 
                   <button
-                    aria-label="Icon button"> onCalculate?.(estimate)}
+                    aria-label="Use this estimate"
+                    onClick={() => onCalculate?.(estimate)}
                     className="w-full py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
                   >
                     Use This Estimate

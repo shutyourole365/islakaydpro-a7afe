@@ -431,7 +431,7 @@ export default function PriceAlerts({ userId, onClose }: PriceAlertsProps) {
                       name="frequency"
                       defaultChecked={freq === 'Instant'}
                       className="w-4 h-4 text-orange-600 focus:ring-orange-500"
-                    / aria-label="frequency">
+                    />
                     <span className="text-gray-700">{freq}</span>
                   </label>
                 ))}

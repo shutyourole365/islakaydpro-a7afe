@@ -197,7 +197,8 @@ export default function MultiPaymentSystem({
               {paymentMethods.map((method) => (
                 <button
                   key={method.id}
-                  aria-label="Icon button"> {
+                  aria-label="Select payment method"
+                  onClick={() => {
                     if (method.available) {
                       setSelectedMethod(method.id);
                       setUseInstallments(method.id === 'installments');

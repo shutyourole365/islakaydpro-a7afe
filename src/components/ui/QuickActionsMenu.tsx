@@ -195,7 +195,8 @@ export default function QuickActionsMenu({
                 {recentActionItems.map(action => (
                   <button
                     key={action.id}
-                    aria-label="Icon button" onClick={() => handleActionClick(action)}
+                    aria-label="Quick action"
+                    onClick={() => handleActionClick(action)}
                     className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-r ${action.color} flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-105 transition-all relative`}
                     title={action.label}
                   >

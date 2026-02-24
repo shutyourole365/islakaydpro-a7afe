@@ -124,7 +124,7 @@ export function ConfirmModal({
             onClick={onClose}
             disabled={loading}
             className="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
-           aria-label="Icon button">
+          >
             {cancelText}
           </button>
           <button

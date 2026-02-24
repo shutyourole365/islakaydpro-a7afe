@@ -191,7 +191,8 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               ].map((option) => (
                 <button
                   key={option.id}
-                  aria-label="Icon button"> setPreferences(prev => ({ ...prev, rentalType: option.id as 'renter' | 'owner' | 'both' }))}
+                  aria-label="Select rental type"
+                  onClick={() => setPreferences(prev => ({ ...prev, rentalType: option.id as 'renter' | 'owner' | 'both' }))}
                   className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
                     preferences.rentalType === option.id
                       ? 'border-teal-500 bg-teal-50 shadow-lg scale-105'
@@ -224,7 +225,8 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  aria-label="Icon button" onClick={() => toggleInterest(category.id)}
+                  aria-label="Toggle interest"
+                  onClick={() => toggleInterest(category.id)}
                   className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
                     preferences.interests.includes(category.id)
                       ? 'border-teal-500 bg-teal-50 shadow-lg scale-105'
@@ -265,7 +267,8 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               </div>
 
               <button
-                aria-label="Icon button"> {
+                aria-label="Use current location"
+                onClick={() => {
                   if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                       () => {
@@ -341,7 +344,8 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
             </div>
 
             <button
-              aria-label="Icon button" onClick={() => onComplete(preferences)}
+              aria-label="Start exploring"
+              onClick={() => onComplete(preferences)}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
             >
               Start Exploring
@@ -369,7 +373,7 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
         <button
           onClick={onSkip}
           className="flex items-center gap-1 px-4 py-2 text-gray-500 hover:text-gray-700 transition-colors"
-         aria-label="Icon button">
+        >
           Skip
           <X className="w-4 h-4" />
         </button>
@@ -413,7 +417,8 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
               currentStep === 0
                 ? 'text-gray-300 cursor-not-allowed'
                 : 'text-gray-600 hover:bg-gray-100'
-            } aria-label="Icon button">
+            }`}
+          >
             <ChevronLeft className="w-5 h-5" />
             Back
           </button>
@@ -421,7 +426,7 @@ export default function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowPro
           <button
             onClick={goToNext}
             className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
-           aria-label="Icon button">
+          >
             {currentStep === totalSteps - 1 ? (
               <>
                 Get Started

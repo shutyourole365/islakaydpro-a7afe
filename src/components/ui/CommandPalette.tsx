@@ -313,7 +313,8 @@ export default function CommandPalette({
                     return (
                       <button
                         key={cmd.id}
-                        aria-label="Icon button"> {
+                        aria-label="Run command"
+                        onClick={() => {
                           cmd.onSelect();
                           onClose();
                         }}

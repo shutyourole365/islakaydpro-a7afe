@@ -33,7 +33,8 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
     return (
       <button
         onClick={toggleTheme}
-        className={`p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${className} aria-label={`Switch to ${resolvedTheme === 'light' ? 'dark' : 'light'} mode`}
+        aria-label={`Switch to ${resolvedTheme === 'light' ? 'dark' : 'light'} mode`}
+        className={`p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${className}`}
       >
         {resolvedTheme === 'light' ? (
           <Moon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
@@ -48,7 +49,7 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
     return (
       <div ref={dropdownRef} className={`relative ${className}`}>
         <button
-          aria-label="Icon button" onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen(!isOpen)}
           className="p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
           aria-label="Toggle theme menu"
         >
@@ -64,7 +65,8 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
             {themes.map(({ value, label, icon: Icon }) => (
               <button
                 key={value}
-                aria-label="Icon button"> {
+                aria-label={`Set theme to ${label}`}
+                onClick={() => {
                   setTheme(value);
                   setIsOpen(false);
                 }}
@@ -93,7 +95,8 @@ export default function ThemeToggle({ variant = 'icon', className = '' }: ThemeT
       {themes.map(({ value, label, icon: Icon }) => (
         <button
           key={value}
-          aria-label="Icon button" onClick={() => setTheme(value)}
+          aria-label={`Set theme to ${label}`}
+          onClick={() => setTheme(value)}
           className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all
             ${theme === value
               ? 'bg-white dark:bg-gray-700 text-teal-600 dark:text-teal-400 shadow-sm'

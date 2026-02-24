@@ -590,7 +590,8 @@ export default function FeatureShowcase({ onFeatureSelect, onClose }: FeatureSho
             {filteredFeatures.map((feature) => (
               <button
                 key={feature.id}
-                aria-label="Icon button"> {
+                aria-label="Select feature"
+                onClick={() => {
                   onFeatureSelect(feature.id);
                   onClose();
                 }}

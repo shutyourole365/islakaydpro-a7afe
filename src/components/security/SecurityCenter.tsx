@@ -281,7 +281,7 @@ export default function SecurityCenter({
         ].map((tab) => (
           <button
             key={tab.id}
-            onClick={() = aria-label="Icon button"> setActiveSection(tab.id as typeof activeSection)}
+            onClick={() =>  setActiveSection(tab.id as typeof activeSection)}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
               activeSection === tab.id
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -430,7 +430,7 @@ export default function SecurityCenter({
                 </div>
                 {!session.isCurrent && (
                   <button
-                    onClick={() = aria-label="Icon button"> onRevokeSession(session.id)}
+                    onClick={() =>  onRevokeSession(session.id)}
                     className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <LogOut className="w-4 h-4" />

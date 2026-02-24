@@ -216,7 +216,7 @@ export default function ContactUs({ onBack }: ContactUsProps) {
                         type="checkbox"
                         id="newsletter"
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      / aria-label="newsletter">
+                      />
                       <label htmlFor="newsletter" className="ml-2 text-sm text-gray-600">
                         Subscribe to our newsletter for updates and tips
                       </label>

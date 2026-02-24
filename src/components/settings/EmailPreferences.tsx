@@ -239,7 +239,7 @@ export default function EmailPreferences({ className = '' }: EmailPreferencesPro
                 </div>
               </div>
               <button
-                onClick={() = aria-label="Icon button"> handleToggle(option.key)}
+                onClick={() =>  handleToggle(option.key)}
                 disabled={isSaving || !preferences}
                 className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
                   preferences?.[option.key]

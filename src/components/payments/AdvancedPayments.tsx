@@ -228,7 +228,8 @@ export default function AdvancedPayments({ amount, onPaymentComplete, onCancel }
         {cryptoWallets.map((crypto) => (
           <button
             key={crypto.symbol}
-            aria-label="Icon button"> {
+            aria-label="Select cryptocurrency"
+            onClick={() => {
               setSelectedCrypto(crypto.symbol);
               setStep('confirm');
             }}
