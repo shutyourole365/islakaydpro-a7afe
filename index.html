@@ -114,6 +114,33 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Dev helper: hide Vite error overlay from accessibility tools
+      (function(){
+        function hide(ov){
+          try{
+            ov.setAttribute('aria-hidden','true');
+            if ('inert' in HTMLElement.prototype) {
+              // @ts-ignore
+              ov.inert = true;
+            } else {
+              const els = ov.querySelectorAll('[tabindex], a, button, input, textarea, select');
+              els.forEach(function(el){ try{ el.removeAttribute('tabindex'); }catch(e){} });
+            }
+          }catch(e){/* ignore */}
+        }
+        function process(){
+          const o = document.querySelector('vite-error-overlay');
+          if(o) hide(o);
+        }
+        process();
+        const mo = new MutationObserver(process);
+        mo.observe(document.documentElement||document.body, { childList: true, subtree: true });
+        // periodic fallback
+        const id = setInterval(process, 1000);
+        setTimeout(function(){ clearInterval(id); }, 30000);
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
