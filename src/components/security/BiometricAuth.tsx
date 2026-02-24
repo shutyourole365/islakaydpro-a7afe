@@ -197,7 +197,9 @@ export default function BiometricAuth({ onSuccess, onCancel, mode = 'authenticat
                     status === 'scanning'
                       ? 'bg-teal-100 text-teal-600 cursor-not-allowed'
                       : 'bg-teal-600 text-white hover:bg-teal-700'
-                  } aria-label="Icon button">
+                  }`}
+                  aria-label="Icon button"
+                >
                   {status === 'scanning' ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
