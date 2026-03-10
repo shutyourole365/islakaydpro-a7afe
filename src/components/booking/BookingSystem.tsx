@@ -20,6 +20,10 @@ import {
 } from 'lucide-react';
 import type { Equipment, InsurancePlan } from '../../types';
 import SmartScheduler from '../scheduling/SmartScheduler';
+import { useAuth } from '../../contexts/AuthContext';
+import { createBooking } from '../../services/database';
+import { createCheckoutSession } from '../../services/payments';
+import { useToast } from '../ui/Toast';
 
 interface BookingSystemProps {
   equipment: Equipment;
@@ -77,6 +81,8 @@ export default function BookingSystem({
   onComplete,
   insurancePlans = defaultInsurancePlans,
 }: BookingSystemProps) {
+  const { user } = useAuth();
+  const { addToast } = useToast();
   const [currentStep, setCurrentStep] = useState<BookingStep>('dates');
   const [showSmartScheduler, setShowSmartScheduler] = useState(false);
   const [selectedStart, setSelectedStart] = useState<Date | null>(null);
@@ -245,33 +251,75 @@ export default function BookingSystem({
   };
 
   const handleComplete = async () => {
-    if (!selectedStart || !selectedEnd) return;
+    if (!selectedStart || !selectedEnd || !user) return;
 
     setIsProcessing(true);
-    
-    // Simulate processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
 
-    const booking: BookingDetails = {
-      equipmentId: equipment.id,
-      startDate: selectedStart,
-      endDate: selectedEnd,
-      totalDays: rentalDays,
-      basePrice: pricing.basePrice,
-      discount: pricing.discount,
-      insurance: selectedInsurance,
-      serviceFee: pricing.serviceFee,
-      deposit: pricing.deposit,
-      total: pricing.total,
-      delivery: deliveryOption === 'delivery',
-      deliveryAddress: deliveryOption === 'delivery' ? deliveryAddress : undefined,
-      notes: notes || undefined,
-      promoCode: promoApplied ? promoCode : undefined,
-    };
+    try {
+      // Create the booking record in the database
+      const newBooking = await createBooking({
+        equipment_id: equipment.id,
+        renter_id: user.id,
+        owner_id: equipment.owner_id,
+        start_date: selectedStart.toISOString().split('T')[0],
+        end_date: selectedEnd.toISOString().split('T')[0],
+        total_days: rentalDays,
+        daily_rate: equipment.daily_rate,
+        subtotal: pricing.basePrice,
+        service_fee: pricing.serviceFee,
+        deposit_amount: pricing.deposit,
+        total_amount: pricing.total,
+        status: 'pending',
+        payment_status: 'pending',
+        notes: notes || null,
+      });
 
-    setIsProcessing(false);
-    setCurrentStep('confirmation');
-    onComplete(booking);
+      const bookingDetails: BookingDetails = {
+        equipmentId: equipment.id,
+        startDate: selectedStart,
+        endDate: selectedEnd,
+        totalDays: rentalDays,
+        basePrice: pricing.basePrice,
+        discount: pricing.discount,
+        insurance: selectedInsurance,
+        serviceFee: pricing.serviceFee,
+        deposit: pricing.deposit,
+        total: pricing.total,
+        delivery: deliveryOption === 'delivery',
+        deliveryAddress: deliveryOption === 'delivery' ? deliveryAddress : undefined,
+        notes: notes || undefined,
+        promoCode: promoApplied ? promoCode : undefined,
+      };
+
+      // Redirect to Stripe checkout if payment service is configured
+      if (import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+        try {
+          const checkout = await createCheckoutSession({
+            booking: newBooking,
+            equipment,
+            insurancePlanId: selectedInsurance?.id,
+            insuranceAmount: selectedInsurance ? pricing.insurance : 0,
+            successUrl: `${window.location.origin}/?booking=success&id=${newBooking.id}`,
+            cancelUrl: `${window.location.origin}/?booking=cancelled`,
+          });
+          window.location.href = checkout.url;
+          return;
+        } catch {
+          // If Stripe redirect fails, still show confirmation
+        }
+      }
+
+      setIsProcessing(false);
+      setCurrentStep('confirmation');
+      onComplete(bookingDetails);
+    } catch (err) {
+      setIsProcessing(false);
+      addToast({
+        type: 'error',
+        title: 'Booking failed',
+        message: err instanceof Error ? err.message : 'Failed to create booking. Please try again.',
+      });
+    }
   };
 
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { supabase } from './lib/supabase';
 import type { Category, Equipment, SearchFilters, EquipmentId, UserId } from './types';
+import { useToast } from './components/ui/Toast';
+import { createEquipment } from './services/database';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './components/home/Hero';
@@ -590,7 +592,8 @@ const sampleEquipment: Equipment[] = [
 
 function AppContent() {
 type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language' | 'availability-calendar' | 'revenue-dashboard' | 'certification-tracker' | 'agreement-generator' | 'support-tickets';
-  const { isAuthenticated, user, profile, signOut } = useAuth();
+  const { isAuthenticated, user, profile, signOut, unreadNotifications } = useAuth();
+  const { addToast } = useToast();
   const {
     showBanner,
     showSettings,
@@ -855,7 +858,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
         console.error('Failed to toggle favorite:', error);
       }
       // Show user-friendly error
-      alert('Failed to update favorites. Please try again.');
+      addToast({ type: 'error', title: 'Favorites error', message: 'Failed to update favorites. Please try again.' });
     }
   };
 
@@ -886,27 +889,24 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
     
     setIsBookingOpen(false);
     setBookingEquipment(null);
-    // Show success notification
-    alert('🎉 Booking confirmed! Check your email for confirmation details.');
+    addToast({
+      type: 'success',
+      title: 'Booking confirmed!',
+      message: 'Check your email for confirmation details.',
+    });
   };
 
   const handleAddToComparison = (equipment: Equipment) => {
     if (comparisonItems.length >= 4) {
-      alert('You can compare up to 4 items at a time.');
+      addToast({ type: 'warning', title: 'Comparison full', message: 'You can compare up to 4 items at a time.' });
       return;
     }
     if (comparisonItems.find(item => item.id === equipment.id)) {
-      alert('This item is already in your comparison.');
+      addToast({ type: 'info', title: 'Already added', message: 'This item is already in your comparison.' });
       return;
     }
     setComparisonItems(prev => [...prev, equipment]);
-    // Show toast notification
-    setTimeout(() => {
-      if (comparisonItems.length + 1 >= 2) {
-        const shouldOpen = window.confirm(`${equipment.title} added to comparison! You now have ${comparisonItems.length + 1} items. View comparison now?`);
-        if (shouldOpen) setIsComparisonOpen(true);
-      }
-    }, 100);
+    addToast({ type: 'success', title: 'Added to comparison', message: `${equipment.title} added. You now have ${comparisonItems.length + 1} items.` });
   };
 
   const handleQuickBook = (equipment: Equipment) => {
@@ -1158,7 +1158,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
         setCurrentPage('support-tickets');
         break;
       default:
-        alert(`${featureId} feature coming soon!`);
+        addToast({ type: 'info', title: 'Coming soon!', message: `${featureId} feature is coming soon.` });
     }
     setIsFeatureShowcaseOpen(false);
   };
@@ -1176,9 +1176,43 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
     setCurrentPage('home');
   };
 
-  const handleListingSubmit = () => {
-    alert('Equipment listed successfully! It will be visible to renters shortly.');
-    setCurrentPage('dashboard');
+  const handleListingSubmit = async (formData: {
+    title: string; category_id: string; description: string; brand: string; model: string;
+    condition: string; daily_rate: number; weekly_rate: number; monthly_rate: number;
+    deposit_amount: number; location: string; features: string[]; images: string[];
+    min_rental_days: number; max_rental_days: number;
+  }) => {
+    if (!user) return;
+    try {
+      await createEquipment({
+        owner_id: user.id as unknown as import('./types').UserId,
+        category_id: formData.category_id,
+        title: formData.title,
+        description: formData.description,
+        brand: formData.brand || null,
+        model: formData.model || null,
+        condition: formData.condition as 'excellent' | 'good' | 'fair' | 'poor',
+        daily_rate: formData.daily_rate,
+        weekly_rate: formData.weekly_rate || null,
+        monthly_rate: formData.monthly_rate || null,
+        deposit_amount: formData.deposit_amount || 0,
+        location: formData.location,
+        latitude: null,
+        longitude: null,
+        images: formData.images,
+        features: formData.features,
+        specifications: {},
+        availability_status: 'available',
+        min_rental_days: formData.min_rental_days || 1,
+        max_rental_days: formData.max_rental_days || 90,
+        is_featured: false,
+        is_active: true,
+      });
+      addToast({ type: 'success', title: 'Equipment listed!', message: 'Your listing is now visible to renters.' });
+      setCurrentPage('dashboard');
+    } catch (err) {
+      addToast({ type: 'error', title: 'Listing failed', message: err instanceof Error ? err.message : 'Could not save listing.' });
+    }
   };
 
   return (
@@ -1630,8 +1664,8 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
       {currentPage !== 'list-equipment' && isAuthenticated && (
         <QuickActionsMenu
           onNavigate={handleNavigate}
-          unreadMessages={3}
-          unreadNotifications={5}
+          unreadMessages={0}
+          unreadNotifications={unreadNotifications}
         />
       )}
 
@@ -1691,7 +1725,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onComplete={(data) => {
                   console.log('Group booking:', data);
                   setIsGroupBookingOpen(false);
-                  alert('Group booking confirmed!');
+                  addToast({ type: 'success', title: 'Group booking confirmed!', message: 'All participants will receive confirmation emails.' });
                 }}
               />
             </div>
@@ -1713,7 +1747,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onComplete={(data) => {
                   console.log('Split payment:', data);
                   setIsSplitPaymentOpen(false);
-                  alert('Payment split configured!');
+                  addToast({ type: 'success', title: 'Payment split configured', message: 'All parties will be notified.' });
                 }}
               />
             </div>
@@ -1737,7 +1771,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onSelect={(plan) => {
                   console.log('Insurance plan:', plan);
                   setIsInsuranceQuoteOpen(false);
-                  alert(`${plan.name} insurance selected!`);
+                  addToast({ type: 'success', title: 'Insurance selected!', message: `${plan.name} plan applied.` });
                 }}
               />
             </div>
@@ -1778,7 +1812,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onComplete={(result) => {
                   console.log('QR check result:', result);
                   setIsQRCheckInOpen(false);
-                  alert('Check-in successful!');
+                  addToast({ type: 'success', title: 'Check-in successful!', message: 'Enjoy your rental.' });
                 }}
                 onClose={() => setIsQRCheckInOpen(false)}
               />
@@ -1800,7 +1834,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onComplete={(report) => {
                   console.log('Damage report:', report);
                   setIsDamageDetectionOpen(false);
-                  alert('Inspection complete!');
+                  addToast({ type: 'success', title: 'Inspection complete', message: 'Report saved successfully.' });
                 }}
                 onClose={() => setIsDamageDetectionOpen(false)}
               />
@@ -1835,7 +1869,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onSign={(signature) => {
                   console.log('Contract signed:', signature);
                   setIsBlockchainOpen(false);
-                  alert('Smart contract signed!');
+                  addToast({ type: 'success', title: 'Smart contract signed!', message: 'Agreement recorded on blockchain.' });
                 }}
                 onClose={() => setIsBlockchainOpen(false)}
               />
@@ -1856,7 +1890,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 equipmentType={bookingEquipment.category?.name || 'Equipment'}
                 onComplete={() => {
                   setIsARTutorialOpen(false);
-                  alert('Tutorial completed!');
+                  addToast({ type: 'success', title: 'Tutorial completed!', message: 'You are ready to get started.' });
                 }}
                 onClose={() => setIsARTutorialOpen(false)}
               />
@@ -1925,7 +1959,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onComplete={(report) => {
                   console.log('Damage report:', report);
                   setIsDamageWizardOpen(false);
-                  alert('Return inspection complete!');
+                  addToast({ type: 'success', title: 'Return inspection complete', message: 'Thank you for returning the equipment.' });
                 }}
                 onClose={() => setIsDamageWizardOpen(false)}
               />
@@ -1969,11 +2003,11 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
             onAccepted={(finalPrice: number) => {
               console.log('Negotiation accepted:', finalPrice);
               setIsPriceNegotiatorOpen(false);
-              alert(`Offer accepted! Final price: $${finalPrice.toFixed(2)}`);
+              addToast({ type: 'success', title: 'Offer accepted!', message: `Final price: ${finalPrice.toFixed(2)}` });
             }}
             onRejected={() => {
               setIsPriceNegotiatorOpen(false);
-              alert('Negotiation ended');
+              addToast({ type: 'info', title: 'Negotiation ended', message: '' });
             }}
             onClose={() => setIsPriceNegotiatorOpen(false)}
           />
@@ -1992,7 +2026,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
             onScheduleMaintenance={(date: Date, type: string) => {
               console.log('Maintenance scheduled:', date, type);
               setIsMaintenancePredictorOpen(false);
-              alert(`Maintenance scheduled: ${type} on ${date.toLocaleDateString()}`);
+              addToast({ type: 'success', title: 'Maintenance scheduled', message: `${type} on ${date.toLocaleDateString()}` });
             }}
             onClose={() => setIsMaintenancePredictorOpen(false)}
           />
@@ -2011,7 +2045,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
               setIsSmartSchedulerOpen(false);
               const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
               const total = bookingEquipment.daily_rate * days * (1 - discount / 100);
-              alert(`Booking optimized! ${days} days at ${discount}% off. Total: $${total.toFixed(2)}`);
+              addToast({ type: 'success', title: 'Booking optimized!', message: `${days} days at ${discount}% off. Total: ${total.toFixed(2)}` });
             }}
             onClose={() => setIsSmartSchedulerOpen(false)}
           />
@@ -2078,7 +2112,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onSendMessage={async (content, photos) => {
                   console.log('Message sent:', { content, photos });
                   setIsPhotoMessagingOpen(false);
-                  alert('Message with photos sent successfully!');
+                  addToast({ type: 'success', title: 'Message sent!', message: 'Photos delivered successfully.' });
                 }}
                 onClose={() => {
                   setIsPhotoMessagingOpen(false);
@@ -2105,7 +2139,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                   setIsEnhancedReviewOpen(false);
                   setReviewEquipment(null);
                   setReviewBookingId(null);
-                  alert('Thank you for your detailed review!');
+                  addToast({ type: 'success', title: 'Review submitted!', message: 'Thank you for your detailed review.' });
                 }}
                 onClose={() => {
                   setIsEnhancedReviewOpen(false);
@@ -2131,7 +2165,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
                 onPaymentComplete={async (paymentData) => {
                   console.log('Payment completed:', paymentData);
                   setIsMultiPaymentOpen(false);
-                  alert(`Payment successful! Method: ${paymentData.method}`);
+                  addToast({ type: 'success', title: 'Payment successful!', message: `Method: ${paymentData.method}` });
                 }}
                 onClose={() => setIsMultiPaymentOpen(false)}
               />
@@ -2285,7 +2319,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
             onConfirm={(bookingData) => {
               console.log('Quick booking confirmed:', bookingData);
               setIsQuickBookOpen(false);
-              alert('Booking confirmed! Check your email for details.');
+              addToast({ type: 'success', title: 'Booking confirmed!', message: 'Check your email for details.' });
             }}
             onClose={() => {
               setIsQuickBookOpen(false);
@@ -2708,7 +2742,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
             <BiometricAuth
               onSuccess={() => {
                 setIsBiometricAuthOpen(false);
-                alert('Biometric authentication successful!');
+                addToast({ type: 'success', title: 'Authenticated!', message: 'Biometric authentication successful.' });
               }}
               onCancel={() => setIsBiometricAuthOpen(false)}
             />
@@ -2750,7 +2784,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
               onScan={(data) => {
                 console.log('QR Code scanned:', data);
                 // Handle QR code data (could be equipment ID, booking code, etc.)
-                alert(`QR Code scanned: ${data}`);
+                addToast({ type: 'info', title: 'QR Code scanned', message: `${data}` });
                 setIsQRCodeScannerOpen(false);
               }}
               onClose={() => setIsQRCodeScannerOpen(false)}
