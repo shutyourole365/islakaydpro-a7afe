@@ -18,7 +18,7 @@ import {
   ArrowRight,
   FileText,
 } from 'lucide-react';
-import type { Equipment, InsurancePlan } from '../../types';
+import type { Equipment, InsurancePlan, UserId } from '../../types';
 import SmartScheduler from '../scheduling/SmartScheduler';
 import { useAuth } from '../../contexts/AuthContext';
 import { createBooking } from '../../services/database';
@@ -259,7 +259,7 @@ export default function BookingSystem({
       // Create the booking record in the database
       const newBooking = await createBooking({
         equipment_id: equipment.id,
-        renter_id: user.id,
+        renter_id: user.id as UserId,
         owner_id: equipment.owner_id,
         start_date: selectedStart.toISOString().split('T')[0],
         end_date: selectedEnd.toISOString().split('T')[0],
