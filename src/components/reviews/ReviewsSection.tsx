@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Star, ThumbsUp, MessageSquare, Filter, ChevronDown, User, CheckCircle2 } from 'lucide-react';
+import { Star, ThumbsUp, MessageSquare, Filter, ChevronDown, User, CheckCircle2, PenLine, Send } from 'lucide-react';
+import { createReview } from '../../services/database';
 
 interface Review {
   id: string;
@@ -27,6 +28,11 @@ interface ReviewsSectionProps {
   totalReviews: number;
   ratingDistribution: { [key: number]: number };
   className?: string;
+  equipmentId?: string;
+  bookingId?: string;
+  reviewerId?: string;
+  revieweeId?: string;
+  canReview?: boolean;
 }
 
 const sampleReviews: Review[] = [
@@ -81,11 +87,62 @@ export default function ReviewsSection({
   totalReviews = 47,
   ratingDistribution = { 5: 38, 4: 7, 3: 2, 2: 0, 1: 0 },
   className = '',
+  equipmentId,
+  bookingId,
+  reviewerId,
+  revieweeId,
+  canReview = false,
 }: Partial<ReviewsSectionProps>) {
-  const [reviews] = useState<Review[]>(sampleReviews);
+  const [reviews, setReviews] = useState<Review[]>(sampleReviews);
   const [filter, setFilter] = useState<'all' | 'positive' | 'critical'>('all');
   const [sortBy, setSortBy] = useState<'recent' | 'helpful'>('recent');
   const [helpfulReviews, setHelpfulReviews] = useState<Set<string>>(new Set());
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewRating, setReviewRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [reviewComment, setReviewComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (reviewRating === 0 || !reviewComment.trim()) return;
+    if (!equipmentId || !bookingId || !reviewerId || !revieweeId) return;
+    setIsSubmitting(true);
+    setSubmitError('');
+    try {
+      await createReview({
+        equipment_id: equipmentId,
+        booking_id: bookingId,
+        reviewer_id: reviewerId,
+        reviewee_id: revieweeId ?? null,
+        rating: reviewRating,
+        comment: reviewComment.trim(),
+        title: null,
+        is_equipment_review: true,
+        updated_at: new Date().toISOString(),
+      });
+      const newReview: Review = {
+        id: Date.now().toString(),
+        author: { name: 'You', avatar: null, isVerified: false },
+        rating: reviewRating,
+        date: 'Just now',
+        title: '',
+        content: reviewComment.trim(),
+        helpful: 0,
+      };
+      setReviews(prev => [newReview, ...prev]);
+      setSubmitted(true);
+      setShowReviewForm(false);
+      setReviewRating(0);
+      setReviewComment('');
+    } catch {
+      setSubmitError('Failed to submit review. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const markHelpful = (reviewId: string) => {
     setHelpfulReviews((prev) => {
@@ -189,6 +246,69 @@ export default function ReviewsSection({
           </div>
         </div>
       </div>
+
+      {/* Write a Review */}
+      {canReview && !submitted && (
+        <div className="p-6 border-b border-gray-100 bg-gray-50">
+          {!showReviewForm ? (
+            <button
+              onClick={() => setShowReviewForm(true)}
+              className="flex items-center gap-2 px-4 py-2.5 bg-teal-500 hover:bg-teal-600 text-white font-medium rounded-xl transition-colors text-sm"
+            >
+              <PenLine className="w-4 h-4" />
+              Write a Review
+            </button>
+          ) : (
+            <form onSubmit={handleSubmitReview} className="space-y-4">
+              <h4 className="font-semibold text-gray-900">Your Review</h4>
+              <div>
+                <p className="text-sm text-gray-600 mb-2">Rating</p>
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map(star => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setReviewRating(star)}
+                      onMouseEnter={() => setHoverRating(star)}
+                      onMouseLeave={() => setHoverRating(0)}
+                      className="transition-transform hover:scale-110"
+                    >
+                      <Star className={`w-7 h-7 ${star <= (hoverRating || reviewRating) ? 'fill-amber-400 text-amber-400' : 'fill-gray-200 text-gray-200'}`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <textarea
+                value={reviewComment}
+                onChange={e => setReviewComment(e.target.value)}
+                rows={4}
+                placeholder="Share your experience with this equipment and owner…"
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                required
+              />
+              {submitError && <p className="text-sm text-red-500">{submitError}</p>}
+              <div className="flex gap-3">
+                <button type="button" onClick={() => setShowReviewForm(false)}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-colors text-sm">
+                  Cancel
+                </button>
+                <button type="submit" disabled={reviewRating === 0 || !reviewComment.trim() || isSubmitting}
+                  className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-white rounded-xl transition-colors text-sm font-medium">
+                  <Send className="w-4 h-4" />
+                  {isSubmitting ? 'Submitting…' : 'Submit Review'}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      )}
+
+      {submitted && (
+        <div className="p-4 bg-green-50 border-b border-green-100 flex items-center gap-2 text-green-700 text-sm">
+          <CheckCircle2 className="w-4 h-4" />
+          Your review has been submitted. Thank you!
+        </div>
+      )}
 
       <div className="divide-y divide-gray-100">
         {filteredReviews.map((review) => (

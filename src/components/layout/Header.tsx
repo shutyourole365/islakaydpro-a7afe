@@ -107,6 +107,14 @@ export default function Header({
                 Browse Equipment
               </button>
               <button
+                onClick={() => onNavigate('requests')}
+                className={`text-sm font-medium transition-colors hover:text-teal-500 ${
+                  showTransparent ? 'text-white/90' : 'text-gray-700'
+                } ${currentPage === 'requests' ? 'text-teal-500' : ''}`}
+              >
+                Wanted
+              </button>
+              <button
                 onClick={() => onNavigate('help')}
                 className={`text-sm font-medium transition-colors hover:text-teal-500 ${
                   showTransparent ? 'text-white/90' : 'text-gray-700'

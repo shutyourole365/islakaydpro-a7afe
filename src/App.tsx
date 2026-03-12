@@ -13,6 +13,7 @@ import EquipmentShowcase from './components/home/EquipmentShowcase';
 import HowItWorks from './components/home/HowItWorks';
 import Testimonials from './components/home/Testimonials';
 import CTASection from './components/home/CTASection';
+import RecentlyViewed from './components/home/RecentlyViewed';
 import AboutPage from './components/home/AboutPage';
 import SearchModal from './components/search/SearchModal';
 import EquipmentDetail from './components/equipment/EquipmentDetail';
@@ -21,6 +22,7 @@ import AIAssistantEnhanced from './components/ai/AIAssistantEnhanced';
 import BrowsePage from './components/browse/BrowsePage';
 import Dashboard from './components/dashboard/Dashboard';
 import ErrorBoundary from './components/ui/ErrorBoundary';
+import NotFound from './components/ui/NotFound';
 import ListEquipmentForm from './components/listing/ListEquipmentForm';
 import BookingSystem from './components/booking/BookingSystem';
 import EquipmentComparison from './components/comparison/EquipmentComparison';
@@ -31,6 +33,9 @@ import InstallPrompt, { OfflineIndicator } from './components/pwa/InstallPrompt'
 import { CookieConsentBanner, CookieSettingsModal } from './components/ui/CookieConsent';
 import { useCookieConsent } from './hooks/useCookieConsent';
 import { addFavorite, removeFavorite, getEquipment } from './services/database';
+
+// New features
+const EquipmentRequestBoard = lazy(() => import('./components/requests/EquipmentRequestBoard'));
 
 // Lazy load heavy components for better performance
 const SecurityCenter = lazy(() => import('./components/security/SecurityCenter'));
@@ -591,7 +596,7 @@ const sampleEquipment: Equipment[] = [
 ];
 
 function AppContent() {
-type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language' | 'availability-calendar' | 'revenue-dashboard' | 'certification-tracker' | 'agreement-generator' | 'support-tickets';
+type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language' | 'availability-calendar' | 'revenue-dashboard' | 'certification-tracker' | 'agreement-generator' | 'support-tickets' | 'requests' | '404';
   const { isAuthenticated, user, profile, signOut, unreadNotifications } = useAuth();
   const { addToast } = useToast();
   const {
@@ -798,7 +803,8 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
   };
 
   const handleNavigate = (page: string) => {
-    setCurrentPage(page as PageType);
+    const knownPages: PageType[] = ['home', 'browse', 'dashboard', 'list-equipment', 'security', 'analytics', 'admin', 'notifications', 'payments', 'subscription', 'sustainability', 'tutorials', 'loyalty', 'fleet', 'referrals', 'pwa', 'trust-score', 'alerts', 'bundles', 'warranties', 'bulk-booking', 'insights', 'terms', 'privacy', 'cookies', 'refund', 'accessibility', 'cancellation', 'about', 'careers', 'press', 'blog', 'partnerships', 'investors', 'help', 'safety', 'trust', 'contact', 'pricing-calculator', 'insurance', 'host-resources', 'host-community', 'ai-matching', 'smart-contracts', 'ar-preview', 'carbon-tracker', 'equipment-financing', 'iot-telematics', 'ar-visualization', 'gps-tracking', 'crypto-payments', 'ai-insurance', 'sustainability-dashboard', 'social-communities', 'voice-ai-assistant', 'blockchain-contracts', 'vr-training', 'drone-delivery', 'industry-integrations', 'maintenance', 'scheduler', 'equipment-health', 'cost-estimator', 'seasonal-deals', 'rental-history', 'multi-language', 'availability-calendar', 'revenue-dashboard', 'certification-tracker', 'agreement-generator', 'support-tickets', 'requests', '404'];
+    setCurrentPage(knownPages.includes(page as PageType) ? (page as PageType) : '404');
   };
 
   const handleSearch = (query: string) => {
@@ -821,7 +827,15 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
 
   const handleEquipmentClick = (equipment: Equipment) => {
     setSelectedEquipment(equipment);
-    
+
+    // Track recently viewed in localStorage
+    try {
+      const stored = localStorage.getItem('recentlyViewed');
+      const recent: Equipment[] = stored ? JSON.parse(stored) : [];
+      const filtered = recent.filter(e => e.id !== equipment.id);
+      localStorage.setItem('recentlyViewed', JSON.stringify([equipment, ...filtered].slice(0, 8)));
+    } catch { /* ignore storage errors */ }
+
     // Track equipment view
     if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
       import('./services/analytics').then(({ analytics }) => {
@@ -1260,6 +1274,12 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
               favorites={favorites}
               onAddToComparison={handleAddToComparison}
               isLoading={isLoadingEquipment}
+            />
+
+            <RecentlyViewed
+              onEquipmentClick={handleEquipmentClick}
+              onFavoriteClick={handleFavoriteToggle}
+              favorites={favorites}
             />
 
             <HowItWorks />
@@ -2803,6 +2823,20 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
           </div>
         </Suspense>
       )}
+      {currentPage === 'requests' && (
+        <Suspense fallback={<PageLoader />}>
+          <EquipmentRequestBoard onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === '404' && (
+        <>
+          <NotFound onNavigate={handleNavigate} />
+          <Footer onNavigate={handleNavigate} />
+        </>
+      )}
+
       {/* Cookie Consent */}
       {showBanner && (
         <CookieConsentBanner

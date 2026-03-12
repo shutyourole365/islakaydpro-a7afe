@@ -1,6 +1,14 @@
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
 import LogoPro from '../branding/LogoPro';
 
+const socialLinks = [
+  { Icon: Facebook, url: import.meta.env.VITE_FACEBOOK_URL, label: 'Facebook' },
+  { Icon: Twitter, url: import.meta.env.VITE_TWITTER_URL, label: 'Twitter' },
+  { Icon: Instagram, url: import.meta.env.VITE_INSTAGRAM_URL, label: 'Instagram' },
+  { Icon: Linkedin, url: import.meta.env.VITE_LINKEDIN_URL, label: 'LinkedIn' },
+  { Icon: Youtube, url: import.meta.env.VITE_YOUTUBE_URL, label: 'YouTube' },
+].filter(s => s.url);
+
 interface FooterProps {
   onNavigate?: (page: string) => void;
 }
@@ -50,17 +58,22 @@ export default function Footer({ onNavigate }: FooterProps) {
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               The world's most advanced equipment rental marketplace. Rent anything, anywhere, powered by AI.
             </p>
-            <div className="flex items-center gap-4">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-teal-500 hover:text-white transition-all duration-300"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
+            {socialLinks.length > 0 && (
+              <div className="flex items-center gap-4">
+                {socialLinks.map(({ Icon, url, label }) => (
+                  <a
+                    key={label}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-teal-500 hover:text-white transition-all duration-300"
+                  >
+                    <Icon className="w-5 h-5" />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {Object.entries(footerLinks).map(([category, links]) => (
@@ -125,27 +138,6 @@ export default function Footer({ onNavigate }: FooterProps) {
               >
                 Accessibility
               </button>
-              <a href="/policies/TERMS_OF_SERVICE.md" className="text-gray-400 hover:text-teal-400 transition-colors">
-                Terms of Service
-              </a>
-              <a href="/policies/PRIVACY_POLICY.md" className="text-gray-400 hover:text-teal-400 transition-colors">
-                Privacy Policy
-              </a>
-              <a href="/policies/COOKIE_POLICY.md" className="text-gray-400 hover:text-teal-400 transition-colors">
-                Cookie Policy
-              </a>
-              <a href="/policies/ACCEPTABLE_USE_POLICY.md" className="text-gray-400 hover:text-teal-400 transition-colors">
-                Acceptable Use
-              </a>
-              <a href="/policies/DMCA_POLICY.md" className="text-gray-400 hover:text-teal-400 transition-colors">
-                DMCA Policy
-              </a>
-              <a href="/policies/DATA_RETENTION_POLICY.md" className="text-gray-400 hover:text-teal-400 transition-colors">
-                Data Retention
-              </a>
-              <a href="/policies/CANCELLATION_POLICY.md" className="text-gray-400 hover:text-teal-400 transition-colors">
-                Cancellation Policy
-              </a>
             </div>
             <div className="flex items-center gap-4">
               <select className="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-teal-500">

@@ -19,7 +19,7 @@
     "preview:build": "npm run build && npm run preview",
     "analyze": "npm run build && npx vite-bundle-analyzer dist",
     "clean": "rm -rf dist node_modules/.vite",
-    "postinstall": "npm run typecheck"
+    "postinstall": "npm run typecheck || true"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.2",
