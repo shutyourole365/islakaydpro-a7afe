@@ -68,32 +68,72 @@ export default function WeatherAdvisor({
 
   const loadWeatherData = async () => {
     setLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      // Geocode the location string → lat/lon using free Nominatim API
+      const geoRes = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`,
+        { headers: { 'Accept-Language': 'en' } }
+      );
+      const geoData = await geoRes.json();
+      let lat = -33.8688; // fallback: Sydney
+      let lon = 151.2093;
+      if (geoData.length > 0) {
+        lat = parseFloat(geoData[0].lat);
+        lon = parseFloat(geoData[0].lon);
+      }
 
-    // Generate mock forecast
-    const conditions: WeatherForecast['condition'][] = ['sunny', 'cloudy', 'rainy', 'sunny', 'windy', 'cloudy', 'sunny'];
-    const days: WeatherForecast[] = [];
-    
-    let currentDate = new Date(startDate);
-    while (currentDate <= endDate) {
-      const dayIndex = days.length % conditions.length;
-      days.push({
-        date: new Date(currentDate),
-        condition: conditions[dayIndex],
-        tempHigh: 65 + Math.random() * 20,
-        tempLow: 45 + Math.random() * 15,
-        precipitation: conditions[dayIndex] === 'rainy' ? 60 + Math.random() * 30 : Math.random() * 20,
-        windSpeed: conditions[dayIndex] === 'windy' ? 20 + Math.random() * 15 : 5 + Math.random() * 10,
-        humidity: 40 + Math.random() * 40,
-        uvIndex: conditions[dayIndex] === 'sunny' ? 6 + Math.random() * 4 : 2 + Math.random() * 3,
+      // Fetch real 7-day forecast from Open-Meteo (free, no API key)
+      const weatherRes = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+        `&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,uv_index_max` +
+        `&timezone=auto&forecast_days=7`
+      );
+      const weatherData = await weatherRes.json();
+
+      const days: WeatherForecast[] = weatherData.daily.time.map((dateStr: string, i: number) => {
+        const code: number = weatherData.daily.weathercode[i];
+        const condition: WeatherForecast['condition'] =
+          code === 0 ? 'sunny' :
+          code <= 3 ? 'cloudy' :
+          code <= 67 ? 'rainy' :
+          code <= 77 ? 'snowy' :
+          code <= 82 ? 'rainy' :
+          code <= 99 ? 'stormy' : 'cloudy';
+        return {
+          date: new Date(dateStr),
+          condition,
+          tempHigh: weatherData.daily.temperature_2m_max[i] ?? 20,
+          tempLow: weatherData.daily.temperature_2m_min[i] ?? 12,
+          precipitation: weatherData.daily.precipitation_sum[i] ?? 0,
+          windSpeed: weatherData.daily.windspeed_10m_max[i] ?? 10,
+          humidity: 60, // not in free daily tier
+          uvIndex: weatherData.daily.uv_index_max?.[i] ?? 3,
+        };
       });
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
 
-    setForecast(days);
-    generateRecommendation(days, equipmentType);
-    setLoading(false);
+      // Slice to the rental date range
+      const rentalDays = days.filter(d => d.date >= startDate && d.date <= endDate);
+      const displayDays = rentalDays.length > 0 ? rentalDays : days;
+
+      setForecast(displayDays);
+      generateRecommendation(displayDays, equipmentType);
+    } catch {
+      // Fallback: generate basic forecast if APIs fail
+      const days: WeatherForecast[] = Array.from({ length: 7 }, (_, i) => ({
+        date: new Date(Date.now() + i * 86400000),
+        condition: 'cloudy' as const,
+        tempHigh: 22,
+        tempLow: 14,
+        precipitation: 5,
+        windSpeed: 12,
+        humidity: 60,
+        uvIndex: 4,
+      }));
+      setForecast(days);
+      generateRecommendation(days, equipmentType);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const generateRecommendation = (weatherData: WeatherForecast[], equipment: string) => {

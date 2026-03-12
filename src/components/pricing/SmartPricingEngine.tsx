@@ -4,6 +4,7 @@ import type { Equipment } from '../../types';
 
 interface SmartPricingProps {
   equipment: Equipment;
+  allEquipment?: Equipment[];
   onPriceChange?: (prices: PriceSuggestion) => void;
 }
 
@@ -26,74 +27,85 @@ interface MarketData {
   demandScore: number;
 }
 
-export default function SmartPricingEngine({ equipment, onPriceChange }: SmartPricingProps) {
+export default function SmartPricingEngine({ equipment, allEquipment = [], onPriceChange }: SmartPricingProps) {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [suggestion, setSuggestion] = useState<PriceSuggestion | null>(null);
   const [marketData, setMarketData] = useState<MarketData | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
-  // Simulate AI-powered pricing analysis
+  // Compute real market data from existing equipment listings
+  const computeMarketData = (): MarketData => {
+    const sameCat = allEquipment.filter(
+      e => e.id !== equipment.id && e.category?.slug === equipment.category?.slug && e.daily_rate > 0
+    );
+    if (sameCat.length === 0) {
+      const base = equipment.daily_rate || 50;
+      return { averagePrice: base, minPrice: Math.round(base * 0.6), maxPrice: Math.round(base * 1.5), totalListings: 0, demandScore: 70 };
+    }
+    const rates = sameCat.map(e => e.daily_rate).sort((a, b) => a - b);
+    const avg = Math.round(rates.reduce((s, r) => s + r, 0) / rates.length);
+    const totalBookings = sameCat.reduce((s, e) => s + (e.total_bookings || 0), 0);
+    const avgBookings = sameCat.length > 0 ? totalBookings / sameCat.length : 0;
+    const demandScore = Math.min(100, Math.round(50 + avgBookings * 0.5));
+    return {
+      averagePrice: avg,
+      minPrice: rates[0],
+      maxPrice: rates[rates.length - 1],
+      totalListings: sameCat.length,
+      demandScore,
+    };
+  };
+
   const analyzePricing = async () => {
     setIsAnalyzing(true);
-    
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Mock market analysis based on equipment data
-    const baseRate = equipment.daily_rate || 50;
-    const categoryMultiplier = getCategoryMultiplier(equipment.category?.slug || 'other');
+    // Brief delay for UX
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    const market = computeMarketData();
     const conditionMultiplier = getConditionMultiplier(equipment.condition || 'good');
     const seasonalMultiplier = getSeasonalMultiplier();
-    
-    const optimizedDaily = Math.round(baseRate * categoryMultiplier * conditionMultiplier * seasonalMultiplier);
-    const optimizedWeekly = Math.round(optimizedDaily * 6); // ~15% discount
-    const optimizedMonthly = Math.round(optimizedDaily * 22); // ~27% discount
-    
+
+    // Use real market average as the base, adjusted for condition and season
+    const baseForCalc = market.averagePrice > 0 ? market.averagePrice : (equipment.daily_rate || 50);
+    const optimizedDaily = Math.round(baseForCalc * conditionMultiplier * seasonalMultiplier);
+    const optimizedWeekly = Math.round(optimizedDaily * 6);
+    const optimizedMonthly = Math.round(optimizedDaily * 22);
+
+    const demandLevel: 'low' | 'medium' | 'high' | 'very-high' =
+      market.demandScore >= 85 ? 'very-high' :
+      market.demandScore >= 70 ? 'high' :
+      market.demandScore >= 50 ? 'medium' : 'low';
+
+    const demandText = { low: 'low', medium: 'moderate', high: 'high', 'very-high': 'very high' }[demandLevel];
+    const confidence = market.totalListings >= 10 ? 0.92 : market.totalListings >= 3 ? 0.80 : 0.65;
+
     const newSuggestion: PriceSuggestion = {
       dailyRate: optimizedDaily,
       weeklyRate: optimizedWeekly,
       monthlyRate: optimizedMonthly,
-      confidence: 0.87,
+      confidence,
       reasoning: [
-        `Based on ${Math.floor(Math.random() * 50 + 20)} similar listings in your area`,
-        `${equipment.condition === 'excellent' ? 'Premium condition justifies higher pricing' : 'Competitive pricing for condition level'}`,
-        `Current demand is ${getDemandText()} in your market`,
-        seasonalMultiplier > 1 ? 'Peak season pricing applied (+15%)' : 'Standard seasonal rate',
+        market.totalListings > 0
+          ? `Based on ${market.totalListings} similar ${equipment.category?.name || 'equipment'} listings (avg $${market.averagePrice}/day)`
+          : 'No comparable listings found — using your current rate as baseline',
+        equipment.condition === 'excellent' ? 'Excellent condition commands a premium (+15%)' : `${equipment.condition || 'Good'} condition pricing applied`,
+        `Demand is ${demandText} in this category`,
+        seasonalMultiplier > 1 ? `Peak season adjustment applied (+${Math.round((seasonalMultiplier - 1) * 100)}%)` : 'Standard seasonal rate',
       ],
-      demandLevel: getDemandLevel(),
+      demandLevel,
       seasonalAdjustment: Math.round((seasonalMultiplier - 1) * 100),
-      competitorComparison: optimizedDaily > baseRate ? 'above' : optimizedDaily < baseRate ? 'below' : 'average',
+      competitorComparison:
+        optimizedDaily > market.averagePrice * 1.05 ? 'above' :
+        optimizedDaily < market.averagePrice * 0.95 ? 'below' : 'average',
     };
-    
-    const newMarketData: MarketData = {
-      averagePrice: Math.round(optimizedDaily * 0.95),
-      minPrice: Math.round(optimizedDaily * 0.6),
-      maxPrice: Math.round(optimizedDaily * 1.4),
-      totalListings: Math.floor(Math.random() * 100 + 30),
-      demandScore: Math.random() * 40 + 60,
-    };
-    
+
     setSuggestion(newSuggestion);
-    setMarketData(newMarketData);
+    setMarketData(market);
     setIsAnalyzing(false);
-    
+
     if (onPriceChange) {
       onPriceChange(newSuggestion);
     }
-  };
-
-  const getCategoryMultiplier = (category: string): number => {
-    const multipliers: Record<string, number> = {
-      'construction': 1.2,
-      'photography': 1.15,
-      'audio-video': 1.1,
-      'vehicles': 1.25,
-      'power-tools': 1.0,
-      'landscaping': 0.95,
-      'events': 1.05,
-      'cleaning': 0.9,
-    };
-    return multipliers[category] || 1.0;
   };
 
   const getConditionMultiplier = (condition: string): number => {
@@ -113,24 +125,6 @@ export default function SmartPricingEngine({ equipment, onPriceChange }: SmartPr
     // Holiday season: November-December
     if (month >= 10) return 1.1;
     return 1.0;
-  };
-
-  const getDemandLevel = (): 'low' | 'medium' | 'high' | 'very-high' => {
-    const rand = Math.random();
-    if (rand > 0.8) return 'very-high';
-    if (rand > 0.5) return 'high';
-    if (rand > 0.2) return 'medium';
-    return 'low';
-  };
-
-  const getDemandText = (): string => {
-    const level = getDemandLevel();
-    return {
-      'low': 'low',
-      'medium': 'moderate',
-      'high': 'high',
-      'very-high': 'very high',
-    }[level];
   };
 
   const getDemandColor = (level: string): string => {
