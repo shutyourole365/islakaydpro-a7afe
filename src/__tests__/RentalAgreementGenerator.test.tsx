@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RentalAgreementGenerator from '../components/agreements/RentalAgreementGenerator';
 
@@ -75,24 +75,28 @@ describe('RentalAgreementGenerator', () => {
     it('should display agreement status badges', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
       expect(screen.getByText('Draft')).toBeInTheDocument();
-      expect(screen.getByText('Signed')).toBeInTheDocument();
+      const signedElements = screen.getAllByText('Signed');
+      expect(signedElements.length).toBeGreaterThan(0);
     });
 
     it('should show renter names on agreements', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
-      expect(screen.getByText('John D.')).toBeInTheDocument();
-      expect(screen.getByText('Sarah M.')).toBeInTheDocument();
+      // Renter names are shown as "Renter: John D." - check text content
+      expect(screen.getByText((content) => content.includes('John D.'))).toBeInTheDocument();
+      expect(screen.getByText((content) => content.includes('Sarah M.'))).toBeInTheDocument();
     });
 
     it('should display rental dates on agreements', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
       // Should show date ranges
-      expect(screen.getByText(/2026/)).toBeInTheDocument();
+      const dateElements = screen.queryAllByText(/2026/);
+      expect(dateElements.length).toBeGreaterThan(0);
     });
 
     it('should display total cost on agreements', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
-      expect(screen.getByText(/\$[0-9,]+/)).toBeInTheDocument();
+      const costElements = screen.queryAllByText(/\$[0-9,]+/);
+      expect(costElements.length).toBeGreaterThan(0);
     });
 
     it('should display download button on agreements', () => {
@@ -104,7 +108,8 @@ describe('RentalAgreementGenerator', () => {
     it('should display action buttons based on status', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
       // Should show different buttons for different statuses
-      expect(screen.getByRole('button', { name: /Download/i })).toBeInTheDocument();
+      const downloadButtons = screen.getAllByRole('button', { name: /Download/i });
+      expect(downloadButtons.length).toBeGreaterThan(0);
     });
   });
 
@@ -123,7 +128,8 @@ describe('RentalAgreementGenerator', () => {
 
     it('should show signed badge for signed agreements', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
-      expect(screen.getByText('Signed')).toBeInTheDocument();
+      const signedElements = screen.getAllByText('Signed');
+      expect(signedElements.length).toBeGreaterThan(0);
     });
 
     it('should show completed status for finished agreements', () => {
@@ -165,7 +171,8 @@ describe('RentalAgreementGenerator', () => {
       const templatesTab = screen.getByRole('button', { name: /Templates/i });
       await user.click(templatesTab);
 
-      expect(screen.getByText(/clauses/i)).toBeInTheDocument();
+      const clauseElements = screen.queryAllByText(/clauses/i);
+      expect(clauseElements.length).toBeGreaterThan(0);
     });
 
     it('should select first template by default', async () => {
@@ -411,7 +418,11 @@ describe('RentalAgreementGenerator', () => {
       await user.click(templatesTab);
 
       expect(screen.getByText('EQUIPMENT RENTAL AGREEMENT')).toBeInTheDocument();
-      expect(screen.getByText(/Equipment: CAT 320 Excavator/)).toBeInTheDocument();
+      // Equipment is in a <p> with <strong>Equipment:</strong> tag - check for strong text
+      expect(screen.getByText('Equipment:')).toBeInTheDocument();
+      // Check that CAT 320 Excavator appears somewhere in the preview
+      const equipmentElements = screen.queryAllByText(/CAT 320 Excavator/);
+      expect(equipmentElements.length).toBeGreaterThan(0);
     });
 
     it('should update preview when renter name changes', async () => {
@@ -424,38 +435,40 @@ describe('RentalAgreementGenerator', () => {
       const renterInput = screen.getByPlaceholderText(/Enter renter name/i);
       await user.type(renterInput, 'John Smith');
 
-      expect(screen.getByText(/Renter: John Smith/)).toBeInTheDocument();
+      // Renter name appears after typing (in preview, broken by strong tag)
+      expect(screen.getByText('Renter:')).toBeInTheDocument();
+      expect(screen.getByText('John Smith')).toBeInTheDocument();
     });
 
     it('should show rental period in preview when dates entered', async () => {
       const user = userEvent.setup();
-      render(<RentalAgreementGenerator onBack={mockOnBack} />);
+      const { container } = render(<RentalAgreementGenerator onBack={mockOnBack} />);
 
       const templatesTab = screen.getByRole('button', { name: /Templates/i });
       await user.click(templatesTab);
 
-      const dateInputs = screen.getAllByDisplayValue('') as HTMLInputElement[];
+      // Labels don't have 'for' attribute so use querySelectorAll for type="date"
+      const dateInputs = container.querySelectorAll('input[type="date"]');
       if (dateInputs.length >= 2) {
-        await user.type(dateInputs[0], '2026-03-01');
-        await user.type(dateInputs[1], '2026-03-05');
-
-        expect(screen.getByText(/Rental Period:/)).toBeInTheDocument();
+        fireEvent.change(dateInputs[0], { target: { value: '2026-03-01' } });
+        fireEvent.change(dateInputs[1], { target: { value: '2026-03-05' } });
+        expect(screen.getByText('Rental Period:')).toBeInTheDocument();
       }
     });
 
     it('should calculate duration in preview', async () => {
       const user = userEvent.setup();
-      render(<RentalAgreementGenerator onBack={mockOnBack} />);
+      const { container } = render(<RentalAgreementGenerator onBack={mockOnBack} />);
 
       const templatesTab = screen.getByRole('button', { name: /Templates/i });
       await user.click(templatesTab);
 
-      const dateInputs = screen.getAllByDisplayValue('') as HTMLInputElement[];
+      // Labels don't have 'for' attribute so use querySelectorAll for type="date"
+      const dateInputs = container.querySelectorAll('input[type="date"]');
       if (dateInputs.length >= 2) {
-        await user.type(dateInputs[0], '2026-03-01');
-        await user.type(dateInputs[1], '2026-03-05');
-
-        expect(screen.getByText(/Duration:/)).toBeInTheDocument();
+        fireEvent.change(dateInputs[0], { target: { value: '2026-03-01' } });
+        fireEvent.change(dateInputs[1], { target: { value: '2026-03-05' } });
+        expect(screen.getByText('Duration:')).toBeInTheDocument();
       }
     });
 
@@ -506,17 +519,17 @@ describe('RentalAgreementGenerator', () => {
   describe('Duration Calculation', () => {
     it('should calculate days between start and end date', async () => {
       const user = userEvent.setup();
-      render(<RentalAgreementGenerator onBack={mockOnBack} />);
+      const { container } = render(<RentalAgreementGenerator onBack={mockOnBack} />);
 
       const templatesTab = screen.getByRole('button', { name: /Templates/i });
       await user.click(templatesTab);
 
-      const dateInputs = screen.getAllByDisplayValue('') as HTMLInputElement[];
+      // Labels don't have 'for' attribute so use querySelectorAll for type="date"
+      const dateInputs = container.querySelectorAll('input[type="date"]');
       if (dateInputs.length >= 2) {
-        await user.type(dateInputs[0], '2026-03-01');
-        await user.type(dateInputs[1], '2026-03-06');
-
-        expect(screen.getByText(/Duration:/)).toBeInTheDocument();
+        fireEvent.change(dateInputs[0], { target: { value: '2026-03-01' } });
+        fireEvent.change(dateInputs[1], { target: { value: '2026-03-06' } });
+        expect(screen.getByText('Duration:')).toBeInTheDocument();
       }
     });
   });
@@ -555,18 +568,21 @@ describe('RentalAgreementGenerator', () => {
   describe('Agreement Card Information', () => {
     it('should display duration calculation on agreement cards', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
-      expect(screen.getByText('Duration')).toBeInTheDocument();
+      const durationElements = screen.getAllByText('Duration');
+      expect(durationElements.length).toBeGreaterThan(0);
     });
 
     it('should show formatted date ranges', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
       // Dates should be formatted properly
-      expect(screen.getByText(/2026/)).toBeInTheDocument();
+      const dateElements = screen.queryAllByText(/2026/);
+      expect(dateElements.length).toBeGreaterThan(0);
     });
 
     it('should display formatted cost amounts', () => {
       render(<RentalAgreementGenerator onBack={mockOnBack} />);
-      expect(screen.getByText(/\$[0-9,]+/)).toBeInTheDocument();
+      const costElements = screen.queryAllByText(/\$[0-9,]+/);
+      expect(costElements.length).toBeGreaterThan(0);
     });
   });
 });
