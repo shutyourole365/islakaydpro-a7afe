@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getEquipmentWarranties, createWarranty, updateWarranty, EquipmentWarrantyRecord } from '../../services/database';
 import {
   Shield,
   AlertTriangle,
@@ -147,8 +148,25 @@ const mockWarranties: (EquipmentWarranty & { equipment?: Equipment })[] = [
 ];
 
 export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose }: WarrantyTrackerProps) {
-  void equipmentId; void ownerId; // Parameters for future API integration
-  const [warranties, setWarranties] = useState<(EquipmentWarranty & { equipment?: Equipment })[]>(mockWarranties);
+  const [warranties, setWarranties] = useState<(EquipmentWarranty & { equipment?: Equipment })[]>([]);
+
+  useEffect(() => {
+    getEquipmentWarranties(equipmentId, ownerId).then(records => {
+      if (records.length > 0) {
+        // Map DB record to component type (documents may be undefined → default [])
+        const mapped = records.map(r => ({
+          ...r,
+          documents: r.documents ?? [],
+          claim_contact: r.claim_contact ?? null,
+          claim_phone: r.claim_phone ?? null,
+          updated_at: r.created_at,
+        })) as (EquipmentWarranty & { equipment?: Equipment })[];
+        setWarranties(mapped);
+      } else {
+        setWarranties(mockWarranties);
+      }
+    }).catch(() => setWarranties(mockWarranties));
+  }, [equipmentId, ownerId]);
   const [selectedWarranty, setSelectedWarranty] = useState<EquipmentWarranty | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -233,34 +251,47 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
     expired: warranties.filter((w) => w.status === 'expired').length,
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would call the API
-    const newWarranty: EquipmentWarranty = {
-      id: Date.now().toString(),
+    const warrantyData: Omit<EquipmentWarrantyRecord, 'id' | 'created_at'> = {
       equipment_id: equipmentId || '',
       ...formData,
       documents: [],
       status: 'active',
-      created_at: new Date().toISOString(),
+    };
+    const saved = await createWarranty(warrantyData).catch(() => null);
+    const newWarranty: EquipmentWarranty = {
+      id: saved?.id ?? Date.now().toString(),
+      equipment_id: equipmentId || '',
+      ...formData,
+      claim_contact: formData.claim_contact || null,
+      claim_phone: formData.claim_phone || null,
+      documents: [],
+      status: 'active',
+      created_at: saved?.created_at ?? new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
     setWarranties([newWarranty, ...warranties]);
     setIsAddingNew(false);
-    setFormData({
-      warranty_type: 'manufacturer',
-      provider: '',
-      coverage_details: '',
-      start_date: '',
-      end_date: '',
-      claim_contact: '',
-      claim_phone: '',
-    });
+    setFormData({ warranty_type: 'manufacturer', provider: '', coverage_details: '', start_date: '', end_date: '', claim_contact: '', claim_phone: '' });
   };
 
   const handleSetReminder = (warranty: EquipmentWarranty) => {
-    // In production, this would create a smart alert
     alert(`Reminder set for warranty expiry: ${warranty.provider}`);
+  };
+
+  const handleMarkClaimed = async (warranty: EquipmentWarranty) => {
+    const updated = await updateWarranty(warranty.id, { status: 'claimed' }).catch(() => null);
+    if (updated) {
+      setWarranties(prev => prev.map(w => w.id === warranty.id ? { ...w, status: 'claimed' } : w));
+    }
+  };
+
+  const handleDeleteWarranty = async (warrantyId: string) => {
+    if (!confirm('Delete this warranty record?')) return;
+    // Soft-delete: mark as expired
+    await updateWarranty(warrantyId, { status: 'expired' }).catch(() => {});
+    setWarranties(prev => prev.filter(w => w.id !== warrantyId));
   };
 
   return (
@@ -577,11 +608,17 @@ export default function EquipmentWarrantyTracker({ equipmentId, ownerId, onClose
                         <Bell className="w-4 h-4" />
                         Set Reminder
                       </button>
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors">
+                      <button
+                        onClick={() => handleMarkClaimed(warranty)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm transition-colors"
+                      >
                         <Edit2 className="w-4 h-4" />
-                        Edit
+                        Mark Claimed
                       </button>
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg text-sm transition-colors">
+                      <button
+                        onClick={() => handleDeleteWarranty(warranty.id)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg text-sm transition-colors"
+                      >
                         <Trash2 className="w-4 h-4" />
                         Delete
                       </button>

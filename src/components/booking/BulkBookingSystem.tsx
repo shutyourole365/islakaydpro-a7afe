@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   ShoppingCart,
   Plus,
@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import type { Equipment, BulkBooking, EquipmentId, UserId } from '../../types';
 import { useAuth } from '../../contexts/AuthContext';
-import { createBulkBooking } from '../../services/database';
+import { createBulkBooking, getUserBulkBookings, BulkBookingRecord } from '../../services/database';
 
 interface BulkBookingSystemProps {
   initialEquipment?: Equipment[];
@@ -175,6 +175,7 @@ const mockAvailableEquipment: Equipment[] = [
 
 export default function BulkBookingSystem({ initialEquipment = [], onComplete, onClose }: BulkBookingSystemProps) {
   const { user } = useAuth();
+  const [pastBookings, setPastBookings] = useState<BulkBookingRecord[]>([]);
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     return initialEquipment.map((eq) => ({
       equipment: eq,
@@ -253,6 +254,12 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
       totalAmount,
     };
   }, [cartItems, globalStartDate, globalEndDate, useSameDates]);
+
+  useEffect(() => {
+    if (user) {
+      getUserBulkBookings(user.id).then(setPastBookings).catch(() => {});
+    }
+  }, [user]);
 
   // Add item to cart
   const addToCart = (equipment: Equipment) => {
@@ -712,10 +719,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
         <div className="text-sm text-gray-500 mb-1">Booking Reference</div>
         <div className="text-lg font-mono font-bold text-gray-900">BULK-{Date.now().toString(36).toUpperCase()}</div>
       </div>
-      <div className="flex justify-center gap-4">
-        <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-          View Bookings
-        </button>
+      <div className="flex justify-center gap-4 mb-8">
         <button
           onClick={onClose}
           className="px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
@@ -723,6 +727,30 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           Close
         </button>
       </div>
+
+      {pastBookings.length > 0 && (
+        <div className="text-left border-t pt-6">
+          <h4 className="font-semibold text-gray-900 mb-3">Your Bulk Booking History</h4>
+          <div className="space-y-2">
+            {pastBookings.slice(0, 5).map(b => (
+              <div key={b.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg text-sm">
+                <div>
+                  <p className="font-medium text-gray-900">{b.items.length} item{b.items.length !== 1 ? 's' : ''}</p>
+                  <p className="text-gray-500">{new Date(b.created_at).toLocaleDateString()}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-semibold text-gray-900">${b.total_amount.toFixed(2)}</p>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    b.booking_status === 'completed' ? 'bg-green-100 text-green-700' :
+                    b.booking_status === 'cancelled' ? 'bg-gray-100 text-gray-600' :
+                    'bg-blue-100 text-blue-700'
+                  }`}>{b.booking_status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 
