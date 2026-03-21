@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Browse Page', () => {
   test('should navigate to browse page', async ({ page }) => {
@@ -27,9 +27,9 @@ test.describe('Browse Page', () => {
   test('should show equipment cards', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: /browse equipment/i }).first().click();
-    // Wait for equipment cards to appear
-    await page.waitForTimeout(1500);
+    // Wait for equipment cards to appear (allows time for Supabase fallback to load)
     const cards = page.locator('.bg-white').filter({ has: page.getByText(/\/day/i) });
+    await expect(cards.first()).toBeVisible({ timeout: 10000 });
     expect(await cards.count()).toBeGreaterThan(0);
   });
 

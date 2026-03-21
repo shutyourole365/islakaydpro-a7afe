@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Authentication', () => {
   test('should open auth modal when clicking Sign In', async ({ page }) => {
@@ -11,7 +11,7 @@ test.describe('Authentication', () => {
   test('should show password field in auth modal', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: /sign in/i }).first().click();
-    await expect(page.getByLabel(/password/i)).toBeVisible();
+    await expect(page.getByRole('textbox', { name: /password/i })).toBeVisible();
   });
 
   test('should show validation error on empty form submit', async ({ page }) => {
