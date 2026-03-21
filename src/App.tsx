@@ -33,6 +33,8 @@ import InstallPrompt, { OfflineIndicator } from './components/pwa/InstallPrompt'
 import { CookieConsentBanner, CookieSettingsModal } from './components/ui/CookieConsent';
 import { useCookieConsent } from './hooks/useCookieConsent';
 import { addFavorite, removeFavorite, getEquipment } from './services/database';
+import { verifyCheckoutSession } from './services/payments';
+import { getPersonalizedRecommendations } from './services/ai';
 
 // New features
 const EquipmentRequestBoard = lazy(() => import('./components/requests/EquipmentRequestBoard'));
@@ -626,6 +628,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
   const [searchCategory, setSearchCategory] = useState('');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingEquipment, setBookingEquipment] = useState<Equipment | null>(null);
+  const [personalizedRecs, setPersonalizedRecs] = useState<{ recommendations: string[]; basedOn: string } | null>(null);
   const [comparisonItems, setComparisonItems] = useState<Equipment[]>([]);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
   // Premium feature states
@@ -719,6 +722,46 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
     fetchEquipment();
   }, [fetchEquipment]);
 
+  // Verify Stripe checkout session on redirect back from payment
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const bookingStatus = params.get('booking');
+    const sessionId = params.get('session_id');
+
+    if (bookingStatus === 'success' && sessionId) {
+      verifyCheckoutSession(sessionId).then(({ success, bookingId }) => {
+        if (success) {
+          addToast({
+            type: 'success',
+            title: 'Payment successful!',
+            message: bookingId
+              ? `Your booking #${bookingId.slice(0, 8)} is confirmed.`
+              : 'Your booking has been confirmed.',
+          });
+        } else {
+          addToast({
+            type: 'warning',
+            title: 'Payment pending',
+            message: 'Your payment is being processed. Check your dashboard for updates.',
+          });
+        }
+      }).catch(() => {});
+
+      // Clean up URL params without reloading
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    } else if (bookingStatus === 'cancelled') {
+      addToast({
+        type: 'info',
+        title: 'Booking cancelled',
+        message: 'Your booking was not completed. You can try again anytime.',
+      });
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     
@@ -751,8 +794,10 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
   useEffect(() => {
     if (user) {
       loadFavorites();
+      getPersonalizedRecommendations(user.id).then(setPersonalizedRecs).catch(() => {});
     } else {
       setFavorites(new Set());
+      setPersonalizedRecs(null);
     }
   }, [user, loadFavorites]);
 
@@ -1285,6 +1330,26 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
               onFavoriteClick={handleFavoriteToggle}
               favorites={favorites}
             />
+
+            {isAuthenticated && personalizedRecs && personalizedRecs.recommendations.length > 0 && (
+              <section className="py-12 px-4 max-w-7xl mx-auto">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Recommended for You</h2>
+                  <p className="text-sm text-gray-500 mt-1">{personalizedRecs.basedOn}</p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {personalizedRecs.recommendations.map((rec) => (
+                    <button
+                      key={rec}
+                      onClick={() => handleSearch(rec)}
+                      className="px-4 py-2 bg-teal-50 text-teal-700 border border-teal-200 rounded-full text-sm font-medium hover:bg-teal-100 transition-colors"
+                    >
+                      {rec}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
 
             <HowItWorks />
 

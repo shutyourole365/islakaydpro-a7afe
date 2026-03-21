@@ -2,6 +2,7 @@ import { useState, useId } from 'react';
 import { X, Mail, Lock, User, Eye, EyeOff, Package, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { signUpWithRetry, getAuthErrorMessage } from '../../services/authHelpers';
+import { sendWelcomeEmail } from '../../services/email';
 import SocialAuth from './SocialAuth';
 import BiometricAuth from './BiometricAuth';
 
@@ -74,12 +75,14 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
       if (data.user) {
         // If Supabase requires email confirmation, there will be no session
         if (!data.session) {
+          sendWelcomeEmail(email, fullName).catch(() => {});
           setSuccess('✅ Account created! Please check your email to confirm your account.');
           setLoading(false);
           return;
         }
 
         // Auto-confirmed (session exists)
+        sendWelcomeEmail(email, fullName).catch(() => {});
         setSuccess('✅ Account created successfully! Welcome to Islakayd!');
         setLoading(false);
         setTimeout(() => {

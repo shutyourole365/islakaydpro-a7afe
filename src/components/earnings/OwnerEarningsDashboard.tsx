@@ -11,9 +11,12 @@ import {
   Download,
   ArrowUpRight,
   ArrowDownRight,
+  CreditCard,
+  ExternalLink,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { checkPayoutStatus, getBalance, redirectToConnectOnboarding } from '../../services/payments';
 
 interface OwnerEarningsDashboardProps {
   onBack: () => void;
@@ -84,6 +87,9 @@ export default function OwnerEarningsDashboard({ onBack }: OwnerEarningsDashboar
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<'all' | '30d' | '90d' | 'ytd'>('30d');
   const [summary, setSummary] = useState<EarningsSummary | null>(null);
+  const [payoutStatus, setPayoutStatus] = useState<{ hasAccount: boolean; isOnboarded: boolean } | null>(null);
+  const [stripeBalance, setStripeBalance] = useState<{ available: number; pending: number } | null>(null);
+  const [payoutLoading, setPayoutLoading] = useState(false);
 
   const loadEarnings = useCallback(async () => {
     if (!user) return;
@@ -121,6 +127,27 @@ export default function OwnerEarningsDashboard({ onBack }: OwnerEarningsDashboar
   }, [user, period]);
 
   useEffect(() => { loadEarnings(); }, [loadEarnings]);
+
+  useEffect(() => {
+    if (!user) return;
+    checkPayoutStatus().then(status => {
+      setPayoutStatus(status);
+      if (status.isOnboarded && import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+        getBalance().then(b => {
+          setStripeBalance({ available: b.available, pending: b.pending });
+        }).catch(() => {});
+      }
+    }).catch(() => {});
+  }, [user]);
+
+  const handleSetupPayouts = async () => {
+    setPayoutLoading(true);
+    try {
+      await redirectToConnectOnboarding();
+    } catch {
+      setPayoutLoading(false);
+    }
+  };
 
   const exportCSV = () => {
     const rows = [
@@ -183,6 +210,44 @@ export default function OwnerEarningsDashboard({ onBack }: OwnerEarningsDashboar
             </button>
           </div>
         </div>
+
+        {/* Payout setup banner */}
+        {payoutStatus && !payoutStatus.isOnboarded && import.meta.env.VITE_STRIPE_PUBLIC_KEY && (
+          <div className="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <CreditCard className="w-5 h-5 text-amber-600 flex-shrink-0" />
+              <div>
+                <p className="font-medium text-amber-900">Set up payouts to receive your earnings</p>
+                <p className="text-sm text-amber-700">Connect your bank account via Stripe to get paid.</p>
+              </div>
+            </div>
+            <button
+              onClick={handleSetupPayouts}
+              disabled={payoutLoading}
+              className="flex items-center gap-1.5 px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition-colors disabled:opacity-60 flex-shrink-0"
+            >
+              {payoutLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ExternalLink className="w-4 h-4" />}
+              Set Up Payouts
+            </button>
+          </div>
+        )}
+
+        {/* Stripe balance display */}
+        {stripeBalance && (
+          <div className="mb-6 bg-teal-50 border border-teal-200 rounded-2xl p-4 flex items-center gap-6">
+            <CreditCard className="w-5 h-5 text-teal-600 flex-shrink-0" />
+            <div className="flex gap-8">
+              <div>
+                <p className="text-xs text-teal-600 font-medium">Available for payout</p>
+                <p className="text-xl font-bold text-teal-900">{fmt(stripeBalance.available)}</p>
+              </div>
+              <div>
+                <p className="text-xs text-teal-600 font-medium">Pending</p>
+                <p className="text-xl font-bold text-teal-700">{fmt(stripeBalance.pending)}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {loading ? (
           <div className="flex justify-center py-20">
