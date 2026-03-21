@@ -2361,10 +2361,8 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
               // Apply saved search filters and navigate to browse
               if (filters.query) setSearchQuery(filters.query);
               if (filters.category) setSearchCategory(filters.category);
-              if (filters.priceRange) {
-                setSearchMinPrice(filters.priceRange[0] > 0 ? filters.priceRange[0] : undefined);
-                setSearchMaxPrice(filters.priceRange[1] < 10000 ? filters.priceRange[1] : undefined);
-              }
+              if (filters.minPrice) setSearchMinPrice(filters.minPrice > 0 ? filters.minPrice : undefined);
+              if (filters.maxPrice) setSearchMaxPrice(filters.maxPrice < 10000 ? filters.maxPrice : undefined);
               setIsSavedSearchesOpen(false);
               setCurrentPage('browse');
             }}

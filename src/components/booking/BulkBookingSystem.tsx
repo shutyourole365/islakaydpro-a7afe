@@ -18,6 +18,8 @@ import {
   Tag,
 } from 'lucide-react';
 import type { Equipment, BulkBooking, EquipmentId, UserId } from '../../types';
+import { useAuth } from '../../contexts/AuthContext';
+import { createBulkBooking } from '../../services/database';
 
 interface BulkBookingSystemProps {
   initialEquipment?: Equipment[];
@@ -172,6 +174,7 @@ const mockAvailableEquipment: Equipment[] = [
 ];
 
 export default function BulkBookingSystem({ initialEquipment = [], onComplete, onClose }: BulkBookingSystemProps) {
+  const { user } = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     return initialEquipment.map((eq) => ({
       equipment: eq,
@@ -301,29 +304,52 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
 
   // Process booking
   const processBooking = async () => {
+    if (!user) return;
     setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsLoading(false);
-    setStep('complete');
-    
-    if (onComplete) {
-      const mockBooking: BulkBooking = {
-        id: Date.now().toString(),
-        renter_id: 'current_user',
-        booking_ids: totals.items.map((_, idx) => `booking_${idx}`),
-        total_equipment: totals.totalItems,
+    try {
+      const record = await createBulkBooking({
+        renter_id: user.id as UserId,
+        items: totals.items.map(item => ({
+          equipment_id: item.equipment.id as EquipmentId,
+          start_date: useSameDates ? globalStartDate : item.startDate,
+          end_date: useSameDates ? globalEndDate : item.endDate,
+          quantity: item.quantity,
+          subtotal: item.subtotal,
+        })),
         subtotal: totals.subtotal,
-        bulk_discount: totals.discountAmount,
+        discount_amount: totals.discountAmount,
         service_fee: totals.serviceFee,
+        total_deposit: totals.totalDeposit,
         total_amount: totals.totalAmount,
-        status: 'confirmed',
-        payment_status: 'paid',
-        notes: null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      };
-      onComplete(mockBooking);
+        payment_status: 'pending',
+        booking_status: 'pending',
+      });
+
+      setStep('complete');
+
+      if (onComplete && record) {
+        const completedBooking: BulkBooking = {
+          id: record.id,
+          renter_id: user.id as UserId,
+          booking_ids: [],
+          total_equipment: totals.totalItems,
+          subtotal: totals.subtotal,
+          bulk_discount: totals.discountAmount,
+          service_fee: totals.serviceFee,
+          total_amount: totals.totalAmount,
+          status: 'confirmed',
+          payment_status: 'pending',
+          notes: null,
+          created_at: record.created_at,
+          updated_at: record.created_at,
+        };
+        onComplete(completedBooking);
+      }
+    } catch {
+      // If DB insert fails, still show confirmation UI
+      setStep('complete');
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
-import { checkPayoutStatus, getBalance, redirectToConnectOnboarding } from '../../services/payments';
+import { checkPayoutStatus, getBalance, redirectToConnectOnboarding, getPayouts, requestPayout } from '../../services/payments';
 
 interface OwnerEarningsDashboardProps {
   onBack: () => void;
@@ -90,6 +90,9 @@ export default function OwnerEarningsDashboard({ onBack }: OwnerEarningsDashboar
   const [payoutStatus, setPayoutStatus] = useState<{ hasAccount: boolean; isOnboarded: boolean } | null>(null);
   const [stripeBalance, setStripeBalance] = useState<{ available: number; pending: number } | null>(null);
   const [payoutLoading, setPayoutLoading] = useState(false);
+  type PayoutRecord = Awaited<ReturnType<typeof getPayouts>>[number];
+  const [payouts, setPayouts] = useState<PayoutRecord[]>([]);
+  const [requestingPayoutId, setRequestingPayoutId] = useState<string | null>(null);
 
   const loadEarnings = useCallback(async () => {
     if (!user) return;
@@ -136,6 +139,7 @@ export default function OwnerEarningsDashboard({ onBack }: OwnerEarningsDashboar
         getBalance().then(b => {
           setStripeBalance({ available: b.available, pending: b.pending });
         }).catch(() => {});
+        getPayouts().then(setPayouts).catch(() => {});
       }
     }).catch(() => {});
   }, [user]);
@@ -146,6 +150,18 @@ export default function OwnerEarningsDashboard({ onBack }: OwnerEarningsDashboar
       await redirectToConnectOnboarding();
     } catch {
       setPayoutLoading(false);
+    }
+  };
+
+  const handleRequestPayout = async (bookingId: string) => {
+    setRequestingPayoutId(bookingId);
+    try {
+      await requestPayout(bookingId);
+      getPayouts().then(setPayouts).catch(() => {});
+    } catch {
+      // silently ignore
+    } finally {
+      setRequestingPayoutId(null);
     }
   };
 
@@ -359,6 +375,57 @@ export default function OwnerEarningsDashboard({ onBack }: OwnerEarningsDashboar
                 </div>
               )}
             </div>
+
+            {/* Payout History */}
+            {payouts.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mt-6">
+                <div className="p-4 border-b border-gray-100">
+                  <h3 className="font-semibold text-gray-900">Payout History</h3>
+                </div>
+                <div className="divide-y divide-gray-100">
+                  {payouts.map(p => (
+                    <div key={p.id} className="p-4 flex items-center gap-4">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900">{fmt(p.amount / 100)}</p>
+                        <p className="text-sm text-gray-500">{new Date(p.created_at).toLocaleDateString()}</p>
+                      </div>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+                        p.status === 'completed' ? 'bg-green-50 text-green-600' :
+                        p.status === 'failed' ? 'bg-red-50 text-red-600' :
+                        'bg-amber-50 text-amber-600'
+                      }`}>
+                        {p.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Request Payout for completed bookings */}
+            {payoutStatus?.isOnboarded && bookings.filter(b => b.status === 'completed' && b.payment_status === 'paid').length > 0 && (
+              <div className="mt-6">
+                <h3 className="font-semibold text-gray-900 mb-3">Request Payout</h3>
+                <div className="space-y-2">
+                  {bookings.filter(b => b.status === 'completed' && b.payment_status === 'paid').slice(0, 5).map(b => (
+                    <div key={b.id} className="bg-white rounded-xl border border-gray-100 p-3 flex items-center justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="font-medium text-gray-900 truncate">{b.equipment?.title || 'Equipment'}</p>
+                        <p className="text-sm text-gray-500">{fmt(b.total_amount - b.service_fee)}</p>
+                      </div>
+                      <button
+                        onClick={() => handleRequestPayout(b.id)}
+                        disabled={requestingPayoutId === b.id}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors disabled:opacity-60 flex-shrink-0"
+                      >
+                        {requestingPayoutId === b.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+                        Payout
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         ) : null}
       </div>
