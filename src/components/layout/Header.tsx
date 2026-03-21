@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { getUnreadNotificationCount, subscribeToNotifications } from '../../services/database';
 import {
   Search,
   Menu,
@@ -40,12 +42,25 @@ export default function Header({
   onSignOut,
   currentPage,
 }: HeaderProps) {
+  const { user } = useAuth();
+  const [unreadNotifCount, setUnreadNotifCount] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isCompanyMenuOpen, setIsCompanyMenuOpen] = useState(false);
   const [isSupportMenuOpen, setIsSupportMenuOpen] = useState(false);
+  const unsubRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    if (!user) { setUnreadNotifCount(0); return; }
+    getUnreadNotificationCount(user.id).then(setUnreadNotifCount).catch(() => {});
+    const unsub = subscribeToNotifications(user.id, () => {
+      getUnreadNotificationCount(user.id).then(setUnreadNotifCount).catch(() => {});
+    });
+    unsubRef.current = unsub?.unsubscribe ? () => unsub.unsubscribe() : null;
+    return () => { unsubRef.current?.(); };
+  }, [user]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -348,11 +363,16 @@ export default function Header({
                       }`}
                     >
                       <Bell className="w-5 h-5" />
-                      <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+                      {unreadNotifCount > 0 && (
+                        <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+                      )}
                     </button>
                     <NotificationsDropdown
                       isOpen={isNotificationsOpen}
-                      onClose={() => setIsNotificationsOpen(false)}
+                      onClose={() => {
+                        setIsNotificationsOpen(false);
+                        if (user) getUnreadNotificationCount(user.id).then(setUnreadNotifCount).catch(() => {});
+                      }}
                     />
                   </div>
                   <ThemeToggle variant="dropdown" />

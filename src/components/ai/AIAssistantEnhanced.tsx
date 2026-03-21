@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { streamMessage, analyzeProject } from '../../services/ai';
+import { streamMessage, analyzeProject, getRecommendations, getPersonalizedRecommendations, getEquipmentHelp } from '../../services/ai';
 import { useLocalStorage } from '../../hooks';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   X,
   Send,
@@ -72,6 +73,7 @@ const quickActions: QuickAction[] = [
 ];
 
 export default function AIAssistantEnhanced() {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
@@ -102,7 +104,27 @@ export default function AIAssistantEnhanced() {
   // Persist user preference for AI assistant (local override of env flag)
   const [aiEnabledByUser, setAiEnabledByUser] = useLocalStorage<boolean>('ai_assistant_enabled', true);
   const aiIsEnabled = GLOBAL_AI_ENABLED && aiEnabledByUser;
-  
+
+  // Load personalized recommendations when assistant opens for logged-in users
+  useEffect(() => {
+    if (!isOpen || !user) return;
+    getPersonalizedRecommendations(user.id).then(({ recommendations, basedOn }) => {
+      if (recommendations.length > 0) {
+        setMessages(prev => {
+          // Only inject if we're still on the welcome message
+          if (prev.length > 1) return prev;
+          return [...prev, {
+            id: 'personalized-' + Date.now(),
+            role: 'assistant',
+            content: `✨ **Personalized Picks for You**\n\n${basedOn}`,
+            timestamp: new Date(),
+            suggestions: recommendations.slice(0, 4),
+          }];
+        });
+      }
+    }).catch(() => {});
+  }, [isOpen, user]);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -326,7 +348,51 @@ export default function AIAssistantEnhanced() {
           setIsTyping(false);
           return;
         } catch {
-          // Fall through to contextual responses
+          // Fall through
+        }
+      }
+
+      // Recommendation query → getRecommendations
+      const isRecommendQuery = lowerMsg.includes('recommend') || lowerMsg.includes('suggest') ||
+        lowerMsg.includes('what should i') || lowerMsg.includes('best equipment');
+      if (isRecommendQuery) {
+        try {
+          const result = await getRecommendations(userMessage);
+          const newMessage: Message = {
+            id: Date.now().toString(),
+            role: 'assistant',
+            content: `🎯 **Equipment Recommendations**\n\n${result.explanation}`,
+            timestamp: new Date(),
+            suggestions: result.recommendations.slice(0, 4),
+            metadata: { type: 'recommendation' },
+          };
+          setMessages(prev => [...prev, newMessage]);
+          setIsTyping(false);
+          return;
+        } catch {
+          // Fall through
+        }
+      }
+
+      // Equipment-specific help question (e.g. "how does an excavator work?")
+      const isEquipmentHelpQuery = lowerMsg.includes('how does') || lowerMsg.includes('what is') ||
+        lowerMsg.includes('tell me about') || lowerMsg.includes('explain');
+      if (isEquipmentHelpQuery) {
+        try {
+          const helpResponse = await getEquipmentHelp('', userMessage);
+          const newMessage: Message = {
+            id: Date.now().toString(),
+            role: 'assistant',
+            content: helpResponse.content,
+            timestamp: new Date(),
+            suggestions: helpResponse.suggestions,
+            metadata: { type: 'info' },
+          };
+          setMessages(prev => [...prev, newMessage]);
+          setIsTyping(false);
+          return;
+        } catch {
+          // Fall through
         }
       }
 

@@ -55,6 +55,7 @@ import {
   getUserAnalytics,
   updateProfile,
   updateBookingStatus,
+  logAuditEvent,
 } from '../../services/database';
 import ReferralProgram from '../referral/ReferralProgram';
 
@@ -201,6 +202,7 @@ export default function Dashboard({
     try {
       await updateProfile(user.id, settingsForm);
       await refreshProfile();
+      logAuditEvent({ userId: user.id, action: 'profile_updated', metadata: { fields: Object.keys(settingsForm) } }).catch(() => {});
     } catch (error) {
       console.error('Failed to save settings:', error);
     } finally {
@@ -212,6 +214,7 @@ export default function Dashboard({
     const status = action === 'confirm' ? 'confirmed' : 'cancelled';
     await updateBookingStatus(bookingId, status);
     setOwnerBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status } : b));
+    if (user) logAuditEvent({ userId: user.id, action: `booking_${action}`, metadata: { bookingId } }).catch(() => {});
   };
 
   const filteredBookings = bookings.filter(b => bookingFilter === 'all' || b.status === bookingFilter);
