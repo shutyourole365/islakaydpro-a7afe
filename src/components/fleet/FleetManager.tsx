@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
+import { getEquipment, getEquipmentAnalytics } from '../../services/database';
 import {
   Package,
   DollarSign,
@@ -81,8 +82,54 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
 
   const loadFleetData = async () => {
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const { data: dbEquipment } = await getEquipment({ ownerId });
+      if (dbEquipment.length > 0) {
+        const fleetItems: FleetEquipment[] = dbEquipment.map(eq => ({
+          id: eq.id,
+          title: eq.title,
+          category: (eq as unknown as { category?: { name?: string } }).category?.name || 'Equipment',
+          status: (eq.availability_status === 'available' ? 'available' : eq.availability_status === 'rented' ? 'rented' : 'inactive') as FleetEquipment['status'],
+          location: eq.location || '',
+          dailyRate: eq.daily_rate,
+          totalEarnings: 0,
+          bookingsThisMonth: eq.total_bookings || 0,
+          utilizationRate: Math.min(100, (eq.total_bookings || 0) * 2),
+          condition: (eq.condition === 'excellent' || eq.condition === 'good' || eq.condition === 'fair') ? eq.condition : 'good',
+          imageUrl: eq.images?.[0] || '',
+        }));
 
+        // Load analytics for each equipment item
+        const analyticsResults = await Promise.allSettled(fleetItems.map(item => getEquipmentAnalytics(item.id)));
+        analyticsResults.forEach((result, idx) => {
+          if (result.status === 'fulfilled' && result.value) {
+            const a = result.value;
+            fleetItems[idx].totalEarnings = (a as unknown as { total_revenue?: number }).total_revenue ?? 0;
+            fleetItems[idx].utilizationRate = (a as unknown as { utilization_rate?: number }).utilization_rate ?? fleetItems[idx].utilizationRate;
+          }
+        });
+
+        const computedStats: FleetStats = {
+          totalEquipment: fleetItems.length,
+          activeListings: fleetItems.filter(e => e.status !== 'inactive').length,
+          currentlyRented: fleetItems.filter(e => e.status === 'rented').length,
+          inMaintenance: fleetItems.filter(e => e.status === 'maintenance').length,
+          totalRevenue: fleetItems.reduce((sum, e) => sum + e.totalEarnings, 0),
+          revenueGrowth: 0,
+          averageUtilization: Math.round(fleetItems.reduce((s, e) => s + e.utilizationRate, 0) / (fleetItems.length || 1)),
+          upcomingBookings: 0,
+          alerts: [],
+        };
+        setEquipment(fleetItems);
+        setStats(computedStats);
+        setLoading(false);
+        return;
+      }
+    } catch {
+      // Fall through to mock data
+    }
+
+    // Fallback mock data
     const mockEquipment: FleetEquipment[] = [
       {
         id: '1',
@@ -176,7 +223,7 @@ export default function FleetManager({ ownerId, onClose: _onClose }: FleetManage
     };
 
     setEquipment(mockEquipment);
-    setStats(mockStats);
+        setStats(mockStats);
     setLoading(false);
   };
 

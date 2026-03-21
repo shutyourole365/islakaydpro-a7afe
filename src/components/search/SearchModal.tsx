@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { getSearchSuggestions } from '../../services/ai';
+import { getCategories } from '../../services/database';
+import type { Category } from '../../types';
 import {
   Search,
   X,
@@ -29,6 +31,7 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [dbCategories, setDbCategories] = useState<Category[]>([]);
   const [filters, setFilters] = useState<SearchFilters>({
     location: '',
     dateRange: '',
@@ -42,6 +45,7 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
     if (isOpen) {
       inputRef.current?.focus();
       document.body.style.overflow = 'hidden';
+      getCategories().then(setDbCategories).catch(() => {});
     } else {
       document.body.style.overflow = '';
     }
@@ -93,16 +97,9 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
     { query: 'Moving Trucks', count: '980 searches' },
   ];
 
-  const categories = [
-    'All Categories',
-    'Construction',
-    'Power Tools',
-    'Photography',
-    'Audio & Video',
-    'Landscaping',
-    'Events',
-    'Vehicles',
-  ];
+  const categories = dbCategories.length > 0
+    ? ['All Categories', ...dbCategories.map(c => c.name)]
+    : ['All Categories', 'Construction', 'Power Tools', 'Photography', 'Audio & Video', 'Landscaping', 'Events', 'Vehicles'];
 
   if (!isOpen) return null;
 

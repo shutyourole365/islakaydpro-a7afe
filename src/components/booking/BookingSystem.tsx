@@ -21,7 +21,8 @@ import {
 import type { Equipment, InsurancePlan, UserId } from '../../types';
 import SmartScheduler from '../scheduling/SmartScheduler';
 import { useAuth } from '../../contexts/AuthContext';
-import { createBooking } from '../../services/database';
+import { createBooking, getBookingById } from '../../services/database';
+import type { Booking } from '../../types';
 import { createCheckoutSession } from '../../services/payments';
 import { sendBookingConfirmation } from '../../services/email';
 import { useToast } from '../ui/Toast';
@@ -98,6 +99,7 @@ export default function BookingSystem({
   const [notes, setNotes] = useState('');
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [confirmedBooking, setConfirmedBooking] = useState<Booking | null>(null);
 
   const today = useMemo(() => {
     const d = new Date();
@@ -325,6 +327,8 @@ export default function BookingSystem({
 
       setIsProcessing(false);
       setCurrentStep('confirmation');
+      // Fetch the confirmed booking to show accurate details
+      getBookingById(newBooking.id).then(b => { if (b) setConfirmedBooking(b); }).catch(() => {});
       onComplete(bookingDetails);
     } catch (err) {
       setIsProcessing(false);
@@ -836,7 +840,10 @@ export default function BookingSystem({
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Booking Confirmed!</h2>
               <p className="text-gray-600 mb-6">
-                Your booking reference is <span className="font-mono font-bold">ISK-{Date.now().toString().slice(-8)}</span>
+                Your booking reference is{' '}
+                <span className="font-mono font-bold">
+                  {confirmedBooking ? `ISK-${confirmedBooking.id.slice(-8).toUpperCase()}` : `ISK-${Date.now().toString().slice(-8)}`}
+                </span>
               </p>
               
               <div className="bg-gray-50 rounded-xl p-6 max-w-md mx-auto text-left">

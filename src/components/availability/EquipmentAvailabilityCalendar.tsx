@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { ArrowLeft, ChevronLeft, ChevronRight, Clock, MapPin, DollarSign, Check, X, AlertCircle } from 'lucide-react';
+import { getEquipment, getEquipmentAvailability, blockDates, unblockDates } from '../../services/database';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface EquipmentAvailabilityCalendarProps {
   onBack: () => void;
@@ -74,11 +76,76 @@ const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export default function EquipmentAvailabilityCalendar({ onBack }: EquipmentAvailabilityCalendarProps) {
+  const { user } = useAuth();
+  const [equipmentList, setEquipmentList] = useState<CalendarEquipment[]>(sampleEquipment);
   const [selected, setSelected] = useState(sampleEquipment[0]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectionStart, setSelectionStart] = useState<string | null>(null);
   const [selectionEnd, setSelectionEnd] = useState<string | null>(null);
+
+  // Load equipment list (owner's equipment if logged in, else show sample)
+  useEffect(() => {
+    if (!user) return;
+    getEquipment({ ownerId: user.id, limit: 10 }).then(({ data }) => {
+      if (data.length > 0) {
+        const items: CalendarEquipment[] = data.map(eq => ({
+          id: eq.id,
+          name: eq.title,
+          location: eq.location || '',
+          dailyRate: eq.daily_rate,
+          image: eq.images?.[0] || '',
+          slots: generateSlots(eq.daily_rate),
+        }));
+        setEquipmentList(items);
+        setSelected(items[0]);
+      }
+    }).catch(() => {});
+  }, [user]);
+
+  // Load real availability slots when selected equipment changes
+  const loadAvailability = useCallback(async (equipmentId: string, _dailyRate: number) => {
+    try {
+      const today = new Date();
+      const start = new Date(today); start.setDate(today.getDate() - 15);
+      const end = new Date(today); end.setDate(today.getDate() + 60);
+      const records = await getEquipmentAvailability(
+        equipmentId,
+        start.toISOString().split('T')[0],
+        end.toISOString().split('T')[0]
+      );
+      if (records.length > 0) {
+        // Build a day-level slot map from date ranges
+        const statusMap: Record<string, BookingSlot['status']> = {};
+        for (const r of records) {
+          const d = new Date(r.start_date);
+          const endD = new Date(r.end_date);
+          while (d <= endD) {
+            const dateStr = d.toISOString().split('T')[0];
+            statusMap[dateStr] = r.reason === 'maintenance' ? 'maintenance' : r.reason === 'booked' ? 'booked' : 'blocked';
+            d.setDate(d.getDate() + 1);
+          }
+        }
+        // Merge into existing generated slots
+        setEquipmentList(prev => prev.map(eq => {
+          if (eq.id !== equipmentId) return eq;
+          const merged = eq.slots.map(s => statusMap[s.date] ? { ...s, status: statusMap[s.date] } : s);
+          return { ...eq, slots: merged };
+        }));
+        setSelected(prev => {
+          if (prev.id !== equipmentId) return prev;
+          const merged = prev.slots.map(s => statusMap[s.date] ? { ...s, status: statusMap[s.date] } : s);
+          return { ...prev, slots: merged };
+        });
+      }
+    } catch { /* keep generated slots */ }
+  }, []);
+
+  useEffect(() => {
+    if (selected.id !== sampleEquipment[0]?.id) {
+      loadAvailability(selected.id, selected.dailyRate);
+    }
+  }, [selected.id, selected.dailyRate, loadAvailability]);
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -176,7 +243,7 @@ export default function EquipmentAvailabilityCalendar({ onBack }: EquipmentAvail
 
         {/* Equipment Selector */}
         <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
-          {sampleEquipment.map((eq) => (
+          {equipmentList.map((eq) => (
             <button
               key={eq.id}
               onClick={() => { setSelected(eq); setSelectionStart(null); setSelectionEnd(null); }}
@@ -308,6 +375,21 @@ export default function EquipmentAvailabilityCalendar({ onBack }: EquipmentAvail
                 {selectedSlot.bookedBy && (
                   <p className="text-sm text-gray-500 mt-2">Booked by: {selectedSlot.bookedBy}</p>
                 )}
+                {selectedSlot.status === 'blocked' && (
+                  <button
+                    className="mt-3 text-xs text-teal-600 underline"
+                    onClick={async () => {
+                      if (!selectedDate) return;
+                      try {
+                        await unblockDates(selectedDate);
+                        await loadAvailability(selected.id, selected.dailyRate);
+                        setSelectedDate(null);
+                      } catch { alert('Failed to unblock date.'); }
+                    }}
+                  >
+                    Unblock this date
+                  </button>
+                )}
                 {selectedSlot.price && selectedSlot.status === 'available' && (
                   <p className="text-sm text-gray-500 mt-2 flex items-center gap-1">
                     <DollarSign className="w-4 h-4" /> Rate: ${selectedSlot.price}/day
@@ -339,8 +421,18 @@ export default function EquipmentAvailabilityCalendar({ onBack }: EquipmentAvail
                   </div>
                 </div>
                 {rangeAvailable ? (
-                  <button className="w-full mt-4 py-2.5 bg-teal-500 text-white rounded-xl font-semibold hover:bg-teal-600 transition-colors">
-                    Book {rangeDays} Days
+                  <button
+                    className="w-full mt-4 py-2.5 bg-teal-500 text-white rounded-xl font-semibold hover:bg-teal-600 transition-colors"
+                    onClick={async () => {
+                      if (!selectionStart || !selectionEnd) return;
+                      try {
+                        await blockDates(selected.id, selectionStart, selectionEnd, 'unavailable');
+                        await loadAvailability(selected.id, selected.dailyRate);
+                        setSelectionStart(null); setSelectionEnd(null);
+                      } catch { alert('Failed to block dates. Please try again.'); }
+                    }}
+                  >
+                    Block {rangeDays} Days
                   </button>
                 ) : (
                   <div className="mt-3 p-2 bg-red-100 rounded-lg text-xs text-red-700 text-center">

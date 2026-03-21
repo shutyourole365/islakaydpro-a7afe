@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { getEquipmentBundles, createEquipmentBundle, deleteEquipmentBundle } from '../../services/database';
+import { getEquipmentBundles, createEquipmentBundle, updateEquipmentBundle, deleteEquipmentBundle } from '../../services/database';
 import {
   Package,
   Plus,
@@ -175,6 +175,7 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
     });
   }, [ownerId, mode, user?.id]);
   const [isCreating, setIsCreating] = useState(false);
+  const [editingBundleId, setEditingBundleId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
   
@@ -247,6 +248,40 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
   const handleDeleteBundle = async (bundleId: string) => {
     await deleteEquipmentBundle(bundleId).catch(() => {});
     setBundles(bundles.filter((b) => b.id !== bundleId));
+  };
+
+  const handleEditBundle = (bundle: EquipmentBundle) => {
+    setEditingBundleId(bundle.id);
+    setFormData({
+      name: bundle.name,
+      description: bundle.description,
+      equipment_ids: bundle.equipment_ids as string[],
+      discount_percentage: bundle.discount_percentage,
+      min_rental_days: bundle.min_rental_days,
+      max_rental_days: bundle.max_rental_days,
+    });
+    setIsCreating(true);
+  };
+
+  const handleUpdateBundle = async () => {
+    if (!editingBundleId) return handleSaveBundle();
+    const pricing = calculateBundlePricing(formData.equipment_ids);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const saved = await updateEquipmentBundle(editingBundleId, {
+      name: formData.name,
+      description: formData.description,
+      discount_percentage: formData.discount_percentage,
+      min_rental_days: formData.min_rental_days,
+      max_rental_days: formData.max_rental_days,
+      is_active: true,
+    } as any).catch(() => null);
+    const updated: Partial<EquipmentBundle> = saved
+      ? (saved as unknown as Partial<EquipmentBundle>)
+      : { name: formData.name, description: formData.description, discount_percentage: formData.discount_percentage, original_total: pricing.originalTotal, bundle_price: pricing.discountedTotal };
+    setBundles(bundles.map(b => b.id === editingBundleId ? { ...b, ...updated } : b));
+    setEditingBundleId(null);
+    setIsCreating(false);
+    setFormData({ name: '', description: '', equipment_ids: [], discount_percentage: 10, min_rental_days: 1, max_rental_days: 30 });
   };
 
   // Get equipment by ID
@@ -374,7 +409,10 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
               </>
             ) : (
               <>
-                <button className="flex-1 py-2 border rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+                <button
+                  className="flex-1 py-2 border rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                  onClick={() => handleEditBundle(bundle)}
+                >
                   <Edit2 className="w-4 h-4" />
                   Edit
                 </button>
@@ -521,12 +559,12 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
               Cancel
             </button>
             <button
-              onClick={handleSaveBundle}
+              onClick={editingBundleId ? handleUpdateBundle : handleSaveBundle}
               disabled={!formData.name || formData.equipment_ids.length < 2}
               className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
              >
               <CheckCircle className="w-4 h-4" />
-              Create Bundle
+              {editingBundleId ? 'Update Bundle' : 'Create Bundle'}
             </button>
           </div>
         </div>

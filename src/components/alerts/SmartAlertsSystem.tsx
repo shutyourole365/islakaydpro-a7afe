@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { getUserAlerts, markAlertAsRead, dismissAlert as dbDismissAlert } from '../../services/database';
 import {
   Bell,
   BellRing,
@@ -240,8 +242,16 @@ const defaultPreferences: AlertPreference[] = [
 ];
 
 export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystemProps) {
-  void userId; // For future API integration
-  const [alerts, setAlerts] = useState<SmartAlert[]>(mockAlerts);
+  const { user } = useAuth();
+  const effectiveUserId = userId || user?.id;
+  const [alerts, setAlerts] = useState<SmartAlert[]>([]);
+
+  useEffect(() => {
+    if (!effectiveUserId) { setAlerts(mockAlerts); return; }
+    getUserAlerts(effectiveUserId).then(records => {
+      setAlerts(records.length > 0 ? (records as unknown as SmartAlert[]) : mockAlerts);
+    }).catch(() => setAlerts(mockAlerts));
+  }, [effectiveUserId]);
   const [preferences, setPreferences] = useState<AlertPreference[]>(defaultPreferences);
   const [activeView, setActiveView] = useState<'alerts' | 'settings'>('alerts');
   const [filterType, setFilterType] = useState<AlertType | 'all'>('all');
@@ -334,6 +344,7 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
 
   // Mark as read
   const markAsRead = (id: string) => {
+    markAlertAsRead(id).catch(() => {});
     setAlerts((prev) =>
       prev.map((a) => (a.id === id ? { ...a, status: 'read' as AlertStatus } : a))
     );
@@ -341,11 +352,15 @@ export default function SmartAlertsSystem({ userId, onClose }: SmartAlertsSystem
 
   // Mark all as read
   const markAllAsRead = () => {
-    setAlerts((prev) => prev.map((a) => ({ ...a, status: 'read' as AlertStatus })));
+    setAlerts((prev) => {
+      prev.filter(a => a.status === 'unread').forEach(a => markAlertAsRead(a.id).catch(() => {}));
+      return prev.map((a) => ({ ...a, status: 'read' as AlertStatus }));
+    });
   };
 
   // Dismiss alert
   const dismissAlert = (id: string) => {
+    dbDismissAlert(id).catch(() => {});
     setAlerts((prev) =>
       prev.map((a) => (a.id === id ? { ...a, status: 'dismissed' as AlertStatus } : a))
     );
