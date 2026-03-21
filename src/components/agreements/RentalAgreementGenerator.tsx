@@ -1,323 +1,395 @@
-import { useState } from 'react';
-import { ArrowLeft, FileText, Download, Send, Check, Lock, Plus } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import {
+  ArrowLeft,
+  FileText,
+  Download,
+  CheckCircle,
+  Clock,
+  XCircle,
+  Pen,
+  Loader2,
+  Shield,
+  Package,
+} from 'lucide-react';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface RentalAgreementGeneratorProps {
   onBack: () => void;
+  bookingId?: string;
 }
 
-interface AgreementTemplate {
+interface Agreement {
   id: string;
-  name: string;
-  description: string;
-  clauses: number;
+  booking_id: string;
+  equipment_title: string;
+  start_date: string;
+  end_date: string;
+  total_amount: number;
+  deposit_amount: number;
+  daily_rate: number;
+  insurance_plan: string | null;
+  special_terms: string | null;
+  status: 'pending' | 'owner_signed' | 'fully_signed' | 'voided';
+  owner_signed_at: string | null;
+  renter_signed_at: string | null;
+  owner_id: string;
+  renter_id: string;
+  created_at: string;
+  owner?: { full_name: string | null };
+  renter?: { full_name: string | null };
 }
 
-interface GeneratedAgreement {
-  id: string;
-  equipmentName: string;
-  renterName: string;
-  startDate: string;
-  endDate: string;
-  totalCost: number;
-  status: 'draft' | 'pending_signature' | 'signed' | 'completed';
-  agreementDate: string;
-}
-
-const templates: AgreementTemplate[] = [
-  { id: 't1', name: 'Standard Rental Agreement', description: 'Basic rental terms and conditions', clauses: 8 },
-  { id: 't2', name: 'Heavy Equipment Agreement', description: 'Specialized for construction equipment', clauses: 12 },
-  { id: 't3', name: 'Photography Equipment Agreement', description: 'Terms for cameras and media equipment', clauses: 10 },
-  { id: 't4', name: 'Short-Term Rental Agreement', description: 'For rentals under 7 days', clauses: 6 },
-  { id: 't5', name: 'Enterprise Agreement', description: 'For large volume/long-term rentals', clauses: 15 },
-];
-
-const sampleAgreements: GeneratedAgreement[] = [
-  { id: 'a1', equipmentName: 'CAT 320 Excavator', renterName: 'John D.', startDate: '2026-02-20', endDate: '2026-02-27', totalCost: 3150, status: 'signed', agreementDate: '2026-02-19' },
-  { id: 'a2', equipmentName: 'Sony A7IV Camera Kit', renterName: 'Sarah M.', startDate: '2026-03-01', endDate: '2026-03-05', totalCost: 625, status: 'pending_signature', agreementDate: '2026-02-24' },
-  { id: 'a3', equipmentName: 'DeWalt Power Tool Kit', renterName: 'Mike R.', startDate: '2026-02-25', endDate: '2026-03-02', totalCost: 525, status: 'draft', agreementDate: '2026-02-23' },
-  { id: 'a4', equipmentName: 'Premium DJ Package', renterName: 'Lisa K.', startDate: '2026-02-15', endDate: '2026-02-16', totalCost: 590, status: 'completed', agreementDate: '2026-02-14' },
-];
-
-const statusConfig = {
-  draft: { bg: 'bg-gray-100', text: 'text-gray-700', dot: 'bg-gray-500', label: 'Draft' },
-  pending_signature: { bg: 'bg-blue-100', text: 'text-blue-700', dot: 'bg-blue-500', label: 'Awaiting Signature' },
-  signed: { bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-500', label: 'Signed' },
-  completed: { bg: 'bg-teal-100', text: 'text-teal-700', dot: 'bg-teal-500', label: 'Completed' },
+const STATUS_CONFIG = {
+  pending: { label: 'Awaiting Signatures', bg: 'bg-amber-50', text: 'text-amber-700', icon: Clock },
+  owner_signed: { label: 'Owner Signed', bg: 'bg-blue-50', text: 'text-blue-700', icon: Pen },
+  fully_signed: { label: 'Fully Signed', bg: 'bg-green-50', text: 'text-green-700', icon: CheckCircle },
+  voided: { label: 'Voided', bg: 'bg-gray-50', text: 'text-gray-600', icon: XCircle },
 };
 
-export default function RentalAgreementGenerator({ onBack }: RentalAgreementGeneratorProps) {
-  const [tab, setTab] = useState<'templates' | 'agreements'>('agreements');
-  const [selectedTemplate, setSelectedTemplate] = useState(templates[0]);
-  const [formData, setFormData] = useState({
-    equipment: 'CAT 320 Excavator',
-    renterName: '',
-    renterEmail: '',
-    startDate: '',
-    endDate: '',
-    totalCost: 0,
-    insuranceIncluded: true,
-    depositAmount: 2000,
-    additionalTerms: '',
-  });
+const STANDARD_TERMS = `
+1. EQUIPMENT USE: The renter agrees to use the equipment only for its intended purpose and in accordance with manufacturer guidelines.
 
-  const rentalDays = formData.startDate && formData.endDate
-    ? Math.ceil((new Date(formData.endDate).getTime() - new Date(formData.startDate).getTime()) / (1000 * 60 * 60 * 24))
-    : 0;
+2. RESPONSIBILITY: The renter is responsible for the equipment from pickup/delivery until return. Any damage beyond normal wear and tear will be deducted from the deposit.
+
+3. RETURN CONDITION: Equipment must be returned in the same condition as received, clean and fully functional.
+
+4. LATE RETURN: Late returns are charged at 1.5x the daily rate for each additional day without prior agreement.
+
+5. DAMAGE POLICY: Any damage must be reported immediately. The deposit covers repairs up to the deposit amount. Costs exceeding the deposit are the renter's responsibility.
+
+6. CANCELLATION: Cancellations 48+ hours before start date receive a full refund. Cancellations within 48 hours forfeit 50% of the rental amount.
+
+7. DISPUTES: Any disputes will be handled through the Islakayd platform dispute resolution system.
+
+8. INSURANCE: The selected insurance plan applies during the rental period as described during booking.
+`.trim();
+
+function generateAgreementText(agreement: Agreement, ownerName: string, renterName: string): string {
+  const start = new Date(agreement.start_date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const end = new Date(agreement.end_date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const days = Math.ceil((new Date(agreement.end_date).getTime() - new Date(agreement.start_date).getTime()) / 86400000);
+
+  return `
+EQUIPMENT RENTAL AGREEMENT
+===========================
+Agreement ID: ${agreement.id}
+Date: ${new Date(agreement.created_at).toLocaleDateString()}
+
+PARTIES
+-------
+Owner: ${ownerName}
+Renter: ${renterName}
+
+EQUIPMENT
+---------
+Equipment: ${agreement.equipment_title}
+Rental Period: ${start} to ${end} (${days} days)
+Daily Rate: $${agreement.daily_rate.toFixed(2)}
+Insurance Plan: ${agreement.insurance_plan || 'None'}
+
+FINANCIAL TERMS
+---------------
+Total Rental Amount: $${agreement.total_amount.toFixed(2)}
+Security Deposit: $${agreement.deposit_amount.toFixed(2)}
+
+SPECIAL TERMS
+-------------
+${agreement.special_terms || 'None'}
+
+STANDARD TERMS & CONDITIONS
+----------------------------
+${STANDARD_TERMS}
+
+SIGNATURES
+----------
+Owner: ${agreement.owner_signed_at ? `Signed on ${new Date(agreement.owner_signed_at).toLocaleDateString()}` : '[Pending]'}
+Renter: ${agreement.renter_signed_at ? `Signed on ${new Date(agreement.renter_signed_at).toLocaleDateString()}` : '[Pending]'}
+`.trim();
+}
+
+export default function RentalAgreementGenerator({ onBack, bookingId }: RentalAgreementGeneratorProps) {
+  const { user } = useAuth();
+  const [agreements, setAgreements] = useState<Agreement[]>([]);
+  const [selected, setSelected] = useState<Agreement | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [signing, setSigning] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [bookingIdInput, setBookingIdInput] = useState(bookingId || '');
+  const [specialTerms, setSpecialTerms] = useState('');
+
+  const loadAgreements = useCallback(async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from('rental_agreements')
+      .select(`*, owner:profiles!rental_agreements_owner_id_fkey(full_name), renter:profiles!rental_agreements_renter_id_fkey(full_name)`)
+      .or(`owner_id.eq.${user.id},renter_id.eq.${user.id}`)
+      .order('created_at', { ascending: false });
+    if (!error) setAgreements((data || []) as Agreement[]);
+    setLoading(false);
+  }, [user]);
+
+  useEffect(() => { loadAgreements(); }, [loadAgreements]);
+
+  const handleGenerate = async () => {
+    if (!user || !bookingIdInput.trim()) return;
+    setGenerating(true);
+    try {
+      const { data: booking, error: bError } = await supabase
+        .from('bookings')
+        .select(`id, owner_id, renter_id, start_date, end_date, total_amount, deposit_amount, daily_rate, service_fee, equipment:equipment(title)`)
+        .eq('id', bookingIdInput.trim())
+        .single();
+
+      if (bError || !booking) {
+        alert('Booking not found. Please check the ID.');
+        return;
+      }
+
+      const equipmentTitle = (booking.equipment as { title?: string } | null)?.title || 'Unknown Equipment';
+
+      const { data: existing } = await supabase
+        .from('rental_agreements')
+        .select('id')
+        .eq('booking_id', booking.id)
+        .maybeSingle();
+
+      if (existing) {
+        alert('An agreement already exists for this booking.');
+        await loadAgreements();
+        return;
+      }
+
+      const { data: agreement, error: aError } = await supabase
+        .from('rental_agreements')
+        .insert({
+          booking_id: booking.id,
+          owner_id: booking.owner_id,
+          renter_id: booking.renter_id,
+          equipment_title: equipmentTitle,
+          start_date: booking.start_date,
+          end_date: booking.end_date,
+          total_amount: booking.total_amount,
+          deposit_amount: booking.deposit_amount,
+          daily_rate: booking.daily_rate,
+          special_terms: specialTerms || null,
+        })
+        .select(`*, owner:profiles!rental_agreements_owner_id_fkey(full_name), renter:profiles!rental_agreements_renter_id_fkey(full_name)`)
+        .single();
+
+      if (aError) throw aError;
+      setAgreements(prev => [agreement as Agreement, ...prev]);
+      setSelected(agreement as Agreement);
+      setBookingIdInput('');
+      setSpecialTerms('');
+    } catch (err) {
+      console.error('Failed to generate agreement:', err);
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  const handleSign = async (agreementId: string, role: 'owner' | 'renter') => {
+    if (!user) return;
+    setSigning(true);
+    try {
+      const now = new Date().toISOString();
+      const updates: Record<string, string> = {};
+      updates[role === 'owner' ? 'owner_signed_at' : 'renter_signed_at'] = now;
+      updates[role === 'owner' ? 'owner_signature' : 'renter_signature'] = `${user.id}:${now}`;
+
+      const { data: current } = await supabase.from('rental_agreements').select('owner_signed_at,renter_signed_at').eq('id', agreementId).single();
+      const otherSigned = role === 'owner' ? current?.renter_signed_at : current?.owner_signed_at;
+      if (otherSigned) updates.status = 'fully_signed';
+      else updates.status = role === 'owner' ? 'owner_signed' : 'pending';
+
+      const { data, error } = await supabase
+        .from('rental_agreements')
+        .update(updates)
+        .eq('id', agreementId)
+        .select(`*, owner:profiles!rental_agreements_owner_id_fkey(full_name), renter:profiles!rental_agreements_renter_id_fkey(full_name)`)
+        .single();
+
+      if (error) throw error;
+      setSelected(data as Agreement);
+      setAgreements(prev => prev.map(a => a.id === agreementId ? data as Agreement : a));
+    } finally {
+      setSigning(false);
+    }
+  };
+
+  const handleDownload = (agreement: Agreement) => {
+    const ownerName = agreement.owner?.full_name || 'Owner';
+    const renterName = agreement.renter?.full_name || 'Renter';
+    const text = generateAgreementText(agreement, ownerName, renterName);
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `rental-agreement-${agreement.id.slice(0, 8)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  if (selected) {
+    const cfg = STATUS_CONFIG[selected.status];
+    const Icon = cfg.icon;
+    const isOwner = user?.id === selected.owner_id;
+    const isRenter = user?.id === selected.renter_id;
+    const myRole = isOwner ? 'owner' : 'renter';
+    const mySigned = isOwner ? selected.owner_signed_at : selected.renter_signed_at;
+    const ownerName = selected.owner?.full_name || 'Owner';
+    const renterName = selected.renter?.full_name || 'Renter';
+
+    return (
+      <div className="min-h-screen bg-gray-50 pt-20">
+        <div className="max-w-3xl mx-auto px-4 py-8">
+          <button onClick={() => setSelected(null)} className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors">
+            <ArrowLeft className="w-5 h-5" /> Back to Agreements
+          </button>
+
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-gray-900">Rental Agreement</h2>
+              <span className={`flex items-center gap-1.5 px-3 py-1 ${cfg.bg} ${cfg.text} rounded-full text-sm font-medium`}>
+                <Icon className="w-4 h-4" /> {cfg.label}
+              </span>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-4 font-mono text-xs text-gray-700 whitespace-pre-wrap overflow-auto max-h-96 mb-6">
+              {generateAgreementText(selected, ownerName, renterName)}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="p-3 bg-gray-50 rounded-xl">
+                <p className="text-xs text-gray-500 mb-1">Owner ({ownerName})</p>
+                {selected.owner_signed_at ? (
+                  <p className="text-sm text-green-600 font-medium flex items-center gap-1"><CheckCircle className="w-4 h-4" /> Signed {new Date(selected.owner_signed_at).toLocaleDateString()}</p>
+                ) : (
+                  <p className="text-sm text-amber-600 flex items-center gap-1"><Clock className="w-4 h-4" /> Pending</p>
+                )}
+              </div>
+              <div className="p-3 bg-gray-50 rounded-xl">
+                <p className="text-xs text-gray-500 mb-1">Renter ({renterName})</p>
+                {selected.renter_signed_at ? (
+                  <p className="text-sm text-green-600 font-medium flex items-center gap-1"><CheckCircle className="w-4 h-4" /> Signed {new Date(selected.renter_signed_at).toLocaleDateString()}</p>
+                ) : (
+                  <p className="text-sm text-amber-600 flex items-center gap-1"><Clock className="w-4 h-4" /> Pending</p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => handleDownload(selected)}
+                className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <Download className="w-4 h-4" /> Download
+              </button>
+              {(isOwner || isRenter) && !mySigned && selected.status !== 'voided' && (
+                <button
+                  onClick={() => handleSign(selected.id, myRole)}
+                  disabled={signing}
+                  className="flex items-center gap-2 px-6 py-2 bg-teal-500 text-white rounded-xl text-sm font-semibold hover:bg-teal-600 disabled:opacity-50 transition-colors"
+                >
+                  {signing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Pen className="w-4 h-4" />}
+                  Sign as {myRole === 'owner' ? 'Owner' : 'Renter'}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-24 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 py-8 pt-24">
-        {/* Header */}
+    <div className="min-h-screen bg-gray-50 pt-20">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <button onClick={onBack} className="p-2 hover:bg-gray-200 rounded-full transition-colors" aria-label="Go back">
-            <ArrowLeft className="w-6 h-6" />
+          <button onClick={onBack} className="text-gray-600 hover:text-gray-900 transition-colors">
+            <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Rental Agreement Generator</h1>
-            <p className="text-gray-500 mt-1">Create and manage digital rental contracts</p>
+            <h1 className="text-2xl font-bold text-gray-900">Rental Agreements</h1>
+            <p className="text-gray-500 text-sm">Digital contracts for your rentals</p>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-1 mb-6 bg-gray-100 rounded-lg p-1 w-fit">
-          {(['agreements', 'templates'] as const).map((t) => (
+        {/* Generate new */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+          <h3 className="font-semibold text-gray-900 mb-4">Generate Agreement from Booking</h3>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Booking ID</label>
+              <input
+                value={bookingIdInput}
+                onChange={e => setBookingIdInput(e.target.value)}
+                placeholder="Paste your booking ID"
+                className="w-full px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Special Terms (optional)</label>
+              <textarea
+                value={specialTerms}
+                onChange={e => setSpecialTerms(e.target.value)}
+                rows={2}
+                placeholder="Any additional terms for this rental..."
+                className="w-full px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+              />
+            </div>
             <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                tab === t ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-              }`}
+              onClick={handleGenerate}
+              disabled={generating || !bookingIdInput.trim()}
+              className="flex items-center gap-2 px-6 py-2 bg-teal-500 text-white rounded-xl text-sm font-semibold hover:bg-teal-600 disabled:opacity-50 transition-colors"
             >
-              {t === 'agreements' ? 'My Agreements' : 'Templates'}
+              {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
+              Generate Agreement
             </button>
-          ))}
+          </div>
         </div>
 
-        {tab === 'agreements' && (
-          <div className="space-y-6">
-            {/* New Agreement Button */}
-            <button className="flex items-center gap-2 px-4 py-3 bg-teal-500 text-white rounded-xl font-semibold hover:bg-teal-600 transition-colors">
-              <Plus className="w-5 h-5" /> Create New Agreement
-            </button>
+        {/* Protection note */}
+        <div className="flex items-center gap-3 p-4 bg-teal-50 rounded-xl border border-teal-100 mb-6">
+          <Shield className="w-5 h-5 text-teal-600 flex-shrink-0" />
+          <p className="text-sm text-teal-800">Signed agreements provide legal protection for both parties. Both owner and renter must sign before the rental begins.</p>
+        </div>
 
-            {/* Agreements List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {sampleAgreements.map((agreement) => {
-                const config = statusConfig[agreement.status];
-                return (
-                  <div key={agreement.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-teal-600" />
-                        <div>
-                          <h3 className="font-bold text-gray-900">{agreement.equipmentName}</h3>
-                          <p className="text-xs text-gray-500 mt-0.5">Renter: {agreement.renterName}</p>
-                        </div>
-                      </div>
-                      <div className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 ${config.bg} ${config.text}`}>
-                        <div className={`w-2 h-2 rounded-full ${config.dot}`} />
-                        {config.label}
-                      </div>
-                    </div>
-
-                    <div className="space-y-2 mb-4 py-4 border-y border-gray-100 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Dates</span>
-                        <span className="font-medium text-gray-900">
-                          {new Date(agreement.startDate).toLocaleDateString()} - {new Date(agreement.endDate).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Duration</span>
-                        <span className="font-medium text-gray-900">
-                          {Math.ceil((new Date(agreement.endDate).getTime() - new Date(agreement.startDate).getTime()) / (1000 * 60 * 60 * 24))} days
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Total Cost</span>
-                        <span className="font-bold text-teal-600">${agreement.totalCost.toLocaleString()}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <button className="flex-1 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                        <Download className="w-4 h-4" /> Download
-                      </button>
-                      {agreement.status === 'pending_signature' && (
-                        <button className="flex-1 px-3 py-2 bg-teal-100 text-teal-700 rounded-lg text-sm font-medium hover:bg-teal-200 transition-colors flex items-center justify-center gap-2">
-                          <Send className="w-4 h-4" /> Send
-                        </button>
-                      )}
-                      {agreement.status === 'draft' && (
-                        <button className="flex-1 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors">
-                          Edit
-                        </button>
-                      )}
-                      {agreement.status === 'signed' && (
-                        <button className="flex-1 px-3 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors flex items-center justify-center gap-2">
-                          <Check className="w-4 h-4" /> Signed
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+        {/* Agreement list */}
+        {agreements.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <FileText className="w-10 h-10 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500">No agreements yet. Generate one from a booking above.</p>
           </div>
-        )}
-
-        {tab === 'templates' && (
-          <div className="space-y-6">
-            {/* Template Selection */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {templates.map((template) => (
-                <button
-                  key={template.id}
-                  onClick={() => setSelectedTemplate(template)}
-                  className={`p-6 rounded-2xl border-2 text-left transition-all ${
-                    selectedTemplate.id === template.id
-                      ? 'border-teal-500 bg-teal-50'
-                      : 'border-gray-200 bg-white hover:border-gray-300'
-                  }`}
-                >
-                  <h3 className="font-bold text-gray-900 mb-1">{template.name}</h3>
-                  <p className="text-sm text-gray-500 mb-3">{template.description}</p>
-                  <p className="text-xs text-gray-400">{template.clauses} standard clauses</p>
+        ) : (
+          <div className="space-y-3">
+            {agreements.map(a => {
+              const cfg = STATUS_CONFIG[a.status];
+              const Icon = cfg.icon;
+              return (
+                <button key={a.id} onClick={() => setSelected(a)} className="w-full bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow text-left flex items-center gap-4">
+                  <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Package className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-900 truncate">{a.equipment_title}</p>
+                    <p className="text-sm text-gray-500">{new Date(a.start_date).toLocaleDateString()} – {new Date(a.end_date).toLocaleDateString()} · ${a.total_amount.toFixed(2)}</p>
+                  </div>
+                  <span className={`flex items-center gap-1.5 px-3 py-1 ${cfg.bg} ${cfg.text} rounded-full text-xs font-medium flex-shrink-0`}>
+                    <Icon className="w-3.5 h-3.5" /> {cfg.label}
+                  </span>
                 </button>
-              ))}
-            </div>
-
-            {/* Preview & Form */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Form */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-teal-600" /> Agreement Details
-                </h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Equipment</label>
-                    <input
-                      type="text"
-                      value={formData.equipment}
-                      onChange={(e) => setFormData({ ...formData, equipment: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Renter Name</label>
-                    <input
-                      type="text"
-                      value={formData.renterName}
-                      onChange={(e) => setFormData({ ...formData, renterName: e.target.value })}
-                      placeholder="Enter renter name"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Renter Email</label>
-                    <input
-                      type="email"
-                      value={formData.renterEmail}
-                      onChange={(e) => setFormData({ ...formData, renterEmail: e.target.value })}
-                      placeholder="Enter renter email"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
-                      <input
-                        type="date"
-                        value={formData.startDate}
-                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-                      <input
-                        type="date"
-                        value={formData.endDate}
-                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Deposit Amount</label>
-                      <input
-                        type="number"
-                        value={formData.depositAmount}
-                        onChange={(e) => setFormData({ ...formData, depositAmount: parseInt(e.target.value) })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Total Cost</label>
-                      <input
-                        type="number"
-                        value={formData.totalCost}
-                        onChange={(e) => setFormData({ ...formData, totalCost: parseInt(e.target.value) })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                      />
-                    </div>
-                  </div>
-                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={formData.insuranceIncluded}
-                      onChange={(e) => setFormData({ ...formData, insuranceIncluded: e.target.checked })}
-                      className="w-4 h-4 text-teal-500 border-gray-300 rounded"
-                    />
-                    Include insurance coverage
-                  </label>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Additional Terms</label>
-                    <textarea
-                      value={formData.additionalTerms}
-                      onChange={(e) => setFormData({ ...formData, additionalTerms: e.target.value })}
-                      placeholder="Add any custom terms..."
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Preview */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <h3 className="font-bold text-gray-900 mb-4">Agreement Preview</h3>
-                <div className="border border-gray-200 rounded-xl p-4 bg-gray-50 text-sm text-gray-700 space-y-2 max-h-96 overflow-y-auto">
-                  <p className="font-bold text-center text-gray-900 mb-3">EQUIPMENT RENTAL AGREEMENT</p>
-                  {formData.renterName && (
-                    <>
-                      <p><strong>Renter:</strong> {formData.renterName}</p>
-                      <p><strong>Email:</strong> {formData.renterEmail}</p>
-                    </>
-                  )}
-                  <p><strong>Equipment:</strong> {formData.equipment}</p>
-                  {formData.startDate && formData.endDate && (
-                    <>
-                      <p><strong>Rental Period:</strong> {new Date(formData.startDate).toLocaleDateString()} - {new Date(formData.endDate).toLocaleDateString()}</p>
-                      <p><strong>Duration:</strong> {rentalDays} days</p>
-                    </>
-                  )}
-                  <p><strong>Total Cost:</strong> ${formData.totalCost}</p>
-                  <p><strong>Deposit:</strong> ${formData.depositAmount}</p>
-                  {formData.insuranceIncluded && (
-                    <p><strong>Insurance:</strong> Included in rental</p>
-                  )}
-                  <div className="pt-3 border-t border-gray-300 mt-3">
-                    <p className="text-xs italic">This is a preview. Full terms and conditions will be included in the final document.</p>
-                  </div>
-                </div>
-                <button className="w-full mt-4 py-2.5 bg-teal-500 text-white rounded-xl font-semibold hover:bg-teal-600 transition-colors flex items-center justify-center gap-2">
-                  <Lock className="w-4 h-4" /> Generate & Sign
-                </button>
-              </div>
-            </div>
+              );
+            })}
           </div>
         )}
       </div>
