@@ -1,4 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { getMarketplaceInsights } from '../../services/database';
+import type { MarketplaceInsight } from '../../services/database';
 import {
   TrendingUp,
   TrendingDown,
@@ -191,6 +193,11 @@ export default function MarketplaceInsights({ categoryId, equipmentId, onClose }
   const [selectedInsightType, setSelectedInsightType] = useState<'all' | 'demand_trend' | 'price_trend' | 'seasonal_pattern' | 'competitor_analysis'>('all');
   const [expandedInsight, setExpandedInsight] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'insights' | 'pricing' | 'competitors'>('overview');
+  const [liveStats, setLiveStats] = useState<MarketplaceInsight | null>(null);
+
+  useEffect(() => {
+    getMarketplaceInsights().then(setLiveStats).catch(() => {});
+  }, []);
 
   // Filter insights
   const filteredInsights = useMemo(() => {
@@ -264,9 +271,9 @@ export default function MarketplaceInsights({ categoryId, equipmentId, onClose }
       {/* Key Metrics */}
       <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Total Listings', value: marketStats.totalListings.toLocaleString(), icon: Package, trend: '+12%' },
-          { label: 'Active Rentals', value: marketStats.activeRentals.toLocaleString(), icon: Calendar, trend: '+8%' },
-          { label: 'Avg Daily Rate', value: `$${marketStats.avgDailyRate}`, icon: DollarSign, trend: '-2%' },
+          { label: 'Total Listings', value: (liveStats?.totalListings ?? marketStats.totalListings).toLocaleString(), icon: Package, trend: '+12%' },
+          { label: 'Active Rentals', value: (liveStats?.totalRentals ?? marketStats.activeRentals).toLocaleString(), icon: Calendar, trend: '+8%' },
+          { label: 'Avg Daily Rate', value: `$${liveStats?.priceRange.avg ?? marketStats.avgDailyRate}`, icon: DollarSign, trend: '-2%' },
           { label: 'Utilization', value: `${marketStats.avgUtilization}%`, icon: BarChart3, trend: '+5%' },
         ].map((metric, idx) => (
           <div key={idx} className="bg-white border rounded-lg p-4">

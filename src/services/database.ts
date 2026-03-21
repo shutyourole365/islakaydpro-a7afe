@@ -139,6 +139,17 @@ export async function createEquipment(equipment: Omit<Equipment, 'id' | 'created
 }
 
 export async function updateEquipment(id: string, updates: Partial<Equipment>): Promise<Equipment> {
+  // Fetch current price before update to detect changes
+  let previousDailyRate: number | undefined;
+  if (updates.daily_rate !== undefined) {
+    const { data: current } = await supabase
+      .from('equipment')
+      .select('daily_rate')
+      .eq('id', id)
+      .single();
+    previousDailyRate = current?.daily_rate;
+  }
+
   const { data, error } = await supabase
     .from('equipment')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -147,6 +158,12 @@ export async function updateEquipment(id: string, updates: Partial<Equipment>): 
     .single();
 
   if (error) throw error;
+
+  // Notify favoriting users if price dropped
+  if (previousDailyRate !== undefined && updates.daily_rate !== undefined && updates.daily_rate < previousDailyRate) {
+    trackPriceChange(id, previousDailyRate, updates.daily_rate).catch(() => {});
+  }
+
   return data;
 }
 

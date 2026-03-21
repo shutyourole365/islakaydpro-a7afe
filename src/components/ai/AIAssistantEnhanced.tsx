@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { streamMessage } from '../../services/ai';
+import { streamMessage, analyzeProject } from '../../services/ai';
 import { useLocalStorage } from '../../hooks';
 import {
   X,
@@ -302,6 +302,34 @@ export default function AIAssistantEnhanced() {
     // If AI is disabled by environment or user preference, use local rule-based responses
     if (!aiIsEnabled) {
       await new Promise(resolve => setTimeout(resolve, 700 + Math.random() * 800));
+
+      // Check if the message describes a project — use analyzeProject for richer results
+      const lowerMsg = userMessage.toLowerCase();
+      const isProjectQuery = lowerMsg.includes('project') || lowerMsg.includes('building') ||
+        lowerMsg.includes('construction') || lowerMsg.includes('i need to') ||
+        lowerMsg.includes('i want to') || lowerMsg.includes('help me');
+
+      if (isProjectQuery && userMessage.length > 20) {
+        try {
+          const analysis = await analyzeProject(userMessage);
+          const equipmentList = analysis.suggestedEquipment.map(e => `• ${e}`).join('\n');
+          const tipsText = analysis.tips.map(t => `💡 ${t}`).join('\n');
+          const newMessage: Message = {
+            id: Date.now().toString(),
+            role: 'assistant',
+            content: `🏗️ **Project Analysis**\n\n**Suggested Equipment:**\n${equipmentList}\n\n**Estimated Budget:** ${analysis.estimatedBudget}\n\n**Tips:**\n${tipsText}`,
+            timestamp: new Date(),
+            suggestions: analysis.suggestedEquipment.slice(0, 4).map(e => `Find ${e}`),
+            metadata: { type: 'recommendation' },
+          };
+          setMessages(prev => [...prev, newMessage]);
+          setIsTyping(false);
+          return;
+        } catch {
+          // Fall through to contextual responses
+        }
+      }
+
       const response = getContextualResponses(userMessage);
       const newMessage: Message = {
         id: Date.now().toString(),

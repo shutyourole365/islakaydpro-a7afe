@@ -1,101 +1,57 @@
-import { useState } from 'react';
-import { Search, Bell, BellOff, Trash2, Edit2, Plus, Filter, X } from 'lucide-react';
-
-interface SavedSearch {
-  id: string;
-  name: string;
-  filters: {
-    query?: string;
-    category?: string;
-    location?: string;
-    priceRange?: [number, number];
-    dateRange?: [string, string];
-  };
-  alertsEnabled: boolean;
-  createdAt: Date;
-  matchCount: number;
-}
+import { useState, useEffect } from 'react';
+import { Search, Bell, BellOff, Trash2, Edit2, Plus, Filter, X, Loader2 } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+import { getSavedSearches, deleteSavedSearch } from '../../services/database';
+import type { SavedSearch as DBSavedSearch } from '../../types';
 
 interface SavedSearchesProps {
   onClose: () => void;
-  onSearchClick: (filters: SavedSearch['filters']) => void;
+  onSearchClick: (filters: DBSavedSearch['filters']) => void;
 }
 
 export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesProps) {
-  const [searches, setSearches] = useState<SavedSearch[]>([
-    {
-      id: '1',
-      name: 'Weekend Excavators LA',
-      filters: {
-        query: 'excavator',
-        location: 'Los Angeles, CA',
-        priceRange: [200, 600],
-      },
-      alertsEnabled: true,
-      createdAt: new Date('2026-01-15'),
-      matchCount: 12,
-    },
-    {
-      id: '2',
-      name: 'Professional Cameras SF',
-      filters: {
-        query: 'camera',
-        category: 'Photography',
-        location: 'San Francisco, CA',
-        priceRange: [100, 300],
-      },
-      alertsEnabled: true,
-      createdAt: new Date('2026-01-10'),
-      matchCount: 24,
-    },
-    {
-      id: '3',
-      name: 'Power Tools Under $100',
-      filters: {
-        category: 'Power Tools',
-        priceRange: [0, 100],
-      },
-      alertsEnabled: false,
-      createdAt: new Date('2026-01-05'),
-      matchCount: 45,
-    },
-  ]);
-
+  const { user } = useAuth();
+  const [searches, setSearches] = useState<DBSavedSearch[]>([]);
+  const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
 
-  const handleToggleAlert = (id: string) => {
-    setSearches(searches.map(s =>
-      s.id === id ? { ...s, alertsEnabled: !s.alertsEnabled } : s
-    ));
-  };
+  useEffect(() => {
+    if (!user) { setLoading(false); return; }
+    getSavedSearches(user.id)
+      .then(setSearches)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [user]);
 
-  const handleDelete = (id: string) => {
-    if (confirm('Delete this saved search?')) {
-      setSearches(searches.filter(s => s.id !== id));
+  const handleDelete = async (id: string) => {
+    if (!confirm('Delete this saved search?')) return;
+    try {
+      await deleteSavedSearch(id);
+      setSearches(prev => prev.filter(s => s.id !== id));
+    } catch {
+      // silently ignore
     }
   };
 
-  const handleStartEdit = (search: SavedSearch) => {
+  const handleStartEdit = (search: DBSavedSearch) => {
     setEditingId(search.id);
     setEditName(search.name);
   };
 
   const handleSaveEdit = (id: string) => {
-    setSearches(searches.map(s =>
-      s.id === id ? { ...s, name: editName } : s
-    ));
+    setSearches(prev => prev.map(s => s.id === id ? { ...s, name: editName } : s));
     setEditingId(null);
     setEditName('');
   };
 
-  const formatFilters = (filters: SavedSearch['filters']) => {
+  const formatFilters = (filters: DBSavedSearch['filters']) => {
     const parts: string[] = [];
     if (filters.query) parts.push(`"${filters.query}"`);
     if (filters.category) parts.push(filters.category);
     if (filters.location) parts.push(filters.location);
-    if (filters.priceRange) parts.push(`$${filters.priceRange[0]}-$${filters.priceRange[1]}`);
-    return parts.join(' • ');
+    if (filters.minPrice || filters.maxPrice) parts.push(`$${filters.minPrice}-$${filters.maxPrice}`);
+    return parts.join(' • ') || 'All equipment';
   };
 
   return (
@@ -112,7 +68,7 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
             <div>
               <h2 className="text-2xl font-bold text-gray-900">Saved Searches</h2>
               <p className="text-sm text-gray-600">
-                {searches.length} saved • {searches.filter(s => s.alertsEnabled).length} with alerts
+                {searches.length} saved • {searches.filter(s => s.alert_enabled).length} with alerts
               </p>
             </div>
           </div>
@@ -127,7 +83,11 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
 
         {/* Searches List */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {searches.length === 0 ? (
+          {loading ? (
+            <div className="flex justify-center py-16">
+              <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+            </div>
+          ) : searches.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
                 <Search className="w-10 h-10 text-gray-400" />
@@ -197,32 +157,27 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
                     </p>
 
                     <div className="flex items-center gap-4 text-sm">
-                      <span className="flex items-center gap-1 text-teal-600 font-medium">
-                        <Search className="w-4 h-4" />
-                        {search.matchCount} matches
-                      </span>
                       <span className="text-gray-500">
-                        Created {search.createdAt.toLocaleDateString()}
+                        Created {new Date(search.created_at).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <button
-                      aria-label={search.alertsEnabled ? 'Disable search alerts' : 'Enable search alerts'} onClick={() => handleToggleAlert(search.id)}
-                      className={`p-2 rounded-lg transition-all ${
-                        search.alertsEnabled
-                          ? 'bg-teal-50 text-teal-600 hover:bg-teal-100'
-                          : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                    <div
+                      className={`p-2 rounded-lg ${
+                        search.alert_enabled
+                          ? 'bg-teal-50 text-teal-600'
+                          : 'bg-gray-100 text-gray-400'
                       }`}
-                      title={search.alertsEnabled ? 'Alerts enabled' : 'Alerts disabled'}
+                      title={search.alert_enabled ? 'Alerts enabled' : 'Alerts disabled'}
                     >
-                      {search.alertsEnabled ? (
+                      {search.alert_enabled ? (
                         <Bell className="w-5 h-5" />
                       ) : (
                         <BellOff className="w-5 h-5" />
                       )}
-                    </button>
+                    </div>
 
                     <button
                       onClick={() => onSearchClick(search.filters)}
@@ -240,7 +195,7 @@ export default function SavedSearches({ onClose, onSearchClick }: SavedSearchesP
                   </div>
                 </div>
 
-                {search.alertsEnabled && (
+                {search.alert_enabled && (
                   <div className="mt-3 px-3 py-2 bg-teal-50 rounded-lg border border-teal-100 flex items-start gap-2">
                     <Bell className="w-4 h-4 text-teal-600 mt-0.5" />
                     <div className="flex-1 text-sm text-teal-700">

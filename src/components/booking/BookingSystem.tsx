@@ -23,6 +23,7 @@ import SmartScheduler from '../scheduling/SmartScheduler';
 import { useAuth } from '../../contexts/AuthContext';
 import { createBooking } from '../../services/database';
 import { createCheckoutSession } from '../../services/payments';
+import { sendBookingConfirmation } from '../../services/email';
 import { useToast } from '../ui/Toast';
 
 interface BookingSystemProps {
@@ -307,6 +308,19 @@ export default function BookingSystem({
         } catch {
           // If Stripe redirect fails, still show confirmation
         }
+      }
+
+      if (user?.email) {
+        sendBookingConfirmation(user.email, {
+          renterName: user.user_metadata?.full_name || user.email,
+          equipmentTitle: equipment.title,
+          startDate: selectedStart.toLocaleDateString(),
+          endDate: selectedEnd.toLocaleDateString(),
+          totalDays: rentalDays,
+          totalAmount: pricing.total,
+          pickupLocation: equipment.location || 'To be confirmed',
+          bookingId: newBooking.id,
+        }).catch(() => {});
       }
 
       setIsProcessing(false);

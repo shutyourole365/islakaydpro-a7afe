@@ -33,9 +33,15 @@ import InstallPrompt, { OfflineIndicator } from './components/pwa/InstallPrompt'
 import { CookieConsentBanner, CookieSettingsModal } from './components/ui/CookieConsent';
 import { useCookieConsent } from './hooks/useCookieConsent';
 import { addFavorite, removeFavorite, getEquipment } from './services/database';
+import { verifyCheckoutSession } from './services/payments';
+import { getPersonalizedRecommendations } from './services/ai';
 
 // New features
 const EquipmentRequestBoard = lazy(() => import('./components/requests/EquipmentRequestBoard'));
+const DisputeCenter = lazy(() => import('./components/disputes/DisputeCenter'));
+const IDVerificationFlow = lazy(() => import('./components/verification/IDVerificationFlow'));
+const OwnerEarningsDashboard = lazy(() => import('./components/earnings/OwnerEarningsDashboard'));
+const RecurringRentals = lazy(() => import('./components/subscription/RecurringRentals'));
 
 // Lazy load heavy components for better performance
 const SecurityCenter = lazy(() => import('./components/security/SecurityCenter'));
@@ -596,7 +602,7 @@ const sampleEquipment: Equipment[] = [
 ];
 
 function AppContent() {
-type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language' | 'availability-calendar' | 'revenue-dashboard' | 'certification-tracker' | 'agreement-generator' | 'support-tickets' | 'requests' | '404';
+type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' | 'analytics' | 'admin' | 'notifications' | 'payments' | 'subscription' | 'sustainability' | 'tutorials' | 'loyalty' | 'fleet' | 'referrals' | 'pwa' | 'trust-score' | 'alerts' | 'bundles' | 'warranties' | 'bulk-booking' | 'insights' | 'terms' | 'privacy' | 'cookies' | 'refund' | 'accessibility' | 'cancellation' | 'about' | 'careers' | 'press' | 'blog' | 'partnerships' | 'investors' | 'help' | 'safety' | 'trust' | 'contact' | 'pricing-calculator' | 'insurance' | 'host-resources' | 'host-community' | 'ai-matching' | 'smart-contracts' | 'ar-preview' | 'carbon-tracker' | 'equipment-financing' | 'iot-telematics' | 'ar-visualization' | 'gps-tracking' | 'crypto-payments' | 'ai-insurance' | 'sustainability-dashboard' | 'social-communities' | 'voice-ai-assistant' | 'blockchain-contracts' | 'vr-training' | 'drone-delivery' | 'industry-integrations' | 'maintenance' | 'scheduler' | 'equipment-health' | 'cost-estimator' | 'seasonal-deals' | 'rental-history' | 'multi-language' | 'availability-calendar' | 'revenue-dashboard' | 'certification-tracker' | 'agreement-generator' | 'support-tickets' | 'requests' | 'disputes' | 'id-verification' | 'earnings' | 'recurring-rentals' | '404';
   const { isAuthenticated, user, profile, signOut, unreadNotifications } = useAuth();
   const { addToast } = useToast();
   const {
@@ -622,6 +628,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
   const [searchCategory, setSearchCategory] = useState('');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingEquipment, setBookingEquipment] = useState<Equipment | null>(null);
+  const [personalizedRecs, setPersonalizedRecs] = useState<{ recommendations: string[]; basedOn: string } | null>(null);
   const [comparisonItems, setComparisonItems] = useState<Equipment[]>([]);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
   // Premium feature states
@@ -715,6 +722,46 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
     fetchEquipment();
   }, [fetchEquipment]);
 
+  // Verify Stripe checkout session on redirect back from payment
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const bookingStatus = params.get('booking');
+    const sessionId = params.get('session_id');
+
+    if (bookingStatus === 'success' && sessionId) {
+      verifyCheckoutSession(sessionId).then(({ success, bookingId }) => {
+        if (success) {
+          addToast({
+            type: 'success',
+            title: 'Payment successful!',
+            message: bookingId
+              ? `Your booking #${bookingId.slice(0, 8)} is confirmed.`
+              : 'Your booking has been confirmed.',
+          });
+        } else {
+          addToast({
+            type: 'warning',
+            title: 'Payment pending',
+            message: 'Your payment is being processed. Check your dashboard for updates.',
+          });
+        }
+      }).catch(() => {});
+
+      // Clean up URL params without reloading
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    } else if (bookingStatus === 'cancelled') {
+      addToast({
+        type: 'info',
+        title: 'Booking cancelled',
+        message: 'Your booking was not completed. You can try again anytime.',
+      });
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     
@@ -747,8 +794,10 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
   useEffect(() => {
     if (user) {
       loadFavorites();
+      getPersonalizedRecommendations(user.id).then(setPersonalizedRecs).catch(() => {});
     } else {
       setFavorites(new Set());
+      setPersonalizedRecs(null);
     }
   }, [user, loadFavorites]);
 
@@ -1282,6 +1331,26 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
               favorites={favorites}
             />
 
+            {isAuthenticated && personalizedRecs && personalizedRecs.recommendations.length > 0 && (
+              <section className="py-12 px-4 max-w-7xl mx-auto">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Recommended for You</h2>
+                  <p className="text-sm text-gray-500 mt-1">{personalizedRecs.basedOn}</p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {personalizedRecs.recommendations.map((rec) => (
+                    <button
+                      key={rec}
+                      onClick={() => handleSearch(rec)}
+                      className="px-4 py-2 bg-teal-50 text-teal-700 border border-teal-200 rounded-full text-sm font-medium hover:bg-teal-100 transition-colors"
+                    >
+                      {rec}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
+
             <HowItWorks />
 
             <Testimonials />
@@ -1332,6 +1401,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
             onBack={() => setCurrentPage('home')}
             onEquipmentClick={handleEquipmentClick}
             onListEquipment={handleListEquipment}
+            onNavigate={(page: string) => setCurrentPage(page as PageType)}
           />
           <Footer onNavigate={handleNavigate} />
         </Suspense>
@@ -2291,10 +2361,8 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
               // Apply saved search filters and navigate to browse
               if (filters.query) setSearchQuery(filters.query);
               if (filters.category) setSearchCategory(filters.category);
-              if (filters.priceRange) {
-                setSearchMinPrice(filters.priceRange[0] > 0 ? filters.priceRange[0] : undefined);
-                setSearchMaxPrice(filters.priceRange[1] < 10000 ? filters.priceRange[1] : undefined);
-              }
+              if (filters.minPrice) setSearchMinPrice(filters.minPrice > 0 ? filters.minPrice : undefined);
+              if (filters.maxPrice) setSearchMaxPrice(filters.maxPrice < 10000 ? filters.maxPrice : undefined);
               setIsSavedSearchesOpen(false);
               setCurrentPage('browse');
             }}
@@ -2826,6 +2894,34 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
       {currentPage === 'requests' && (
         <Suspense fallback={<PageLoader />}>
           <EquipmentRequestBoard onBack={() => setCurrentPage('home')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'disputes' && (
+        <Suspense fallback={<PageLoader />}>
+          <DisputeCenter onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'id-verification' && (
+        <Suspense fallback={<PageLoader />}>
+          <IDVerificationFlow onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'earnings' && (
+        <Suspense fallback={<PageLoader />}>
+          <OwnerEarningsDashboard onBack={() => setCurrentPage('dashboard')} />
+          <Footer onNavigate={handleNavigate} />
+        </Suspense>
+      )}
+
+      {currentPage === 'recurring-rentals' && (
+        <Suspense fallback={<PageLoader />}>
+          <RecurringRentals onBack={() => setCurrentPage('dashboard')} />
           <Footer onNavigate={handleNavigate} />
         </Suspense>
       )}

@@ -66,6 +66,7 @@ interface DashboardProps {
   onBack: () => void;
   onEquipmentClick: (equipment: Equipment) => void;
   onListEquipment: () => void;
+  onNavigate?: (page: string) => void;
 }
 
 type TabType = 'overview' | 'bookings' | 'listings' | 'favorites' | 'messages' | 'notifications' | 'security' | 'settings' | 'referral';
@@ -75,6 +76,7 @@ export default function Dashboard({
   onBack,
   onEquipmentClick,
   onListEquipment,
+  onNavigate,
 }: DashboardProps) {
   const { user, profile, refreshProfile } = useAuth();
   const [activeTab, setActiveTab] = useState<TabType>('overview');
@@ -351,6 +353,22 @@ export default function Dashboard({
           <div className="flex-1 min-w-0">
             {activeTab === 'overview' && (
               <div className="space-y-6">
+                {/* Quick Actions for new features */}
+                {onNavigate && (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {[
+                      { label: 'Earnings', icon: DollarSign, page: 'earnings', color: 'bg-green-50 text-green-700 hover:bg-green-100' },
+                      { label: 'Disputes', icon: AlertCircle, page: 'disputes', color: 'bg-red-50 text-red-700 hover:bg-red-100' },
+                      { label: 'Verify ID', icon: Shield, page: 'id-verification', color: 'bg-blue-50 text-blue-700 hover:bg-blue-100' },
+                        { label: 'Recurring', icon: RefreshCw, page: 'recurring-rentals', color: 'bg-purple-50 text-purple-700 hover:bg-purple-100' },
+                    ].map(action => (
+                      <button key={action.page} onClick={() => onNavigate(action.page)} className={`flex flex-col items-center gap-2 p-4 rounded-2xl border border-transparent transition-colors ${action.color}`}>
+                        <action.icon className="w-5 h-5" />
+                        <span className="text-xs font-semibold">{action.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   <StatCard
                     label="Total Earned"

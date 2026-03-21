@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { getSearchSuggestions } from '../../services/ai';
 import {
   Search,
   X,
@@ -26,6 +27,7 @@ interface SearchFilters {
 
 export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalProps) {
   const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<SearchFilters>({
     location: '',
@@ -58,6 +60,24 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
+
+  const fetchSuggestions = useCallback(async (q: string) => {
+    if (q.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+    try {
+      const results = await getSearchSuggestions(q);
+      setSuggestions(results);
+    } catch {
+      setSuggestions([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => fetchSuggestions(query), 300);
+    return () => clearTimeout(timer);
+  }, [query, fetchSuggestions]);
 
   const recentSearches = [
     'Excavator rental near me',
@@ -275,6 +295,24 @@ export default function SearchModal({ isOpen, onClose, onSearch }: SearchModalPr
 
           {query && (
             <div className="p-6">
+              {suggestions.length > 0 && (
+                <div className="mb-4">
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Suggestions</p>
+                  <ul className="space-y-1">
+                    {suggestions.map((suggestion) => (
+                      <li key={suggestion}>
+                        <button
+                          onClick={() => { onSearch(suggestion, filters); onClose(); }}
+                          className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-700 text-sm flex items-center gap-2"
+                        >
+                          <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                          {suggestion}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <p className="text-sm text-gray-500 mb-4">
                 Press Enter to search for "{query}"
               </p>

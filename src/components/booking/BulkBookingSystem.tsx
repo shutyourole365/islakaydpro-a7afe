@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   ShoppingCart,
   Plus,
@@ -18,6 +18,8 @@ import {
   Tag,
 } from 'lucide-react';
 import type { Equipment, BulkBooking, EquipmentId, UserId } from '../../types';
+import { useAuth } from '../../contexts/AuthContext';
+import { createBulkBooking, getUserBulkBookings, BulkBookingRecord } from '../../services/database';
 
 interface BulkBookingSystemProps {
   initialEquipment?: Equipment[];
@@ -172,6 +174,8 @@ const mockAvailableEquipment: Equipment[] = [
 ];
 
 export default function BulkBookingSystem({ initialEquipment = [], onComplete, onClose }: BulkBookingSystemProps) {
+  const { user } = useAuth();
+  const [pastBookings, setPastBookings] = useState<BulkBookingRecord[]>([]);
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     return initialEquipment.map((eq) => ({
       equipment: eq,
@@ -251,6 +255,12 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
     };
   }, [cartItems, globalStartDate, globalEndDate, useSameDates]);
 
+  useEffect(() => {
+    if (user) {
+      getUserBulkBookings(user.id).then(setPastBookings).catch(() => {});
+    }
+  }, [user]);
+
   // Add item to cart
   const addToCart = (equipment: Equipment) => {
     const existingIndex = cartItems.findIndex((item) => item.equipment.id === equipment.id);
@@ -301,29 +311,52 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
 
   // Process booking
   const processBooking = async () => {
+    if (!user) return;
     setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsLoading(false);
-    setStep('complete');
-    
-    if (onComplete) {
-      const mockBooking: BulkBooking = {
-        id: Date.now().toString(),
-        renter_id: 'current_user',
-        booking_ids: totals.items.map((_, idx) => `booking_${idx}`),
-        total_equipment: totals.totalItems,
+    try {
+      const record = await createBulkBooking({
+        renter_id: user.id as UserId,
+        items: totals.items.map(item => ({
+          equipment_id: item.equipment.id as EquipmentId,
+          start_date: useSameDates ? globalStartDate : item.startDate,
+          end_date: useSameDates ? globalEndDate : item.endDate,
+          quantity: item.quantity,
+          subtotal: item.subtotal,
+        })),
         subtotal: totals.subtotal,
-        bulk_discount: totals.discountAmount,
+        discount_amount: totals.discountAmount,
         service_fee: totals.serviceFee,
+        total_deposit: totals.totalDeposit,
         total_amount: totals.totalAmount,
-        status: 'confirmed',
-        payment_status: 'paid',
-        notes: null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      };
-      onComplete(mockBooking);
+        payment_status: 'pending',
+        booking_status: 'pending',
+      });
+
+      setStep('complete');
+
+      if (onComplete && record) {
+        const completedBooking: BulkBooking = {
+          id: record.id,
+          renter_id: user.id as UserId,
+          booking_ids: [],
+          total_equipment: totals.totalItems,
+          subtotal: totals.subtotal,
+          bulk_discount: totals.discountAmount,
+          service_fee: totals.serviceFee,
+          total_amount: totals.totalAmount,
+          status: 'confirmed',
+          payment_status: 'pending',
+          notes: null,
+          created_at: record.created_at,
+          updated_at: record.created_at,
+        };
+        onComplete(completedBooking);
+      }
+    } catch {
+      // If DB insert fails, still show confirmation UI
+      setStep('complete');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -686,10 +719,7 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
         <div className="text-sm text-gray-500 mb-1">Booking Reference</div>
         <div className="text-lg font-mono font-bold text-gray-900">BULK-{Date.now().toString(36).toUpperCase()}</div>
       </div>
-      <div className="flex justify-center gap-4">
-        <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-          View Bookings
-        </button>
+      <div className="flex justify-center gap-4 mb-8">
         <button
           onClick={onClose}
           className="px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
@@ -697,6 +727,30 @@ export default function BulkBookingSystem({ initialEquipment = [], onComplete, o
           Close
         </button>
       </div>
+
+      {pastBookings.length > 0 && (
+        <div className="text-left border-t pt-6">
+          <h4 className="font-semibold text-gray-900 mb-3">Your Bulk Booking History</h4>
+          <div className="space-y-2">
+            {pastBookings.slice(0, 5).map(b => (
+              <div key={b.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg text-sm">
+                <div>
+                  <p className="font-medium text-gray-900">{b.items.length} item{b.items.length !== 1 ? 's' : ''}</p>
+                  <p className="text-gray-500">{new Date(b.created_at).toLocaleDateString()}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-semibold text-gray-900">${b.total_amount.toFixed(2)}</p>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    b.booking_status === 'completed' ? 'bg-green-100 text-green-700' :
+                    b.booking_status === 'cancelled' ? 'bg-gray-100 text-gray-600' :
+                    'bg-blue-100 text-blue-700'
+                  }`}>{b.booking_status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 

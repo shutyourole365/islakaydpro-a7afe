@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { getEquipmentBundles, createEquipmentBundle, deleteEquipmentBundle } from '../../services/database';
 import {
   Package,
   Plus,
@@ -156,9 +158,22 @@ const mockBundles: EquipmentBundle[] = [
 ];
 
 export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookBundle, onClose }: EquipmentBundleDealsProps) {
-  const [bundles, setBundles] = useState<EquipmentBundle[]>(mockBundles);
+  const { user } = useAuth();
+  const [bundles, setBundles] = useState<EquipmentBundle[]>([]);
   const [_selectedBundle, _setSelectedBundle] = useState<EquipmentBundle | null>(null);
-  void _selectedBundle; void _setSelectedBundle; void ownerId;
+  void _selectedBundle; void _setSelectedBundle;
+
+  useEffect(() => {
+    getEquipmentBundles({
+      ownerId: mode === 'manage' ? (ownerId || user?.id) : undefined,
+      isActive: mode === 'browse' ? true : undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }).then((data: any[]) => {
+      setBundles(data.length > 0 ? (data as EquipmentBundle[]) : mockBundles);
+    }).catch(() => {
+      setBundles(mockBundles);
+    });
+  }, [ownerId, mode, user?.id]);
   const [isCreating, setIsCreating] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
@@ -201,37 +216,36 @@ export default function EquipmentBundleDeals({ ownerId, mode = 'browse', onBookB
   };
 
   // Save bundle
-  const handleSaveBundle = () => {
+  const handleSaveBundle = async () => {
     const pricing = calculateBundlePricing(formData.equipment_ids);
-    const newBundle: EquipmentBundle = {
-      id: Date.now().toString(),
-      owner_id: ownerId || 'current_user',
+    const bundleData = {
+      owner_id: (ownerId || user?.id || 'current_user') as UserId,
       name: formData.name,
       description: formData.description,
-      equipment_ids: formData.equipment_ids,
+      equipment_ids: formData.equipment_ids as EquipmentId[],
       original_total: pricing.originalTotal,
       bundle_price: pricing.discountedTotal,
       discount_percentage: formData.discount_percentage,
       min_rental_days: formData.min_rental_days,
       max_rental_days: formData.max_rental_days,
       is_active: true,
-      created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const saved = await createEquipmentBundle(bundleData as any).catch(() => null);
+    const newBundle: EquipmentBundle = (saved as unknown as EquipmentBundle) ?? {
+      id: Date.now().toString(),
+      ...bundleData,
+      created_at: new Date().toISOString(),
     };
     setBundles([newBundle, ...bundles]);
     setIsCreating(false);
-    setFormData({
-      name: '',
-      description: '',
-      equipment_ids: [],
-      discount_percentage: 10,
-      min_rental_days: 1,
-      max_rental_days: 30,
-    });
+    setFormData({ name: '', description: '', equipment_ids: [], discount_percentage: 10, min_rental_days: 1, max_rental_days: 30 });
   };
 
   // Delete bundle
-  const handleDeleteBundle = (bundleId: string) => {
+  const handleDeleteBundle = async (bundleId: string) => {
+    await deleteEquipmentBundle(bundleId).catch(() => {});
     setBundles(bundles.filter((b) => b.id !== bundleId));
   };
 

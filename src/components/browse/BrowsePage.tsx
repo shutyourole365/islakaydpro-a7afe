@@ -46,6 +46,9 @@ export default function BrowsePage({
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'map'>('grid');
   const [showFilters, setShowFilters] = useState(false);
   const [selectedMapEquipment, setSelectedMapEquipment] = useState<string | undefined>();
+  const [userCoords, setUserCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [nearMeRadius, setNearMeRadius] = useState(50); // km
+  const [locating, setLocating] = useState(false);
 
   // Use deferred value for search to improve performance during typing
   const deferredSearchQuery = useDeferredValue(searchQuery);
@@ -104,8 +107,22 @@ export default function BrowsePage({
         filtered.sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0));
     }
 
+    // Near Me geo filter
+    if (userCoords) {
+      filtered = filtered.filter(item => {
+        if (item.latitude == null || item.longitude == null) return false;
+        return getDistanceKm(userCoords.lat, userCoords.lng, item.latitude, item.longitude) <= nearMeRadius;
+      });
+      // Sort by distance when near-me is active
+      filtered.sort((a, b) => {
+        const dA = a.latitude != null && a.longitude != null ? getDistanceKm(userCoords.lat, userCoords.lng, a.latitude, a.longitude) : 9999;
+        const dB = b.latitude != null && b.longitude != null ? getDistanceKm(userCoords.lat, userCoords.lng, b.latitude, b.longitude) : 9999;
+        return dA - dB;
+      });
+    }
+
     return filtered;
-  }, [deferredSearchQuery, selectedCategory, location, priceRange, condition, sortBy, equipment, categories]);
+  }, [deferredSearchQuery, selectedCategory, location, priceRange, condition, sortBy, equipment, categories, userCoords, nearMeRadius]);
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -114,6 +131,30 @@ export default function BrowsePage({
     setPriceRange([0, 1000]);
     setCondition('');
     setSortBy('featured');
+    setUserCoords(null);
+  };
+
+  const handleNearMe = () => {
+    if (!navigator.geolocation) return;
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocation('Near Me');
+        setViewMode('map');
+        setLocating(false);
+      },
+      () => { setLocating(false); }
+    );
+  };
+
+  // Haversine distance in km
+  const getDistanceKm = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+    const R = 6371;
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLng = ((lng2 - lng1) * Math.PI) / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   };
 
   const activeFiltersCount = [
@@ -153,15 +194,44 @@ export default function BrowsePage({
               )}
             </div>
 
-            <div className="hidden md:flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3">
-              <MapPin className="w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Location"
-                className="bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none w-32"
-              />
+            <div className="hidden md:flex items-center gap-2">
+              <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3">
+                <MapPin className="w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  value={location}
+                  onChange={(e) => { setLocation(e.target.value); if (e.target.value !== 'Near Me') setUserCoords(null); }}
+                  placeholder="Location"
+                  className="bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none w-32"
+                />
+                {location && (
+                  <button onClick={() => { setLocation(''); setUserCoords(null); }}>
+                    <X className="w-4 h-4 text-gray-400 hover:text-gray-600" />
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={handleNearMe}
+                disabled={locating}
+                title="Find equipment near me"
+                className={`flex items-center gap-1.5 px-3 py-3 rounded-xl text-sm font-medium transition-colors border ${userCoords ? 'bg-teal-500 text-white border-teal-500' : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-400 hover:text-teal-600'}`}
+              >
+                <MapPin className="w-4 h-4" />
+                {locating ? '...' : 'Near Me'}
+              </button>
+              {userCoords && (
+                <select
+                  value={nearMeRadius}
+                  onChange={e => setNearMeRadius(Number(e.target.value))}
+                  className="px-2 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none"
+                >
+                  <option value={10}>10 km</option>
+                  <option value={25}>25 km</option>
+                  <option value={50}>50 km</option>
+                  <option value={100}>100 km</option>
+                  <option value={250}>250 km</option>
+                </select>
+              )}
             </div>
           </div>
 
