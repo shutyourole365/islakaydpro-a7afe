@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getUserTrustScore, getReviews, getProfile } from '../../services/database';
 import {
   Shield,
   Star,
@@ -137,11 +138,17 @@ const mockTrustHistory: TrustHistory[] = [
 ];
 
 export default function RenterTrustScore({ userId, viewMode = 'full', onClose }: RenterTrustScoreProps) {
-  void userId; // For future API integration
   const [activeTab, setActiveTab] = useState<'overview' | 'factors' | 'history' | 'reviews'>('overview');
+  const [profile, setProfile] = useState<typeof mockProfile>(mockProfile);
+  const [trustScore, setTrustScore] = useState<number>(mockProfile.trustScore || 0);
+  const [reviews, setReviews] = useState<Review[]>(mockReviews);
 
-  const profile = mockProfile;
-  const trustScore = profile.trustScore || 0;
+  useEffect(() => {
+    if (!userId) return;
+    getProfile(userId).then(p => { if (p) setProfile(p as typeof mockProfile); }).catch(() => {});
+    getUserTrustScore(userId).then(ts => setTrustScore(ts.total)).catch(() => {});
+    getReviews({ revieweeId: userId, limit: 10 }).then(r => { if (r.length > 0) setReviews(r); }).catch(() => {});
+  }, [userId]);
 
   // Calculate trust factors
   const trustFactors: TrustFactor[] = [
@@ -466,7 +473,7 @@ export default function RenterTrustScore({ userId, viewMode = 'full', onClose }:
 
         {activeTab === 'reviews' && (
           <div className="space-y-4">
-            {mockReviews.map((review) => (
+            {reviews.map((review) => (
               <div key={review.id} className="border rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
