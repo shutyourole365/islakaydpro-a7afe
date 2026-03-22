@@ -290,16 +290,12 @@ jobs:
 
       - name: Deploy to Vercel
         id: deploy
-        uses: amondnet/vercel-action@v25
+        run: |
+          DEPLOY_URL=$(npx vercel --prod --token="${{ secrets.VERCEL_TOKEN }}" --yes 2>&1 | tail -1)
+          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
-          vercel-args: '--prod'
 
   # Preview deployment for PRs
   preview:
@@ -319,15 +315,12 @@ jobs:
 
       - name: Deploy Preview to Vercel
         id: preview-deploy
-        uses: amondnet/vercel-action@v25
+        run: |
+          DEPLOY_URL=$(npx vercel --token="${{ secrets.VERCEL_TOKEN }}" --yes 2>&1 | tail -1)
+          echo "preview-url=$DEPLOY_URL" >> $GITHUB_OUTPUT
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
 
       - name: Comment PR with preview URL
         uses: actions/github-script@v7
