@@ -127,6 +127,24 @@ Description: ${equipment.description}`;
         content: m.content,
       }));
 
+    // Build system as an array so we can cache the static part.
+    // SYSTEM_PROMPT is large and never changes — cache it for ~90% token savings.
+    // Dynamic context (equipment, location) is appended uncached.
+    const systemBlocks: Anthropic.TextBlockParam[] = [
+      {
+        type: 'text',
+        text: SYSTEM_PROMPT,
+        // @ts-ignore — cache_control is a beta field not yet in the type defs
+        cache_control: { type: 'ephemeral' },
+      },
+    ];
+    if (enhancedSystemPrompt !== SYSTEM_PROMPT) {
+      systemBlocks.push({
+        type: 'text',
+        text: enhancedSystemPrompt.slice(SYSTEM_PROMPT.length),
+      });
+    }
+
     // --- STREAMING path (SSE) ---
     if (stream && ANTHROPIC_API_KEY) {
       const encoder = new TextEncoder();
@@ -137,9 +155,9 @@ Description: ${equipment.description}`;
             const s = anthropic.messages.stream({
               model: 'claude-opus-4-6',
               max_tokens: 1024,
-              system: enhancedSystemPrompt,
+              system: systemBlocks,
               messages: claudeMessages,
-            });
+            } as Parameters<typeof anthropic.messages.stream>[0]);
 
             let fullText = '';
 
@@ -192,9 +210,9 @@ Description: ${equipment.description}`;
       const msg = await anthropic.messages.create({
         model: 'claude-opus-4-6',
         max_tokens: 1024,
-        system: enhancedSystemPrompt,
+        system: systemBlocks,
         messages: claudeMessages,
-      });
+      } as Parameters<typeof anthropic.messages.create>[0]);
       response = msg.content[0].type === 'text' ? msg.content[0].text : '';
     } else if (OPENAI_API_KEY) {
       response = await callOpenAI(messages, enhancedSystemPrompt);
