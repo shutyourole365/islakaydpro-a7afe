@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { streamMessage, analyzeProject, getRecommendations, getPersonalizedRecommendations, getEquipmentHelp } from '../../services/ai';
+import { streamMessage, analyzeProject, getRecommendations, getPersonalizedRecommendations, getEquipmentHelp, loadChatHistory, saveChatMessage, clearChatHistory } from '../../services/ai';
 import { useLocalStorage } from '../../hooks';
 import { useAuth } from '../../contexts/AuthContext';
 import {
@@ -72,26 +72,31 @@ const quickActions: QuickAction[] = [
   { icon: <PartyPopper className="w-4 h-4" />, label: 'Events', query: 'What equipment do I need for a wedding?', color: 'bg-pink-500' },
 ];
 
+const WELCOME_MESSAGE: Message = {
+  id: '1',
+  role: 'assistant',
+  content: "👋 Hi! I'm **Kayd**, your AI equipment assistant powered by advanced language models. I can:\n\n• 🔍 Find equipment with natural language\n• 🎤 Understand voice commands\n• 📸 Analyze images to identify equipment\n• 💰 Compare prices across listings\n• 📅 Check real-time availability\n• 🤖 Learn your preferences\n\nHow can I help you today?",
+  timestamp: new Date(),
+  suggestions: [
+    'Find construction equipment near me',
+    'Compare camera rental prices',
+    'What do I need for a home renovation?',
+    'Show trending equipment this week',
+  ],
+};
+
 export default function AIAssistantEnhanced() {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
   const [feedbackGiven, setFeedbackGiven] = useState<Set<string>>(new Set());
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: "👋 Hi! I'm **Kayd**, your AI equipment assistant powered by advanced language models. I can:\n\n• 🔍 Find equipment with natural language\n• 🎤 Understand voice commands\n• 📸 Analyze images to identify equipment\n• 💰 Compare prices across listings\n• 📅 Check real-time availability\n• 🤖 Learn your preferences\n\nHow can I help you today?",
-      timestamp: new Date(),
-      suggestions: [
-        'Find construction equipment near me',
-        'Compare camera rental prices',
-        'What do I need for a home renovation?',
-        'Show trending equipment this week',
-      ],
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
+  // Stable session ID per browser tab — persists across page refreshes
+  const [sessionId] = useLocalStorage<string>(
+    'kayd_session_id',
+    () => crypto.randomUUID()
+  );
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -104,6 +109,27 @@ export default function AIAssistantEnhanced() {
   // Persist user preference for AI assistant (local override of env flag)
   const [aiEnabledByUser, setAiEnabledByUser] = useLocalStorage<boolean>('ai_assistant_enabled', true);
   const aiIsEnabled = GLOBAL_AI_ENABLED && aiEnabledByUser;
+
+  // Load chat history from DB when widget first opens
+  useEffect(() => {
+    if (!isOpen || !user || !sessionId) return;
+    loadChatHistory(sessionId).then((history) => {
+      if (history.length === 0) return;
+      setMessages([
+        WELCOME_MESSAGE,
+        ...history.map((h) => ({
+          id: h.id,
+          role: h.role as 'user' | 'assistant',
+          content: h.content,
+          timestamp: new Date(h.created_at),
+          suggestions: h.suggestions,
+        })),
+      ]);
+      setShowQuickActions(false);
+    }).catch(() => {});
+  // Only run once when the widget opens for the first time
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, user]);
 
   // Load personalized recommendations when assistant opens for logged-in users
   useEffect(() => {
@@ -446,6 +472,9 @@ export default function AIAssistantEnhanced() {
 
       conversationHistory.push({ role: 'user' as const, content: userMessage });
 
+      // Persist the user message
+      saveChatMessage(sessionId, 'user', userMessage).catch(() => {});
+
       // Insert placeholder assistant message to stream into
       const placeholderId = Date.now().toString();
       setMessages(prev => [...prev, {
@@ -474,6 +503,8 @@ export default function AIAssistantEnhanced() {
               ? { ...m, suggestions, metadata: { type: 'recommendation', processingTime } }
               : m
           ));
+          // Persist the completed assistant message
+          saveChatMessage(sessionId, 'assistant', streamedText, suggestions).catch(() => {});
           if (voiceEnabled) speakResponse(streamedText);
         },
         (err) => {
@@ -544,6 +575,7 @@ export default function AIAssistantEnhanced() {
   }, [simulateResponse]);
 
   const clearConversation = () => {
+    clearChatHistory(sessionId).catch(() => {});
     setMessages([{
       id: '1',
       role: 'assistant',

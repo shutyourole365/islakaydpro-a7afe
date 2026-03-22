@@ -2,6 +2,65 @@ import { supabase } from '../lib/supabase';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
+// ── Chat history ────────────────────────────────────────────────
+
+export interface HistoryMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  suggestions: string[];
+  created_at: string;
+}
+
+/** Load the last 20 messages for a session from the DB. */
+export async function loadChatHistory(sessionId: string): Promise<HistoryMessage[]> {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from('ai_chat_history')
+    .select('id, role, content, suggestions, created_at')
+    .eq('user_id', user.id)
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: true })
+    .limit(20);
+
+  if (error) { console.error('loadChatHistory:', error); return []; }
+  return (data ?? []) as HistoryMessage[];
+}
+
+/** Save a single message to the DB. */
+export async function saveChatMessage(
+  sessionId: string,
+  role: 'user' | 'assistant',
+  content: string,
+  suggestions: string[] = []
+): Promise<void> {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { error } = await supabase.from('ai_chat_history').insert({
+    user_id: user.id,
+    session_id: sessionId,
+    role,
+    content,
+    suggestions,
+  });
+  if (error) console.error('saveChatMessage:', error);
+}
+
+/** Delete all messages for a session (used by "Clear Conversation"). */
+export async function clearChatHistory(sessionId: string): Promise<void> {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  await supabase
+    .from('ai_chat_history')
+    .delete()
+    .eq('user_id', user.id)
+    .eq('session_id', sessionId);
+}
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
