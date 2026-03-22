@@ -59,8 +59,8 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
-      - name: Sync Capacitor
-        run: ./node_modules/.bin/cap sync android
+      - name: Copy web assets to Android
+        run: ./node_modules/.bin/cap copy android
 
       - name: Set ANDROID_KEYSTORE_BASE64 env
         run: |
