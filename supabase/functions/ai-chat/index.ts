@@ -1,16 +1,17 @@
-// AI Chat Handler using OpenAI/Anthropic
-// Provides intelligent responses for the Kayd AI assistant
+// AI Chat Handler — Anthropic SDK with streaming
+// Upgraded: claude-opus-4-6 + npm:@anthropic-ai/sdk + SSE streaming
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import Anthropic from 'npm:@anthropic-ai/sdk';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
+const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -26,6 +27,7 @@ interface ChatRequest {
     userId?: string;
   };
   provider?: 'openai' | 'anthropic';
+  stream?: boolean;
 }
 
 const supabase = createClient(
@@ -33,7 +35,8 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
-// System prompt for the AI assistant
+const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY ?? '' });
+
 const SYSTEM_PROMPT = `You are Kayd, an intelligent AI assistant for Islakayd - a premium equipment rental marketplace. Your role is to help users find, compare, and book rental equipment.
 
 ## Your Capabilities:
@@ -77,9 +80,9 @@ serve(async (req) => {
 
   try {
     const body: ChatRequest = await req.json();
-    const { messages, context, provider = 'openai' } = body;
+    const { messages, context, provider = 'anthropic', stream = false } = body;
 
-    // Add context-aware information to the system prompt
+    // Build context-enriched system prompt
     let enhancedSystemPrompt = SYSTEM_PROMPT;
 
     if (context?.equipmentId) {
@@ -103,7 +106,6 @@ Description: ${equipment.description}`;
       enhancedSystemPrompt += `\n\nUser's location: ${context.location}`;
     }
 
-    // Fetch some relevant equipment for recommendations
     const { data: featuredEquipment } = await supabase
       .from('equipment')
       .select('title, daily_rate, rating, category:categories(name)')
@@ -112,33 +114,99 @@ Description: ${equipment.description}`;
       .limit(5);
 
     if (featuredEquipment && featuredEquipment.length > 0) {
-      enhancedSystemPrompt += `\n\n## Featured Equipment Available:
-${featuredEquipment.map(e => `- ${e.title} (${e.category?.name}) - $${e.daily_rate}/day, ${e.rating}⭐`).join('\n')}`;
+      enhancedSystemPrompt += `\n\n## Featured Equipment Available:\n${featuredEquipment
+        .map((e) => `- ${e.title} (${e.category?.name}) - $${e.daily_rate}/day, ${e.rating}⭐`)
+        .join('\n')}`;
     }
 
+    // Normalize messages: Claude uses a top-level system param, not a system role message
+    const claudeMessages = messages
+      .filter((m) => m.role !== 'system')
+      .map((m) => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+      }));
+
+    // --- STREAMING path (SSE) ---
+    if (stream && ANTHROPIC_API_KEY) {
+      const encoder = new TextEncoder();
+
+      const readable = new ReadableStream({
+        async start(controller) {
+          try {
+            const s = anthropic.messages.stream({
+              model: 'claude-opus-4-6',
+              max_tokens: 1024,
+              system: enhancedSystemPrompt,
+              messages: claudeMessages,
+            });
+
+            let fullText = '';
+
+            for await (const event of s) {
+              if (
+                event.type === 'content_block_delta' &&
+                event.delta.type === 'text_delta'
+              ) {
+                fullText += event.delta.text;
+                controller.enqueue(
+                  encoder.encode(
+                    `data: ${JSON.stringify({ type: 'delta', text: event.delta.text })}\n\n`
+                  )
+                );
+              }
+            }
+
+            const suggestions = generateSuggestions(messages[messages.length - 1].content, fullText);
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({ type: 'done', suggestions })}\n\n`
+              )
+            );
+          } catch (err) {
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({ type: 'error', message: err.message })}\n\n`
+              )
+            );
+          } finally {
+            controller.close();
+          }
+        },
+      });
+
+      return new Response(readable, {
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      });
+    }
+
+    // --- NON-STREAMING path (JSON) ---
     let response: string;
 
-    if (provider === 'anthropic' && ANTHROPIC_API_KEY) {
-      response = await callAnthropic(messages, enhancedSystemPrompt);
+    if (ANTHROPIC_API_KEY && (provider === 'anthropic' || !OPENAI_API_KEY)) {
+      const msg = await anthropic.messages.create({
+        model: 'claude-opus-4-6',
+        max_tokens: 1024,
+        system: enhancedSystemPrompt,
+        messages: claudeMessages,
+      });
+      response = msg.content[0].type === 'text' ? msg.content[0].text : '';
     } else if (OPENAI_API_KEY) {
       response = await callOpenAI(messages, enhancedSystemPrompt);
     } else {
-      // Fallback to rule-based responses if no API keys
       response = generateFallbackResponse(messages[messages.length - 1].content);
     }
 
-    // Generate smart suggestions based on response
     const suggestions = generateSuggestions(messages[messages.length - 1].content, response);
 
     return new Response(
-      JSON.stringify({
-        content: response,
-        suggestions,
-      }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200,
-      }
+      JSON.stringify({ content: response, suggestions }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   } catch (error) {
     console.error('AI Chat error:', error);
@@ -148,10 +216,7 @@ ${featuredEquipment.map(e => `- ${e.title} (${e.category?.name}) - $${e.daily_ra
         content: "I'm having trouble processing your request right now. Please try again in a moment.",
         suggestions: ['Browse equipment', 'View categories', 'Contact support'],
       }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200, // Return 200 with error message for graceful handling
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   }
 });
@@ -165,10 +230,7 @@ async function callOpenAI(messages: Message[], systemPrompt: string): Promise<st
     },
     body: JSON.stringify({
       model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        ...messages,
-      ],
+      messages: [{ role: 'system', content: systemPrompt }, ...messages],
       max_tokens: 500,
       temperature: 0.7,
     }),
@@ -183,50 +245,20 @@ async function callOpenAI(messages: Message[], systemPrompt: string): Promise<st
   return data.choices[0].message.content;
 }
 
-async function callAnthropic(messages: Message[], systemPrompt: string): Promise<string> {
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY!,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-3-haiku-20240307',
-      max_tokens: 500,
-      system: systemPrompt,
-      messages: messages.map(m => ({
-        role: m.role === 'assistant' ? 'assistant' : 'user',
-        content: m.content,
-      })),
-    }),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error?.message || 'Anthropic API error');
-  }
-
-  const data = await response.json();
-  return data.content[0].text;
-}
-
 function generateFallbackResponse(userMessage: string): string {
   const lowerMessage = userMessage.toLowerCase();
 
-  // Price/cost related
   if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('how much')) {
     return `💰 Equipment prices on Islakayd vary by type and rental duration:
 
 **Power Tools**: $25-100/day
-**Photography Gear**: $50-250/day  
+**Photography Gear**: $50-250/day
 **Heavy Equipment**: $200-800/day
 **Event Supplies**: $100-500/day
 
 Pro tip: Weekly and monthly rentals often include discounts up to 30%! What type of equipment are you looking for?`;
   }
 
-  // Booking related
   if (lowerMessage.includes('book') || lowerMessage.includes('reserve') || lowerMessage.includes('rent')) {
     return `📅 Booking on Islakayd is quick and easy!
 
@@ -238,7 +270,6 @@ Pro tip: Weekly and monthly rentals often include discounts up to 30%! What type
 Most owners confirm within 2 hours. Would you like help finding specific equipment?`;
   }
 
-  // Equipment categories
   if (lowerMessage.includes('camera') || lowerMessage.includes('photo')) {
     return `📸 We have great photography gear available! Popular rentals include:
 
@@ -270,7 +301,6 @@ All come with safety equipment and manuals. What size project are you working on
 How many guests are you expecting? I can help build the perfect package!`;
   }
 
-  // Default response
   return `👋 I'm here to help you find the perfect equipment!
 
 You can ask me about:
@@ -286,27 +316,21 @@ function generateSuggestions(userMessage: string, response: string): string[] {
   const lowerMessage = userMessage.toLowerCase();
   const lowerResponse = response.toLowerCase();
 
-  // Context-aware suggestions
   if (lowerMessage.includes('price') || lowerResponse.includes('price')) {
     return ['Show cheapest options', 'Compare weekly rates', 'View premium equipment'];
   }
-
   if (lowerMessage.includes('camera') || lowerMessage.includes('photo')) {
     return ['Wedding photography gear', 'Video production kit', 'See all cameras'];
   }
-
   if (lowerMessage.includes('construction') || lowerMessage.includes('excavator')) {
     return ['Mini excavators', 'View all heavy equipment', 'Get delivery quote'];
   }
-
   if (lowerMessage.includes('event') || lowerMessage.includes('wedding')) {
     return ['Tent packages', 'DJ equipment', 'See event bundles'];
   }
-
   if (lowerMessage.includes('book') || lowerMessage.includes('how')) {
     return ['Browse equipment', 'View my bookings', 'Contact support'];
   }
 
-  // Default suggestions
   return ['Browse all equipment', 'Popular rentals', 'How it works', 'Contact support'];
 }

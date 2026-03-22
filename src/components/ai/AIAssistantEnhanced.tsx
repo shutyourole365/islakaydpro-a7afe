@@ -320,6 +320,31 @@ export default function AIAssistantEnhanced() {
     setShowQuickActions(false);
 
     const startTime = Date.now();
+    const streamingId = Date.now().toString();
+
+    // Add an empty assistant message that we'll fill in as chunks arrive
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: streamingId,
+        role: 'assistant',
+        content: '',
+        timestamp: new Date(),
+        metadata: { type: 'recommendation' },
+      },
+    ]);
+
+    const conversationHistory = messages
+      .filter(m => m.id !== '1' && m.role !== 'system')
+      .slice(-6)
+      .map(m => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+      }));
+
+    conversationHistory.push({ role: 'user' as const, content: userMessage });
+
+    let fullText = '';
 
     // If AI is disabled by environment or user preference, use local rule-based responses
     if (!aiIsEnabled) {
@@ -411,7 +436,6 @@ export default function AIAssistantEnhanced() {
     }
 
     try {
-      // Build conversation history for context
       const conversationHistory = messages
         .filter(m => m.id !== '1' && m.role !== 'system')
         .slice(-6)
@@ -420,13 +444,9 @@ export default function AIAssistantEnhanced() {
           content: m.content,
         }));
 
-      // Add current message
-      conversationHistory.push({
-        role: 'user' as const,
-        content: userMessage,
-      });
+      conversationHistory.push({ role: 'user' as const, content: userMessage });
 
-      // Insert placeholder assistant message so we can stream into it
+      // Insert placeholder assistant message to stream into
       const placeholderId = Date.now().toString();
       setMessages(prev => [...prev, {
         id: placeholderId,
@@ -436,57 +456,49 @@ export default function AIAssistantEnhanced() {
         suggestions: [],
       }]);
 
-      // track text locally so it's available after streaming completes
+      // Accumulate deltas from real SSE stream
       let streamedText = '';
       await streamMessage(
         conversationHistory,
         {},
         (chunk) => {
-          streamedText = chunk;
+          streamedText += chunk;
           setMessages(prev => prev.map(m =>
-            m.id === placeholderId ? { ...m, content: chunk } : m
+            m.id === placeholderId ? { ...m, content: streamedText } : m
           ));
         },
         (suggestions) => {
+          const processingTime = Date.now() - startTime;
           setMessages(prev => prev.map(m =>
-            m.id === placeholderId ? { ...m, suggestions } : m
+            m.id === placeholderId
+              ? { ...m, suggestions, metadata: { type: 'recommendation', processingTime } }
+              : m
           ));
+          if (voiceEnabled) speakResponse(streamedText);
         },
         (err) => {
           console.error('AI stream error:', err);
+          const fallback = getContextualResponses(userMessage);
+          setMessages(prev => prev.map(m =>
+            m.id === placeholderId
+              ? { ...m, content: fallback.content + '\n\n_(Using offline mode)_', suggestions: fallback.suggestions }
+              : m
+          ));
+          if (voiceEnabled) speakResponse(fallback.content);
         }
       );
-
-      if (voiceEnabled) {
-        speakResponse(streamedText);
-      }
-
-      // re-enable quick actions after a brief delay so the user sees them
-      setTimeout(() => setShowQuickActions(true), 200);
-      setIsTyping(false);
     } catch (error) {
       console.error('AI service error:', error);
-      // Fallback to generic offline response
-      const processingTime = Date.now() - startTime;
-      const fallbackContent = "I'm having trouble connecting right now. Please try again in a moment.";
-
-      const newMessage: Message = {
+      const fallback = getContextualResponses(userMessage);
+      setMessages(prev => [...prev, {
         id: Date.now().toString(),
         role: 'assistant',
-        content: fallbackContent + "\n\n_(Using offline mode)_",
+        content: fallback.content + '\n\n_(Using offline mode)_',
         timestamp: new Date(),
-        suggestions: [],
-        metadata: { 
-          type: 'info',
-          processingTime,
-        },
-      };
-
-      setMessages((prev) => [...prev, newMessage]);
-
-      if (voiceEnabled) {
-        speakResponse(fallbackContent);
-      }
+        suggestions: fallback.suggestions,
+        metadata: { type: 'info', processingTime: Date.now() - startTime },
+      }]);
+      if (voiceEnabled) speakResponse(fallback.content);
     } finally {
       setIsTyping(false);
     }

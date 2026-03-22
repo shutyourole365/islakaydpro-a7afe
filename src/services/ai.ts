@@ -55,7 +55,7 @@ export async function sendMessage(
           content: m.content,
         })),
         context: enhancedContext,
-        provider: 'openai', // or 'anthropic'
+        provider: 'anthropic',
       }),
     });
 
@@ -108,7 +108,7 @@ export async function streamMessage(
           ...context,
           userId: session?.user?.id,
         },
-        provider: 'openai',
+        provider: 'anthropic',
         stream: true,
       }),
     });
@@ -117,20 +117,26 @@ export async function streamMessage(
       throw new Error('Failed to get AI response');
     }
 
-    // For now, we'll simulate streaming since Edge Functions don't support SSE easily
-    const data = await response.json();
-    
-    // Simulate typing effect
-    const words = data.content.split(' ');
-    let currentText = '';
-    
-    for (let i = 0; i < words.length; i++) {
-      currentText += (i > 0 ? ' ' : '') + words[i];
-      onChunk(currentText);
-      await new Promise(resolve => setTimeout(resolve, 30)); // 30ms per word
-    }
+    // Read real SSE stream from Edge Function
+    const reader = response.body?.getReader();
+    const decoder = new TextDecoder();
+    if (!reader) throw new Error('No response body');
 
-    onComplete(data.suggestions || []);
+    let buffer = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() ?? '';
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const event = JSON.parse(line.slice(6));
+        if (event.type === 'delta') onChunk(event.text);
+        if (event.type === 'done') onComplete(event.suggestions ?? []);
+        if (event.type === 'error') throw new Error(event.message);
+      }
+    }
   } catch (error) {
     onError(error instanceof Error ? error : new Error('Unknown error'));
   }
