@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -10,8 +10,11 @@ import {
   CheckCircle2,
   Camera,
   Info,
+  Loader2,
 } from 'lucide-react';
 import type { Category } from '../../types';
+import { uploadMultipleFiles } from '../../services/storage';
+import { supabase } from '../../lib/supabase';
 
 interface ListEquipmentFormProps {
   categories: Category[];
@@ -66,6 +69,9 @@ export default function ListEquipmentForm({
     max_rental_days: 30,
   });
   const [newFeature, setNewFeature] = useState('');
+  const [uploadingImages, setUploadingImages] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const totalSteps = 4;
 
@@ -107,6 +113,33 @@ export default function ListEquipmentForm({
         images: [...formData.images, url],
       });
     }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setUploadingImages(true);
+    setUploadError('');
+
+    const { data: { user } } = await supabase.auth.getUser();
+    const userId = user?.id ?? 'anonymous';
+    const basePath = `${userId}/${Date.now()}`;
+
+    const results = await uploadMultipleFiles(files, basePath);
+    const urls = results.filter(r => r.url).map(r => r.url as string);
+    const failed = results.filter(r => r.error).length;
+
+    if (urls.length > 0) {
+      setFormData(prev => ({ ...prev, images: [...prev.images, ...urls] }));
+    }
+    if (failed > 0) {
+      setUploadError(`${failed} image(s) failed to upload. Please try again.`);
+    }
+
+    setUploadingImages(false);
+    // Reset input so same file can be re-selected if needed
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const removeImage = (index: number) => {
@@ -354,42 +387,42 @@ export default function ListEquipmentForm({
                   </p>
                 </div>
 
-                <div className="border-2 border-dashed border-gray-200 rounded-2xl p-12 text-center">
+                <div
+                  className="border-2 border-dashed border-gray-200 rounded-2xl p-12 text-center hover:border-teal-400 transition-colors cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    multiple
+                    className="hidden"
+                    onChange={handleFileUpload}
+                  />
                   <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Camera className="w-8 h-8 text-gray-400" />
+                    {uploadingImages ? (
+                      <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+                    ) : (
+                      <Camera className="w-8 h-8 text-gray-400" />
+                    )}
                   </div>
                   <p className="text-gray-600 mb-4">
-                    Drag and drop photos here, or click to browse
+                    {uploadingImages ? 'Uploading…' : 'Drag and drop photos here, or click to browse'}
                   </p>
-                  <button className="px-6 py-3 bg-teal-500 text-white font-medium rounded-xl hover:bg-teal-600 transition-colors">
+                  <button
+                    type="button"
+                    disabled={uploadingImages}
+                    onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+                    className="px-6 py-3 bg-teal-500 text-white font-medium rounded-xl hover:bg-teal-600 transition-colors disabled:opacity-50"
+                  >
                     <Upload className="w-5 h-5 inline mr-2" />
                     Upload Photos
                   </button>
                 </div>
 
-                <div className="bg-blue-50 rounded-xl p-4 flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm text-blue-700 font-medium mb-1">
-                      For demo purposes, click sample images below:
-                    </p>
-                    <div className="flex gap-2 mt-2">
-                      {sampleImages.map((url, index) => (
-                        <button
-                          key={index}
-                          onClick={() => addSampleImage(url)}
-                          className="w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-teal-500 transition-colors"
-                        >
-                          <img
-                            src={url}
-                            alt={`Sample ${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                {uploadError && (
+                  <p className="text-sm text-red-600">{uploadError}</p>
+                )}
 
                 {formData.images.length > 0 && (
                   <div>
