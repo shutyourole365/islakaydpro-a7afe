@@ -9,7 +9,6 @@ import {
   MapPin,
   CheckCircle2,
   Camera,
-  Info,
   Loader2,
 } from 'lucide-react';
 import type { Category } from '../../types';
@@ -39,11 +38,6 @@ interface EquipmentFormData {
   min_rental_days: number;
   max_rental_days: number;
 }
-
-const sampleImages = [
-  'https://images.pexels.com/photos/162553/keys-workshop-mechanic-tools-162553.jpeg',
-  'https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg',
-];
 
 export default function ListEquipmentForm({
   categories,
@@ -104,15 +98,6 @@ export default function ListEquipmentForm({
       ...formData,
       features: formData.features.filter((_, i) => i !== index),
     });
-  };
-
-  const addSampleImage = (url: string) => {
-    if (!formData.images.includes(url)) {
-      setFormData({
-        ...formData,
-        images: [...formData.images, url],
-      });
-    }
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

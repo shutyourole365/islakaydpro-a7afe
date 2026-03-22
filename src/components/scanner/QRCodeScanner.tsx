@@ -145,7 +145,7 @@ export default function QRCodeScanner({
   }, [isScanning]);
 
   // Simulate QR detection (replace with actual QR library in production)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const simulateQRDetection = (_imageData: ImageData): string | null => {
     // In production, use jsQR or similar library
     // This is a placeholder that randomly "detects" QR codes for demo

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { useState, useEffect } from 'react';
 import { Shield, DollarSign, AlertTriangle, CheckCircle, FileText, Camera } from 'lucide-react';
 

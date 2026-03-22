@@ -688,13 +688,13 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
   const [quickBookEquipment, setQuickBookEquipment] = useState<Equipment | null>(null);
   const [isQRCodeScannerOpen, setIsQRCodeScannerOpen] = useState(false);
   // Search filter state (used by Advanced Filters and Saved Searches)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const [_searchFilters, _setSearchFilters] = useState<Partial<SearchFilters>>({});
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const [_searchMinPrice, setSearchMinPrice] = useState<number | undefined>(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const [_searchMaxPrice, setSearchMaxPrice] = useState<number | undefined>(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const [_searchCondition, setSearchCondition] = useState<string>('');
 
   // Fetch equipment from database on mount
@@ -770,7 +770,6 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
       const cleanUrl = window.location.pathname;
       window.history.replaceState({}, '', cleanUrl);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

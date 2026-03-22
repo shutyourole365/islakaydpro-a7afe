@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { useState, useRef, useCallback } from 'react';
 import {
   Camera,
