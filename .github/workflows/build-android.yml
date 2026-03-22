@@ -8,6 +8,7 @@ name: Build Android APK/AAB
       - 'src/**'
       - 'android/**'
       - 'package.json'
+      - '.github/workflows/build-android.yml'
   workflow_dispatch:
     inputs:
       build_type:
@@ -55,11 +56,11 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      - name: Sync Capacitor
-        run: npx cap sync android
-
       - name: Make gradlew executable
         run: chmod +x android/gradlew
+
+      - name: Sync Capacitor
+        run: ./node_modules/.bin/cap sync android
 
       - name: Set ANDROID_KEYSTORE_BASE64 env
         run: |
