@@ -10,10 +10,11 @@ interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  initialMode?: 'signin' | 'signup' | 'forgot' | 'reset-password';
 }
 
-export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
-  const [mode, setMode] = useState<'signin' | 'signup' | 'forgot'>('signin');
+export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'signin' }: AuthModalProps) {
+  const [mode, setMode] = useState<'signin' | 'signup' | 'forgot' | 'reset-password'>(initialMode);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -115,6 +116,27 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     }
   };
 
+  const handleSetNewPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+    setLoading(true);
+    setError('');
+    const { error } = await supabase.auth.updateUser({ password });
+    setLoading(false);
+    if (error) {
+      setError(error.message);
+    } else {
+      setSuccess('Password updated! You can now sign in.');
+      setTimeout(() => {
+        window.history.replaceState({}, '', '/');
+        onSuccess();
+      }, 1500);
+    }
+  };
+
   if (!isOpen) return null;
 
   const benefits = [
@@ -183,6 +205,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
           <div className="max-w-sm mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               {mode === 'signin' && 'Welcome back'}
+              {mode === 'reset-password' && 'Set new password'}
               {mode === 'signup' && 'Create your account'}
               {mode === 'forgot' && 'Reset password'}
             </h2>
@@ -210,6 +233,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   ? handleSignIn
                   : mode === 'signup'
                   ? handleSignUp
+                  : mode === 'reset-password'
+                  ? handleSetNewPassword
                   : handleForgotPassword
               }
               className="space-y-4"
@@ -234,7 +259,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 </div>
               )}
 
-              <div>
+              {mode !== 'reset-password' && <div>
                 <label htmlFor={emailId} className="block text-sm font-medium text-gray-700 mb-1.5">
                   Email Address
                 </label>
@@ -250,9 +275,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                     className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 transition-all"
                   />
                 </div>
-              </div>
+              </div>}
 
-              {mode !== 'forgot' && (
+              {(mode === 'signin' || mode === 'signup' || mode === 'reset-password') && (
                 <div>
                   <label htmlFor={passwordId} className="block text-sm font-medium text-gray-700 mb-1.5">
                     Password
@@ -317,6 +342,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                     {mode === 'signin' && 'Sign In'}
                     {mode === 'signup' && 'Create Account'}
                     {mode === 'forgot' && 'Send Reset Link'}
+                    {mode === 'reset-password' && 'Update Password'}
                     <ArrowRight className="w-5 h-5" />
                   </>
                 )}

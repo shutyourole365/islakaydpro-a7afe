@@ -622,6 +622,7 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
   const [isLoadingEquipment, setIsLoadingEquipment] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authInitialMode, setAuthInitialMode] = useState<'signin' | 'signup' | 'forgot' | 'reset-password'>('signin');
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
@@ -721,6 +722,16 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
     fetchCategories();
     fetchEquipment();
   }, [fetchEquipment]);
+
+  // Handle Supabase password recovery redirect
+  useEffect(() => {
+    const hash = new URLSearchParams(window.location.hash.slice(1));
+    if (hash.get('type') === 'recovery') {
+      setAuthInitialMode('reset-password');
+      setIsAuthOpen(true);
+      window.history.replaceState({}, '', '/');
+    }
+  }, []);
 
   // Verify Stripe checkout session on redirect back from payment
   useEffect(() => {
@@ -1691,8 +1702,9 @@ type PageType = 'home' | 'browse' | 'dashboard' | 'list-equipment' | 'security' 
       <Suspense fallback={null}>
         <AuthModal
           isOpen={isAuthOpen}
-          onClose={() => setIsAuthOpen(false)}
-          onSuccess={() => setIsAuthOpen(false)}
+          initialMode={authInitialMode}
+          onClose={() => { setIsAuthOpen(false); setAuthInitialMode('signin'); }}
+          onSuccess={() => { setIsAuthOpen(false); setAuthInitialMode('signin'); }}
         />
       </Suspense>
 
