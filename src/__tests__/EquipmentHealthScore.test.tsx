@@ -108,16 +108,16 @@ describe('EquipmentHealthScore', () => {
     it('should display last inspection date', () => {
       render(<EquipmentHealthScore onBack={mockOnBack} />);
       expect(screen.getByText('Last Inspection')).toBeInTheDocument();
-      // Date rendered with toLocaleDateString() as 2/20/2026 format
-      const dateElements = screen.queryAllByText(/2\/20\/2026|2026-02-20/);
+      // Date rendered with toLocaleDateString() — format varies by locale
+      const dateElements = screen.queryAllByText(/2\/20\/2026|20\/02\/2026|2026-02-20/);
       expect(dateElements.length).toBeGreaterThan(0);
     });
 
     it('should display next maintenance date', () => {
       render(<EquipmentHealthScore onBack={mockOnBack} />);
       expect(screen.getByText('Next Maintenance')).toBeInTheDocument();
-      // Date rendered with toLocaleDateString() as 3/15/2026 format
-      const dateElements = screen.queryAllByText(/3\/15\/2026|2026-03-15/);
+      // Date rendered with toLocaleDateString() — format varies by locale
+      const dateElements = screen.queryAllByText(/3\/15\/2026|15\/03\/2026|2026-03-15/);
       expect(dateElements.length).toBeGreaterThan(0);
     });
 

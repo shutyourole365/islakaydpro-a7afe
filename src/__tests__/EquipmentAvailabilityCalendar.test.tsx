@@ -3,6 +3,17 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EquipmentAvailabilityCalendar from '../components/availability/EquipmentAvailabilityCalendar';
 
+vi.mock('../contexts/AuthContext', () => ({
+  useAuth: () => ({ user: null }),
+}));
+
+vi.mock('../services/database', () => ({
+  getEquipment: vi.fn().mockResolvedValue({ data: [] }),
+  getEquipmentAvailability: vi.fn().mockResolvedValue([]),
+  blockDates: vi.fn().mockResolvedValue(undefined),
+  unblockDates: vi.fn().mockResolvedValue(undefined),
+}));
+
 describe('EquipmentAvailabilityCalendar', () => {
   const mockOnBack = vi.fn();
 

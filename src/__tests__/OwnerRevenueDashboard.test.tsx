@@ -250,8 +250,8 @@ describe('OwnerRevenueDashboard', () => {
 
     it('should display transaction dates', () => {
       render(<OwnerRevenueDashboard onBack={mockOnBack} />);
-      // Should show date format
-      const dateElements = screen.queryAllByText(/2\/24\/2026|2\/23\/2026/);
+      // Should show date format — varies by locale
+      const dateElements = screen.queryAllByText(/2\/24\/2026|24\/02\/2026|2\/23\/2026|23\/02\/2026/);
       expect(dateElements.length).toBeGreaterThan(0);
     });
 
