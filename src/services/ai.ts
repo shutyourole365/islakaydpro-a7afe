@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import { errorMonitoring } from './errorMonitoring';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -86,45 +87,42 @@ export async function sendMessage(
   messages: Message[],
   context?: ChatContext
 ): Promise<ChatResponse> {
+  errorMonitoring.addBreadcrumb('AI sendMessage called', 'ai', 'info', {
+    messageCount: messages.length,
+    hasContext: !!context,
+  });
+
   try {
-    // Get auth token if user is logged in
     const { data: { session } } = await supabase.auth.getSession();
     const token = session?.access_token;
 
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    // Add user ID to context if authenticated
-    const enhancedContext = {
-      ...context,
-      userId: session?.user?.id,
-    };
+    const enhancedContext = { ...context, userId: session?.user?.id };
 
     const response = await fetch(`${SUPABASE_URL}/functions/v1/ai-chat`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
-        messages: messages.map(m => ({
-          role: m.role,
-          content: m.content,
-        })),
+        messages: messages.map(m => ({ role: m.role, content: m.content })),
         context: enhancedContext,
         provider: 'anthropic',
       }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to get AI response');
+      throw new Error(`AI response ${response.status}: ${response.statusText}`);
     }
 
+    errorMonitoring.addBreadcrumb('AI sendMessage succeeded', 'ai', 'info');
     return await response.json();
   } catch (error) {
     console.error('AI chat error:', error);
+    errorMonitoring.captureException(
+      error instanceof Error ? error : new Error(String(error)),
+      { ai: { provider: 'anthropic', stream: false, messageCount: messages.length } }
+    );
     return {
       content: "I'm having trouble connecting right now. Please try again in a moment.",
       suggestions: ['Try again', 'Browse equipment', 'Contact support'],
@@ -143,40 +141,32 @@ export async function streamMessage(
   onComplete: (suggestions: string[]) => void,
   onError: (error: Error) => void
 ): Promise<void> {
+  errorMonitoring.addBreadcrumb('AI streamMessage called', 'ai', 'info', {
+    messageCount: messages.length,
+  });
+
   try {
     const { data: { session } } = await supabase.auth.getSession();
     const token = session?.access_token;
 
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
-
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
 
     const response = await fetch(`${SUPABASE_URL}/functions/v1/ai-chat`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
-        messages: messages.map(m => ({
-          role: m.role,
-          content: m.content,
-        })),
-        context: {
-          ...context,
-          userId: session?.user?.id,
-        },
+        messages: messages.map(m => ({ role: m.role, content: m.content })),
+        context: { ...context, userId: session?.user?.id },
         provider: 'anthropic',
         stream: true,
       }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to get AI response');
+      throw new Error(`AI stream ${response.status}: ${response.statusText}`);
     }
 
-    // Read real SSE stream from Edge Function
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
     if (!reader) throw new Error('No response body');
@@ -192,12 +182,19 @@ export async function streamMessage(
         if (!line.startsWith('data: ')) continue;
         const event = JSON.parse(line.slice(6));
         if (event.type === 'delta') onChunk(event.text);
-        if (event.type === 'done') onComplete(event.suggestions ?? []);
+        if (event.type === 'done') {
+          errorMonitoring.addBreadcrumb('AI stream completed', 'ai', 'info');
+          onComplete(event.suggestions ?? []);
+        }
         if (event.type === 'error') throw new Error(event.message);
       }
     }
   } catch (error) {
-    onError(error instanceof Error ? error : new Error('Unknown error'));
+    const err = error instanceof Error ? error : new Error(String(error));
+    errorMonitoring.captureException(err, {
+      ai: { provider: 'anthropic', stream: true, messageCount: messages.length },
+    });
+    onError(err);
   }
 }
 
